@@ -67,13 +67,51 @@ export default function AuditHistoryPage() {
           </p>
         </div>
 
-        <button
-          onClick={loadAuditData}
-          className="p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded transition self-start md:self-auto"
-          title="Refresh Audit Records"
-        >
-          <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
-        </button>
+        <div className="flex items-center space-x-2">
+          <button
+            onClick={() => {
+              const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(logs, null, 2));
+              const downloadAnchor = document.createElement("a");
+              downloadAnchor.setAttribute("href", dataStr);
+              downloadAnchor.setAttribute("download", `Audit_Ledger_Export_${new Date().toISOString().slice(0, 10)}.json`);
+              document.body.appendChild(downloadAnchor);
+              downloadAnchor.click();
+              downloadAnchor.remove();
+            }}
+            className="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded shadow-sm"
+          >
+            Export JSON
+          </button>
+          <button
+            onClick={() => {
+              const headers = "ID,Timestamp,Actor,Role,EventType,Action,Entity,RecordHash\n";
+              const rows = logs
+                .map(
+                  (l) =>
+                    `"${l.id}","${l.timestamp}","${l.actor_username}","${l.actor_role}","${l.event_type}","${l.action?.replace(/"/g, '""')}","${l.entity_type}","${l.record_hash}"`
+                )
+                .join("\n");
+              const blob = new Blob([headers + rows], { type: "text/csv;charset=utf-8;" });
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              a.href = url;
+              a.download = `Audit_Ledger_Export_${new Date().toISOString().slice(0, 10)}.csv`;
+              document.body.appendChild(a);
+              a.click();
+              a.remove();
+            }}
+            className="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded shadow-sm"
+          >
+            Export CSV
+          </button>
+          <button
+            onClick={loadAuditData}
+            className="p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded transition self-start md:self-auto"
+            title="Refresh Audit Records"
+          >
+            <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
+          </button>
+        </div>
       </div>
 
       {/* Cryptographic Chain Integrity Verification Banner */}

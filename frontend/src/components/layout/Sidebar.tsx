@@ -38,6 +38,12 @@ const NAV_ITEMS: NavItem[] = [
     roles: ["applicant"],
   },
   {
+    title: "Institution Profile & History",
+    href: "/institution/profile",
+    icon: Building,
+    roles: ["applicant", "scrutiny_officer", "supervising_authority", "auditor"],
+  },
+  {
     title: "New Application Wizard",
     href: "/institution/applications/new",
     icon: PlusCircle,
@@ -48,6 +54,12 @@ const NAV_ITEMS: NavItem[] = [
     href: "/applications",
     icon: FileText,
     roles: ["applicant"],
+  },
+  {
+    title: "Clarifications & Responses",
+    href: "/clarifications",
+    icon: Inbox,
+    roles: ["applicant", "scrutiny_officer", "supervising_authority"],
   },
 
   // Officer Queue & Scrutiny

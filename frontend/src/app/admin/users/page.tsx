@@ -3,6 +3,10 @@
 import React, { useEffect, useState } from "react";
 import { fetchApi } from "@/lib/api";
 import { useAuth } from "@/context/AuthContext";
+import { Card } from "@/components/ui/Card";
+import { Button } from "@/components/ui/Button";
+import { StatusBadge } from "@/components/ui/Badge";
+import { StateFeedback } from "@/components/ui/StateFeedback";
 import {
   Users,
   Shield,
@@ -12,7 +16,9 @@ import {
   Edit2,
   CheckCircle,
   AlertTriangle,
-  Building2
+  Building2,
+  KeyRound,
+  ShieldCheck,
 } from "lucide-react";
 
 export default function UserManagementPage() {
@@ -25,6 +31,12 @@ export default function UserManagementPage() {
   const [assignModalOpen, setAssignModalOpen] = useState(false);
   const [selectedAppId, setSelectedAppId] = useState<number>(1);
   const [selectedOfficerId, setSelectedOfficerId] = useState<number>(2);
+
+  // Role Edit Modal
+  const [editUser, setEditUser] = useState<any | null>(null);
+  const [targetRole, setTargetRole] = useState("scrutiny_officer");
+  const [isActive, setIsActive] = useState(true);
+  const [savingUser, setSavingUser] = useState(false);
 
   const loadUsersAndApps = async () => {
     setLoading(true);
@@ -66,178 +78,272 @@ export default function UserManagementPage() {
     }
   };
 
-  const handleToggleUserRole = async (targetUser: any) => {
-    const newRole = prompt(
-      `Update role for ${targetUser.username} (applicant, scrutiny_officer, supervising_authority, admin, auditor):`,
-      targetUser.role
-    );
-    if (!newRole) return;
+  const handleOpenEdit = (target: any) => {
+    setEditUser(target);
+    setTargetRole(target.role);
+    setIsActive(target.is_active);
+  };
 
+  const handleSaveUserRole = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editUser) return;
+    setSavingUser(true);
     try {
-      await fetchApi(`/users/${targetUser.id}/role`, {
+      await fetchApi(`/users/${editUser.id}/role`, {
         method: "PATCH",
         body: JSON.stringify({
-          role: newRole.trim(),
-          is_active: targetUser.is_active,
+          role: targetRole,
+          is_active: isActive,
         }),
       });
-      alert(`Role updated for ${targetUser.username}.`);
+      setEditUser(null);
       loadUsersAndApps();
     } catch (err: any) {
       alert(`Role update error: ${err.message}`);
+    } finally {
+      setSavingUser(false);
     }
   };
 
   return (
     <div className="space-y-6">
-      <div className="bg-white p-6 rounded-lg border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      {/* Page Header */}
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pb-4 border-b border-niyam-border">
         <div>
-          <span className="px-2.5 py-0.5 rounded text-[11px] font-semibold bg-rose-100 text-rose-800 border border-rose-200">
-            System Administration
-          </span>
-          <h1 className="text-xl font-bold text-slate-900 mt-1">
-            User, Role & Assignment Administration
+          <div className="flex items-center gap-2 mb-1">
+            <span className="px-2.5 py-0.5 rounded text-[11px] font-semibold bg-rose-50 text-rose-900 border border-rose-200">
+              Screen 17 • Governance & User RBAC
+            </span>
+            <span className="text-xs text-niyam-secondary font-mono">Server Enforced</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-bold text-niyam-text tracking-tight flex items-center gap-2">
+            <Users className="w-7 h-7 text-niyam-accent" />
+            <span>User, Role & Assignment Administration</span>
           </h1>
-          <p className="text-xs text-slate-500 mt-0.5">
-            Server-enforced role assignments, institution affiliations, and scrutiny case distribution
+          <p className="text-sm text-niyam-secondary mt-1 max-w-2xl">
+            Manage server-enforced role privileges, institutional isolation mapping, and assigned scrutiny case distribution.
           </p>
         </div>
 
-        <div className="flex items-center space-x-3">
-          <button
+        <div className="flex items-center gap-3">
+          <Button
+            variant="secondary"
+            size="sm"
             onClick={loadUsersAndApps}
-            className="p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded transition"
-            title="Refresh Users"
+            leftIcon={<RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />}
           >
-            <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
-          </button>
-          <button
+            Refresh Users
+          </Button>
+          <Button
+            variant="primary"
+            size="sm"
             onClick={() => setAssignModalOpen(true)}
-            className="px-4 py-2 bg-navy-900 hover:bg-navy-850 text-white rounded text-xs font-semibold flex items-center space-x-1.5 transition shadow-sm"
+            leftIcon={<UserCheck className="w-3.5 h-3.5" />}
           >
-            <UserCheck className="w-4 h-4" />
-            <span>Assign Officer to Application</span>
-          </button>
+            Assign Scrutiny Officer
+          </Button>
         </div>
       </div>
 
-      {/* Privilege Separation Notice */}
-      <div className="bg-slate-50 border border-slate-200 p-4 rounded-lg text-xs text-slate-700 flex items-start space-x-3">
-        <Lock className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+      {/* Role Boundary Enforcement Card */}
+      <div className="bg-slate-50 border border-niyam-border p-4 rounded-lg text-xs sm:text-sm text-niyam-secondary flex items-start gap-3 shadow-subtle">
+        <Lock className="w-5 h-5 text-niyam-accent flex-shrink-0 mt-0.5" />
         <div className="leading-relaxed">
-          <strong className="text-slate-900 font-semibold block mb-0.5">Role Boundary Enforcement:</strong>
-          Administrators maintain authority over user provisioning, assignments, and rule publication. Institutional data isolation ensures that institution applicants cannot access other colleges&apos; submissions, and administrative accounts do not bypass document privacy protections.
+          <strong className="text-niyam-text font-bold block mb-0.5">
+            Strict Zero-Trust Role Boundaries:
+          </strong>
+          Administrators maintain authority over user provisioning and application dispatch. Institution applicants access exclusively their own college records. Scrutiny officers access assigned regional cases. Statutory decisions are reserved strictly for Competent Authorities.
         </div>
       </div>
 
       {/* Users Table */}
-      <div className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
-        <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
-          <h3 className="text-sm font-bold text-slate-900">
-            System User Accounts & Scrutiny Roles ({usersList.length})
-          </h3>
-          <span className="text-xs text-slate-500">
-            RBAC Enforced via JWT Claims
-          </span>
-        </div>
-
-        <table className="w-full text-left text-xs">
-          <thead className="bg-slate-50 text-slate-600 font-semibold border-b border-slate-200">
-            <tr>
-              <th className="px-6 py-3">User & Email</th>
-              <th className="px-6 py-3">Assigned Role</th>
-              <th className="px-6 py-3">Designation / Bureau</th>
-              <th className="px-6 py-3">Institutional Affiliation</th>
-              <th className="px-6 py-3">Status</th>
-              <th className="px-6 py-3 text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100">
-            {loading ? (
+      <Card
+        padding="none"
+        title={`Registered System Users & Role Profiles (${usersList.length})`}
+        subtitle="Cryptographically verified accounts with JWT claim enforcement"
+      >
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-xs sm:text-sm">
+            <thead className="bg-slate-50 text-niyam-secondary font-semibold border-b border-niyam-border">
               <tr>
-                <td colSpan={6} className="px-6 py-8 text-center text-slate-400">
-                  Loading system users...
-                </td>
+                <th className="px-4 py-3">User & Contact</th>
+                <th className="px-4 py-3">Server-Enforced Role</th>
+                <th className="px-4 py-3">Bureau / Designation</th>
+                <th className="px-4 py-3">Institutional Affiliation</th>
+                <th className="px-4 py-3">Status</th>
+                <th className="px-4 py-3 text-right">Actions</th>
               </tr>
-            ) : (
-              usersList.map((u) => (
-                <tr key={u.id} className="hover:bg-slate-50/70 transition">
-                  <td className="px-6 py-3.5">
-                    <div className="font-bold text-slate-900">{u.full_name}</div>
-                    <div className="font-mono text-slate-400 text-[11px]">{u.username} | {u.email}</div>
-                  </td>
-                  <td className="px-6 py-3.5">
-                    <span className="px-2 py-0.5 rounded text-[11px] font-semibold bg-slate-100 text-slate-800 border border-slate-200 capitalize">
-                      {u.role.replace(/_/g, " ")}
-                    </span>
-                  </td>
-                  <td className="px-6 py-3.5 text-slate-700">
-                    {u.designation || "AICTE Official"}
-                  </td>
-                  <td className="px-6 py-3.5 text-slate-600">
-                    {u.institution_id ? (
-                      <span className="text-blue-700 font-medium">Apex Institute of Technology</span>
-                    ) : (
-                      <span className="text-slate-400">Regulatory Oversight Bureau</span>
-                    )}
-                  </td>
-                  <td className="px-6 py-3.5">
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
-                      Active
-                    </span>
-                  </td>
-                  <td className="px-6 py-3.5 text-right">
-                    <button
-                      onClick={() => handleToggleUserRole(u)}
-                      className="px-2.5 py-1 text-[11px] text-blue-600 hover:text-blue-800 font-semibold hover:bg-blue-50 rounded transition"
-                    >
-                      Edit Role
-                    </button>
+            </thead>
+            <tbody className="divide-y divide-niyam-border">
+              {loading ? (
+                <tr>
+                  <td colSpan={6} className="px-4 py-8 text-center text-niyam-secondary">
+                    Loading system users...
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
+              ) : (
+                usersList.map((u) => (
+                  <tr key={u.id} className="hover:bg-slate-50/60 transition">
+                    <td className="px-4 py-3.5">
+                      <div className="font-bold text-niyam-text">{u.full_name}</div>
+                      <div className="font-mono text-niyam-secondary text-xs">
+                        {u.username} • {u.email}
+                      </div>
+                    </td>
+                    <td className="px-4 py-3.5">
+                      <span className="px-2.5 py-1 rounded text-xs font-semibold bg-slate-100 text-slate-800 border border-niyam-border capitalize inline-block">
+                        {u.role.replace(/_/g, " ")}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3.5 text-niyam-text">
+                      {u.designation || "AICTE Regulation Bureau"}
+                    </td>
+                    <td className="px-4 py-3.5 text-niyam-secondary">
+                      {u.institution_id ? (
+                        <span className="text-niyam-accent font-semibold flex items-center gap-1">
+                          <Building2 className="w-3.5 h-3.5" />
+                          <span>Apex Institute (inst-101)</span>
+                        </span>
+                      ) : (
+                        <span className="font-mono text-xs">Regulation Bureau HQ</span>
+                      )}
+                    </td>
+                    <td className="px-4 py-3.5">
+                      {u.is_active ? (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                          <CheckCircle className="w-3 h-3 text-emerald-600" />
+                          <span>Active</span>
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold bg-slate-100 text-slate-600 border border-slate-200">
+                          Suspended
+                        </span>
+                      )}
+                    </td>
+                    <td className="px-4 py-3.5 text-right">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        leftIcon={<Edit2 className="w-3.5 h-3.5" />}
+                        onClick={() => handleOpenEdit(u)}
+                      >
+                        Modify Role
+                      </Button>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </Card>
+
+      {/* Modify Role Modal */}
+      {editUser && (
+        <div className="fixed inset-0 z-50 bg-slate-900/50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg border border-niyam-border max-w-md w-full p-6 shadow-dialog space-y-4">
+            <div>
+              <h3 className="text-base sm:text-lg font-bold text-niyam-text">
+                Modify Role & Privileges: {editUser.full_name}
+              </h3>
+              <p className="text-xs text-niyam-secondary mt-0.5 font-mono">
+                Username: {editUser.username} | User ID: #{editUser.id}
+              </p>
+            </div>
+
+            <form onSubmit={handleSaveUserRole} className="space-y-4">
+              <div>
+                <label className="text-xs font-semibold text-niyam-text block mb-1">
+                  Assigned Statutory Role
+                </label>
+                <select
+                  value={targetRole}
+                  onChange={(e) => setTargetRole(e.target.value)}
+                  className="w-full text-xs sm:text-sm px-3.5 py-2.5 border border-niyam-border rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-niyam-accent text-niyam-text bg-white"
+                >
+                  <option value="applicant">Institution Applicant (Colleges)</option>
+                  <option value="scrutiny_officer">Scrutiny Officer (Evaluation)</option>
+                  <option value="supervising_authority">Competent Authority (Statutory Mandate)</option>
+                  <option value="admin">System Administrator (Platform Ops)</option>
+                  <option value="auditor">Statutory Auditor (Read-Only Traceability)</option>
+                </select>
+              </div>
+
+              <div className="flex items-center gap-2 pt-1">
+                <input
+                  type="checkbox"
+                  id="active-toggle"
+                  checked={isActive}
+                  onChange={(e) => setIsActive(e.target.checked)}
+                  className="w-4 h-4 text-niyam-accent rounded border-niyam-border focus:ring-niyam-accent"
+                />
+                <label htmlFor="active-toggle" className="text-xs text-niyam-text font-semibold cursor-pointer">
+                  Account Active and Permitted Access
+                </label>
+              </div>
+
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-niyam-border">
+                <Button
+                  type="button"
+                  variant="secondary"
+                  size="sm"
+                  onClick={() => setEditUser(null)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  variant="primary"
+                  size="sm"
+                  isLoading={savingUser}
+                >
+                  Update Privileges
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* Assignment Modal */}
       {assignModalOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-900/75 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg shadow-2xl border border-slate-300 w-full max-w-md overflow-hidden">
-            <div className="bg-navy-950 text-white px-6 py-4 flex items-center justify-between border-b border-navy-850">
-              <h3 className="text-sm font-bold text-white">Assign Scrutiny Officer</h3>
-              <button onClick={() => setAssignModalOpen(false)} className="text-slate-400 hover:text-white">
-                ✕
-              </button>
+        <div className="fixed inset-0 z-50 bg-slate-900/50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-lg border border-niyam-border max-w-md w-full p-6 shadow-dialog space-y-4">
+            <div>
+              <h3 className="text-base sm:text-lg font-bold text-niyam-text">
+                Assign Scrutiny Officer to Application
+              </h3>
+              <p className="text-xs text-niyam-secondary mt-0.5">
+                Distribute institutional dossiers for official regulatory scrutiny.
+              </p>
             </div>
 
-            <form onSubmit={handleAssignSubmit} className="p-6 space-y-4 text-xs">
+            <form onSubmit={handleAssignSubmit} className="space-y-4">
               <div>
-                <label className="font-bold text-slate-800 block mb-1">
+                <label className="text-xs font-semibold text-niyam-text block mb-1">
                   Select Institutional Application
                 </label>
                 <select
                   value={selectedAppId}
                   onChange={(e) => setSelectedAppId(Number(e.target.value))}
-                  className="w-full px-3 py-2 border border-slate-300 rounded focus:ring-1 focus:ring-blue-500 outline-none"
+                  className="w-full text-xs sm:text-sm px-3.5 py-2.5 border border-niyam-border rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-niyam-accent text-niyam-text bg-white"
                 >
                   {applications.map((app) => (
                     <option key={app.id} value={app.id}>
-                      {app.application_number} — {app.institution?.name || "Institution"}
+                      {app.application_number} — {app.institution?.name || "Apex Institute"}
                     </option>
                   ))}
                 </select>
               </div>
 
               <div>
-                <label className="font-bold text-slate-800 block mb-1">
+                <label className="text-xs font-semibold text-niyam-text block mb-1">
                   Assign to Authorized Scrutiny Officer
                 </label>
                 <select
                   value={selectedOfficerId}
                   onChange={(e) => setSelectedOfficerId(Number(e.target.value))}
-                  className="w-full px-3 py-2 border border-slate-300 rounded focus:ring-1 focus:ring-blue-500 outline-none"
+                  className="w-full text-xs sm:text-sm px-3.5 py-2.5 border border-niyam-border rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-niyam-accent text-niyam-text bg-white"
                 >
                   {officers.map((o) => (
                     <option key={o.id} value={o.id}>
@@ -247,20 +353,22 @@ export default function UserManagementPage() {
                 </select>
               </div>
 
-              <div className="flex items-center justify-end space-x-2 pt-3 border-t border-slate-100">
-                <button
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-niyam-border">
+                <Button
                   type="button"
+                  variant="secondary"
+                  size="sm"
                   onClick={() => setAssignModalOpen(false)}
-                  className="px-3 py-1.5 text-slate-600 hover:bg-slate-100 rounded"
                 >
                   Cancel
-                </button>
-                <button
+                </Button>
+                <Button
                   type="submit"
-                  className="px-4 py-1.5 bg-navy-900 text-white font-medium rounded hover:bg-navy-850 transition"
+                  variant="primary"
+                  size="sm"
                 >
                   Confirm Assignment
-                </button>
+                </Button>
               </div>
             </form>
           </div>
