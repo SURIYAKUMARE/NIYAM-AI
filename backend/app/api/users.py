@@ -22,7 +22,7 @@ class AssignOfficerRequest(BaseModel):
 @router.get("", response_model=List[UserResponse])
 def list_system_users(
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(require_roles([UserRole.ADMIN.value, UserRole.SUPERVISING_AUTHORITY.value]))
+    user_payload: dict = Depends(require_roles("admin", "supervising_authority"))
 ):
     return db.query(User).order_by(User.id.asc()).all()
 
@@ -31,7 +31,7 @@ def update_user_role(
     user_id: int,
     req: UpdateUserRoleRequest,
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(require_roles([UserRole.ADMIN.value]))
+    user_payload: dict = Depends(require_roles("admin"))
 ):
     user = db.query(User).filter(User.id == user_id).first()
     if not user:
@@ -61,7 +61,7 @@ def update_user_role(
 def assign_officer_to_application(
     req: AssignOfficerRequest,
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(require_roles([UserRole.ADMIN.value, UserRole.SUPERVISING_AUTHORITY.value]))
+    user_payload: dict = Depends(require_roles("admin", "supervising_authority"))
 ):
     app = db.query(Application).filter(Application.id == req.application_id).first()
     if not app:

@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import { fetchApi } from "@/lib/api";
+import { useAuth } from "@/context/AuthContext";
 import {
   BarChart3,
   TrendingUp,
@@ -15,6 +17,7 @@ import {
 } from "lucide-react";
 
 export default function AnalyticsDashboardPage() {
+  const { user } = useAuth();
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -36,7 +39,7 @@ export default function AnalyticsDashboardPage() {
 
   if (loading && !data) {
     return (
-      <div className="p-12 text-center text-slate-400 text-xs">
+      <div className="p-12 text-center text-[#5B6B7A] text-xs">
         Loading Operational Analytics...
       </div>
     );
@@ -49,26 +52,51 @@ export default function AnalyticsDashboardPage() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-white p-6 rounded-lg border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div className="bg-white p-6 rounded-xl border border-[#E3E8EE] shadow-xs flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <span className="px-2.5 py-0.5 rounded text-[11px] font-semibold bg-purple-100 text-purple-800 border border-purple-200">
-            Regulation Bureau Oversight
-          </span>
-          <h1 className="text-xl font-bold text-slate-900 mt-1">
-            Operational Analytics & Regulatory Workload
+          <div className="flex items-center gap-2">
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-teal-50 text-[#0F6B6B] border border-teal-200 uppercase tracking-wider">
+              {user?.role === "supervising_authority" ? "Supervising Authority Bureau" : "Regulation Bureau Oversight"}
+            </span>
+            <span className="text-xs text-[#5B6B7A]">
+              Welcome, <strong className="text-[#14202B]">{user?.full_name || "Official"}</strong> ({user?.role || "official"})
+            </span>
+          </div>
+          <h1 className="text-xl sm:text-2xl font-bold text-[#14202B] mt-1.5">
+            {user?.role === "supervising_authority" ? "AICTE Statutory Regulation Bureau" : "Operational Analytics & Regulatory Workload"}
           </h1>
-          <p className="text-xs text-slate-500 mt-0.5">
-            Statistical performance summaries, deficiency frequencies, and authority integration latency
+          <p className="text-xs text-[#5B6B7A] mt-0.5 max-w-3xl leading-relaxed">
+            {user?.role === "supervising_authority"
+              ? "Review escalated scrutiny recommendations, monitor regional workloads, and issue authoritative approval, deficiency, or inspection orders."
+              : "Statistical performance summaries, deficiency frequencies, and authority integration latency across institutional applications."}
           </p>
         </div>
 
-        <button
-          onClick={loadAnalytics}
-          className="p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded transition self-start md:self-auto"
-          title="Refresh Analytics"
-        >
-          <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
-        </button>
+        <div className="flex items-center gap-2.5 shrink-0 self-start md:self-auto">
+          {user?.role === "supervising_authority" && (
+            <>
+              <Link
+                href="/officer/queue"
+                className="px-3 py-1.5 text-xs font-semibold text-[#14202B] bg-white hover:bg-[#F7F9FB] border border-[#E3E8EE] rounded-lg transition-colors"
+              >
+                Escalated Queue
+              </Link>
+              <Link
+                href="/applications"
+                className="px-3 py-1.5 text-xs font-semibold text-[#14202B] bg-white hover:bg-[#F7F9FB] border border-[#E3E8EE] rounded-lg transition-colors"
+              >
+                Applications
+              </Link>
+            </>
+          )}
+          <button
+            onClick={loadAnalytics}
+            className="p-2 text-[#5B6B7A] hover:text-[#14202B] hover:bg-[#F7F9FB] rounded-lg border border-[#E3E8EE] transition-colors"
+            title="Refresh Analytics"
+          >
+            <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
+          </button>
+        </div>
       </div>
 
       {/* Top Level Metric Cards */}

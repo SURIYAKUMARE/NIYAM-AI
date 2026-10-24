@@ -4,18 +4,12 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import { fetchApi } from "@/lib/api";
+import { ROLE_ROUTES, UserRole } from "@/lib/roles";
 import {
   Shield,
   LogOut,
-  ChevronDown,
-  Check,
   Bell,
   Menu,
-  X,
-  Radio,
-  CheckCircle2,
-  Clock,
-  User as UserIcon,
 } from "lucide-react";
 
 interface HeaderProps {
@@ -23,8 +17,7 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ onToggleMobileMenu }) => {
-  const { user, switchRole, demoAccounts, logout, getRoleRedirect } = useAuth();
-  const [roleMenuOpen, setRoleMenuOpen] = useState(false);
+  const { user, logout } = useAuth();
   const [notifOpen, setNotifOpen] = useState(false);
   const [notifications, setNotifications] = useState<any[]>([]);
   const [isOnline, setIsOnline] = useState(true);
@@ -63,21 +56,18 @@ export const Header: React.FC<HeaderProps> = ({ onToggleMobileMenu }) => {
     } catch {}
   };
 
-  const getRoleLabel = (role?: string) => {
-    switch (role) {
-      case "applicant":
-        return "Institution Applicant";
-      case "scrutiny_officer":
-        return "Senior Scrutiny Officer";
-      case "supervising_authority":
-        return "Competent Authority";
-      case "admin":
-        return "System Administrator";
-      case "auditor":
-        return "Statutory Auditor";
-      default:
-        return "Authorized Officer";
+  const getRoleBadge = (role?: string) => {
+    if (role && role in ROLE_ROUTES) {
+      return ROLE_ROUTES[role as UserRole].badge;
     }
+    return "Authorized Officer";
+  };
+
+  const getRoleLabel = (role?: string) => {
+    if (role && role in ROLE_ROUTES) {
+      return ROLE_ROUTES[role as UserRole].name;
+    }
+    return "Authorized Officer";
   };
 
   const getInitials = (name?: string) => {
@@ -101,166 +91,115 @@ export const Header: React.FC<HeaderProps> = ({ onToggleMobileMenu }) => {
           </button>
         )}
 
-        <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="w-8 h-8 rounded-lg bg-[#0F6B6B] group-hover:bg-[#0a4f4f] transition-colors flex items-center justify-center text-white font-extrabold text-xs shadow-xs tracking-wider">
-            NY
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-lg bg-[#0F6B6B] flex items-center justify-center text-white font-extrabold text-sm shadow-xs tracking-tighter">
+            <span>NY</span>
           </div>
-          <div>
-            <div className="text-sm font-bold tracking-tight text-[#14202B] leading-none flex items-center gap-1.5">
-              <span>NIYAM</span>
-              <span className="text-[9px] uppercase font-bold px-1.5 py-0.5 rounded bg-teal-50 text-[#0F6B6B] border border-teal-200">
-                APH 2025-26
+
+          <div className="flex flex-col">
+            <div className="flex items-center gap-2">
+              <span className="font-extrabold text-[#14202B] text-sm tracking-tight">
+                NIYAM
+              </span>
+              <span className="hidden sm:inline-block text-[10px] font-mono px-1.5 py-0.2 bg-[#F7F9FB] text-[#5B6B7A] rounded border border-[#E3E8EE]">
+                AICTE APH 2025-26
               </span>
             </div>
-            <p className="text-[10px] text-[#5B6B7A] leading-none mt-1 hidden sm:block font-medium">
-              AICTE Regulation Bureau • Gov of India
-            </p>
+            <span className="hidden md:inline-block text-[10px] text-[#5B6B7A] leading-tight font-medium">
+              Institutional Regulatory Review &amp; Compliance Verification
+            </span>
           </div>
-        </Link>
-      </div>
-
-      {/* Center: Quick Search Command Hint (Desktop) */}
-      <div className="hidden xl:flex items-center">
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-[#E3E8EE] bg-[#F7F9FB] text-xs text-[#5B6B7A] w-72 cursor-pointer hover:border-[#0F6B6B]/40 transition-colors">
-          <span className="text-[11px] truncate">Search application ID, permanent ID, or doc hash...</span>
-          <kbd className="ml-auto text-[10px] font-mono px-1.5 py-0.5 rounded bg-white border border-[#E3E8EE] text-[#5B6B7A] shadow-2xs">
-            ⌘K
-          </kbd>
         </div>
       </div>
 
-      {/* Right side: Connection Status, Notifications, Persona Switcher, User Badge */}
-      <div className="flex items-center gap-2 sm:gap-3">
-        {/* Actual Live Connection Status Indicator */}
-        <div
-          className={`hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-semibold border ${
-            isOnline
-              ? "bg-emerald-50 text-emerald-800 border-emerald-200"
-              : "bg-rose-50 text-rose-800 border-rose-200"
-          }`}
-          title={isOnline ? "Regulatory Engine Live · SHA-256 Ledger Synchronized" : "Connection Interrupted"}
-        >
+      {/* Right: Regulatory Status, Role Badge, User Info, Notifications & Logout */}
+      <div className="flex items-center gap-2.5 sm:gap-3.5">
+        {/* System Online Status Indicator */}
+        <div className="hidden sm:flex items-center gap-1.5 text-xs text-[#5B6B7A] px-2.5 py-1 rounded-full bg-[#F7F9FB] border border-[#E3E8EE]">
           <span
-            className={`w-1.5 h-1.5 rounded-full ${
+            className={`w-2 h-2 rounded-full ${
               isOnline ? "bg-emerald-500 animate-pulse" : "bg-rose-500"
             }`}
           />
-          <span>{isOnline ? "Online · Connected" : "Offline · Reconnecting"}</span>
+          <span className="text-[11px] font-medium font-mono">
+            {isOnline ? "REGULATORY SYNC: ACTIVE" : "OFFLINE"}
+          </span>
         </div>
 
-        {/* Notifications Bell */}
-        <div className="relative">
-          <button
-            onClick={() => setNotifOpen(!notifOpen)}
-            className="relative p-2 rounded-lg text-[#5B6B7A] hover:text-[#14202B] hover:bg-[#F7F9FB] transition-colors"
-            title="Notifications"
-            aria-label="In-App Notifications"
-          >
-            <Bell className="w-4 h-4" />
-            {unreadCount > 0 && (
-              <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-rose-600 text-white text-[9px] font-bold rounded-full flex items-center justify-center shadow-xs">
-                {unreadCount}
-              </span>
-            )}
-          </button>
-
-          {notifOpen && (
-            <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-xl shadow-xl bg-white border border-[#E3E8EE] py-2 text-xs z-50 text-[#14202B]">
-              <div className="px-4 py-2 border-b border-[#E3E8EE] flex items-center justify-between">
-                <span className="font-bold text-[#14202B] text-xs">Regulatory Alerts & Notifications</span>
-                <span className="text-[10px] font-semibold text-[#5B6B7A] bg-[#F7F9FB] px-2 py-0.5 rounded border border-[#E3E8EE]">
-                  {unreadCount} Unread
+        {/* Notifications Dropdown */}
+        {user && (
+          <div className="relative">
+            <button
+              onClick={() => setNotifOpen(!notifOpen)}
+              className="p-1.5 rounded-lg text-[#5B6B7A] hover:text-[#14202B] hover:bg-[#F7F9FB] transition-colors relative"
+              aria-label="Notifications"
+            >
+              <Bell className="w-4 h-4" />
+              {unreadCount > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-rose-600 text-white text-[9px] font-bold rounded-full flex items-center justify-center shadow-xs">
+                  {unreadCount}
                 </span>
-              </div>
+              )}
+            </button>
 
-              <div className="max-h-80 overflow-y-auto divide-y divide-[#E3E8EE]/60">
-                {notifications.length === 0 ? (
-                  <p className="p-4 text-center text-[#5B6B7A] text-xs">No active alerts at this time.</p>
-                ) : (
-                  notifications.map((n) => (
-                    <div
-                      key={n.id}
-                      className={`p-3.5 hover:bg-[#F7F9FB] transition flex items-start justify-between gap-2 ${
-                        !n.is_read ? "bg-teal-50/40" : ""
-                      }`}
-                    >
-                      <div className="space-y-1">
-                        <span className="font-bold text-[#14202B] block text-xs">
-                          {n.title}
-                        </span>
-                        <p className="text-[11px] text-[#5B6B7A] leading-relaxed">
-                          {n.message}
-                        </p>
-                        <span className="text-[10px] text-[#5B6B7A] block font-mono">
-                          {new Date(n.created_at).toLocaleTimeString()}
-                        </span>
-                      </div>
+            {notifOpen && (
+              <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-xl shadow-xl bg-white border border-[#E3E8EE] py-2 text-xs z-50 text-[#14202B]">
+                <div className="px-4 py-2 border-b border-[#E3E8EE] flex items-center justify-between">
+                  <span className="font-bold text-[#14202B] text-xs">Regulatory Alerts &amp; Notifications</span>
+                  <span className="text-[10px] font-semibold text-[#5B6B7A] bg-[#F7F9FB] px-2 py-0.5 rounded border border-[#E3E8EE]">
+                    {unreadCount} Unread
+                  </span>
+                </div>
 
-                      {!n.is_read && (
-                        <button
-                          onClick={() => handleMarkRead(n.id)}
-                          className="text-[10px] text-[#0F6B6B] hover:underline font-semibold flex-shrink-0"
-                        >
-                          Mark Read
-                        </button>
-                      )}
-                    </div>
-                  ))
-                )}
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Quick Demo Persona Switcher (For evaluators and audit testing) */}
-        <div className="relative">
-          <button
-            onClick={() => setRoleMenuOpen(!roleMenuOpen)}
-            className="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-teal-50 text-[#0F6B6B] border border-teal-200 hover:bg-teal-100 transition-colors shadow-xs"
-            aria-label="Switch Evaluator Persona"
-          >
-            <Shield className="w-3.5 h-3.5" />
-            <span className="capitalize">{user?.role?.replace(/_/g, " ") || "Persona"}</span>
-            <ChevronDown className="w-3 h-3 ml-0.5" />
-          </button>
-
-          {roleMenuOpen && (
-            <div className="absolute right-0 mt-2 w-72 rounded-xl shadow-xl bg-white border border-[#E3E8EE] py-2 text-xs z-50 text-[#14202B]">
-              <div className="px-4 py-2 border-b border-[#E3E8EE]">
-                <div className="font-bold text-[#14202B] text-xs">Quick Role Switcher</div>
-                <div className="text-[11px] text-[#5B6B7A]">Select an official persona for evaluation:</div>
-              </div>
-
-              <div className="py-1">
-                {demoAccounts.map((account) => {
-                  const isCurrent = user?.username === account.username;
-                  return (
-                    <button
-                      key={account.username}
-                      onClick={async () => {
-                        setRoleMenuOpen(false);
-                        await switchRole(account.username);
-                      }}
-                      className={`w-full text-left px-4 py-2 flex items-center justify-between hover:bg-[#F7F9FB] transition ${
-                        isCurrent ? "bg-teal-50/70 font-semibold text-[#0F6B6B]" : "text-[#14202B]"
-                      }`}
-                    >
-                      <div>
-                        <div className="text-xs font-medium">{account.name}</div>
-                        <div className="text-[10px] text-[#5B6B7A] capitalize">
-                          {account.role_title}
+                <div className="max-h-80 overflow-y-auto divide-y divide-[#E3E8EE]/60">
+                  {notifications.length === 0 ? (
+                    <p className="p-4 text-center text-[#5B6B7A] text-xs">No active alerts at this time.</p>
+                  ) : (
+                    notifications.map((n) => (
+                      <div
+                        key={n.id}
+                        className={`p-3.5 hover:bg-[#F7F9FB] transition flex items-start justify-between gap-2 ${
+                          !n.is_read ? "bg-teal-50/40" : ""
+                        }`}
+                      >
+                        <div className="space-y-1">
+                          <span className="font-bold text-[#14202B] block text-xs">
+                            {n.title}
+                          </span>
+                          <p className="text-[11px] text-[#5B6B7A] leading-relaxed">
+                            {n.message}
+                          </p>
+                          <span className="text-[10px] text-[#5B6B7A] block font-mono">
+                            {new Date(n.created_at).toLocaleTimeString()}
+                          </span>
                         </div>
-                      </div>
-                      {isCurrent && <Check className="w-3.5 h-3.5 text-[#0F6B6B]" />}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-        </div>
 
-        {/* User Avatar, Name & Role */}
+                        {!n.is_read && (
+                          <button
+                            onClick={() => handleMarkRead(n.id)}
+                            className="text-[10px] text-[#0F6B6B] hover:underline font-semibold flex-shrink-0"
+                          >
+                            Mark Read
+                          </button>
+                        )}
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Clean Official Role Badge */}
+        {user && (
+          <div className="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-teal-50 text-[#0F6B6B] border border-teal-200 shadow-xs">
+            <Shield className="w-3.5 h-3.5" />
+            <span>{getRoleBadge(user.role)}</span>
+          </div>
+        )}
+
+        {/* User Avatar, Name & Logout Button */}
         {user ? (
           <div className="flex items-center gap-2 pl-1 border-l border-[#E3E8EE]">
             <div className="w-7 h-7 rounded-full bg-[#0F6B6B] text-white text-xs font-bold flex items-center justify-center shadow-xs select-none">

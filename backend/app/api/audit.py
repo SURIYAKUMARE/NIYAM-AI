@@ -16,7 +16,7 @@ def get_audit_trail(
     search: Optional[str] = Query(None),
     limit: int = Query(100, le=500),
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(require_roles([UserRole.AUDITOR.value, UserRole.ADMIN.value, UserRole.SUPERVISING_AUTHORITY.value, UserRole.SCRUTINY_OFFICER.value]))
+    user_payload: dict = Depends(require_roles("auditor", "admin", "supervising_authority", "scrutiny_officer"))
 ):
     query = db.query(AuditLog)
 
@@ -39,7 +39,7 @@ def get_audit_trail(
 @router.get("/verify-chain")
 def verify_audit_log_tamper_integrity(
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(require_roles([UserRole.AUDITOR.value, UserRole.ADMIN.value]))
+    user_payload: dict = Depends(require_roles("auditor", "admin", "supervising_authority", "scrutiny_officer"))
 ):
     """
     Verifies cryptographic SHA-256 block chaining across all historical records
@@ -63,6 +63,7 @@ def verify_audit_log_tamper_integrity(
         "status": "VERIFIED_TAMPER_EVIDENT" if is_valid else "CHAIN_INTEGRITY_BREACH",
         "verified_records": len(logs),
         "chain_intact": is_valid,
+        "is_valid": is_valid,
         "first_breached_record_id": tampered_id,
         "genesis_hash": logs[0].previous_record_hash if logs else None,
         "latest_block_hash": logs[-1].record_hash if logs else None

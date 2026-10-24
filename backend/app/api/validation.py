@@ -15,13 +15,13 @@ router = APIRouter(prefix="/validation", tags=["Validation & Findings"])
 def trigger_validation(
     app_id: int,
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(get_current_user_payload)
+    user_payload: dict = Depends(require_roles("applicant", "scrutiny_officer", "supervising_authority"))
 ):
     app = db.query(Application).filter(Application.id == app_id).first()
     if not app:
         raise HTTPException(status_code=404, detail="Application not found")
 
-    verify_institution_access(user_payload, app.institution_id)
+    verify_institution_access(user_payload, app.institution_id, db=db)
 
     # Execute deterministic compliance engine
     val_run = compliance_engine.execute_validation_run(
@@ -61,7 +61,7 @@ def list_findings(
     severity: Optional[str] = Query(None),
     status: Optional[str] = Query(None),
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(get_current_user_payload)
+    user_payload: dict = Depends(require_roles("applicant", "scrutiny_officer", "supervising_authority", "auditor"))
 ):
     query = db.query(Finding)
 
@@ -77,14 +77,21 @@ def list_findings(
     if status:
         query = query.filter(Finding.status == status)
 
-    return query.order_by(Finding.id.desc()).all()
+    findings = query.order_by(Finding.id.desc()).all()
+
+    # Task 5: Applicant must not receive internal fields (internal officer notes)
+    if user_role == UserRole.APPLICANT.value:
+        for f in findings:
+            f.officer_notes = None
+
+    return findings
 
 @router.patch("/findings/{finding_id}/disposition", response_model=FindingResponse)
 def update_finding_disposition(
     finding_id: int,
     req: UpdateFindingDispositionRequest,
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(require_roles([UserRole.SCRUTINY_OFFICER.value, UserRole.SUPERVISING_AUTHORITY.value, UserRole.ADMIN.value]))
+    user_payload: dict = Depends(require_roles("scrutiny_officer", "supervising_authority"))
 ):
     finding = db.query(Finding).filter(Finding.id == finding_id).first()
     if not finding:

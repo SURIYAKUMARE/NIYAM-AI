@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import { fetchApi } from "@/lib/api";
 import { useAuth } from "@/context/AuthContext";
 import { ContextPanel } from "@/components/stitch/ContextPanel";
@@ -56,11 +57,17 @@ export default function AuditHistoryPage() {
   return (
     <div className="space-y-6">
       <ContextPanel
-        title="Tamper-Evident Regulatory Audit Ledger"
-        subtitle="Cryptographically chained SHA-256 historical log of all uploads, OCR extractions, rule runs, field corrections, and authority determinations."
-        badge="Statutory Traceability"
+        title="Independent Regulatory Oversight Desk"
+        subtitle={`Welcome, ${user?.full_name || "Statutory Auditor"} (${user?.role || "auditor"}) — Inspect tamper-evident SHA-256 cryptographic ledgers, verify provenance chains, and export oversight reports.`}
+        badge="Auditor Oversight"
       >
         <div className="flex items-center gap-2">
+          <Link
+            href="/analytics"
+            className="px-3 py-1.5 bg-white border border-[#E3E8EE] hover:bg-[#F7F9FB] text-[#14202B] text-xs font-semibold rounded-lg shadow-xs transition"
+          >
+            Analytics
+          </Link>
           <button
             onClick={() => {
               const dataStr =

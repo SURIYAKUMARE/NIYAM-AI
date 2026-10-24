@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form, s
 from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 from ..core.database import get_db
-from ..core.security import get_current_user_payload, verify_institution_access
+from ..core.security import get_current_user_payload, verify_institution_access, require_roles
 from ..core.storage import storage_provider
 from ..models.models import (
     Application, Document, DocumentVersion, DocumentStatus, ExtractedField, UserRole
@@ -23,14 +23,14 @@ async def upload_document_version(
     file: UploadFile = File(...),
     notes: Optional[str] = Form(None),
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(get_current_user_payload)
+    user_payload: dict = Depends(require_roles("applicant"))
 ):
     doc = db.query(Document).filter(Document.id == doc_id).first()
     if not doc:
         raise HTTPException(status_code=404, detail="Document checklist slot not found")
 
     app = doc.application
-    verify_institution_access(user_payload, app.institution_id)
+    verify_institution_access(user_payload, app.institution_id, db=db)
 
     # Read bytes safely
     file_bytes = await file.read()
@@ -145,12 +145,12 @@ async def upload_document_version(
 def get_document_by_id(
     doc_id: int,
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(get_current_user_payload)
+    user_payload: dict = Depends(require_roles("applicant", "scrutiny_officer", "supervising_authority", "auditor"))
 ):
     doc = db.query(Document).filter(Document.id == doc_id).first()
     if not doc:
         raise HTTPException(status_code=404, detail="Document checklist slot not found")
-    verify_institution_access(user_payload, doc.application.institution_id)
+    verify_institution_access(user_payload, doc.application.institution_id, db=db)
     return doc
 
 @router.get("/{doc_id}/access-token")
@@ -158,7 +158,7 @@ def get_secure_document_token(
     doc_id: int,
     version_id: Optional[int] = None,
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(get_current_user_payload)
+    user_payload: dict = Depends(require_roles("applicant", "scrutiny_officer", "supervising_authority", "auditor"))
 ):
     """
     Issues short-lived signed JWT for secure private streaming
@@ -167,7 +167,7 @@ def get_secure_document_token(
     if not doc:
         raise HTTPException(status_code=404, detail="Document not found")
 
-    verify_institution_access(user_payload, doc.application.institution_id)
+    verify_institution_access(user_payload, doc.application.institution_id, db=db)
 
     target_v_id = version_id or doc.current_version_id
     doc_version = db.query(DocumentVersion).filter(DocumentVersion.id == target_v_id).first()

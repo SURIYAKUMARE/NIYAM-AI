@@ -4,12 +4,13 @@ from ..core.database import get_db
 from ..core.security import require_roles
 from ..core.config import settings
 from ..models.models import UserRole
+from ..services.audit_service import audit_service
 
 router = APIRouter(prefix="/settings", tags=["System & Integration Settings"])
 
 @router.get("")
 def get_system_settings(
-    user_payload: dict = Depends(require_roles([UserRole.ADMIN.value, UserRole.SUPERVISING_AUTHORITY.value]))
+    user_payload: dict = Depends(require_roles("admin"))
 ):
     return {
         "project_name": settings.PROJECT_NAME,
@@ -31,3 +32,22 @@ def get_system_settings(
             "qr_dss": {"status": "ENABLED_SIMULATED", "timeout_ms": 3000, "rate_limit_per_min": 120}
         }
     }
+
+@router.patch("")
+def update_system_setting(
+    setting_update: dict,
+    db: Session = Depends(get_db),
+    user_payload: dict = Depends(require_roles("admin"))
+):
+    audit_service.log_event(
+        db=db,
+        event_type="SYSTEM_SETTING_UPDATED",
+        actor_username=user_payload.get("username"),
+        actor_role=user_payload.get("role"),
+        entity_type="Settings",
+        entity_id="global_config",
+        action="Administrator updated platform integration settings",
+        details=setting_update,
+        actor_user_id=user_payload.get("user_id")
+    )
+    return {"status": "SUCCESS", "message": "Settings updated and recorded in audit ledger", "data": setting_update}

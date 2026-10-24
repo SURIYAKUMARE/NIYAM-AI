@@ -146,10 +146,22 @@ export default function OfficerReviewQueuePage() {
     <div className="space-y-6">
       {/* Reference Context Panel */}
       <ContextPanel
-        title="Institutional Application Review"
-        subtitle="Examine submitted institutional filings, inspect bounding-box document extractions, and record statutory scrutiny observations."
-        badge="Regulatory Scrutiny Bureau"
+        title="Technical Scrutiny Division — Review Desk"
+        subtitle={`Welcome, ${user?.full_name || "Scrutiny Officer"} (${user?.role || "scrutiny_officer"}) — Examine institutional evidence dossiers, evaluate extracted bounding boxes, and confirm compliance observations.`}
+        badge="Scrutiny Officer"
       >
+        <Link
+          href="/review"
+          className="px-3 py-1.5 text-xs font-semibold text-[#14202B] bg-white hover:bg-[#F7F9FB] border border-[#E3E8EE] rounded-lg transition-colors"
+        >
+          Review Workspace
+        </Link>
+        <Link
+          href="/findings"
+          className="px-3 py-1.5 text-xs font-semibold text-[#14202B] bg-white hover:bg-[#F7F9FB] border border-[#E3E8EE] rounded-lg transition-colors"
+        >
+          Findings &amp; Dispositions
+        </Link>
         <button
           onClick={loadQueue}
           className="p-2 text-[#5B6B7A] hover:text-[#14202B] hover:bg-[#F7F9FB] rounded-lg border border-[#E3E8EE] transition-colors"

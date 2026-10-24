@@ -4,7 +4,7 @@ from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
 from ..core.database import get_db
-from ..core.security import get_current_user_payload, verify_institution_access
+from ..core.security import get_current_user_payload, verify_institution_access, require_roles
 from ..models.models import (
     Application, ApplicationStatus, Institution, Document, DocumentStatus,
     ChecklistItem, ValidationRun, UserRole
@@ -19,7 +19,7 @@ def list_applications(
     status_filter: Optional[str] = Query(None, alias="status"),
     search: Optional[str] = Query(None),
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(get_current_user_payload)
+    user_payload: dict = Depends(require_roles("applicant", "scrutiny_officer", "supervising_authority"))
 ):
     query = db.query(Application)
 
@@ -40,20 +40,28 @@ def list_applications(
             (Institution.aicte_permanent_id.ilike(search_pattern))
         )
 
-    return query.order_by(Application.created_at.desc()).all()
+    apps = query.order_by(Application.created_at.desc()).all()
+
+    # Redact internal officer notes for applicants
+    if user_role == UserRole.APPLICANT.value:
+        for a in apps:
+            if hasattr(a, "internal_notes"):
+                a.internal_notes = None
+
+    return apps
 
 @router.get("/{app_id}", response_model=ApplicationResponse)
 def get_application(
     app_id: int,
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(get_current_user_payload)
+    user_payload: dict = Depends(require_roles("applicant", "scrutiny_officer", "supervising_authority", "auditor"))
 ):
     app = db.query(Application).filter(Application.id == app_id).first()
     if not app:
         raise HTTPException(status_code=404, detail="Application record not found")
 
-    # Enforce institution isolation
-    verify_institution_access(user_payload, app.institution_id)
+    # Enforce institution isolation for applicants
+    verify_institution_access(user_payload, app.institution_id, db=db)
 
     # Log sensitive record access in audit trail
     audit_service.log_event(
@@ -68,18 +76,23 @@ def get_application(
         actor_user_id=user_payload.get("user_id")
     )
 
+    # Task 5: Redact internal fields for applicants
+    user_role = user_payload.get("role")
+    if user_role == UserRole.APPLICANT.value:
+        if hasattr(app, "internal_notes"):
+            app.internal_notes = None
+
     return app
 
 @router.post("", response_model=ApplicationResponse)
 def create_application(
     req: ApplicationCreateRequest,
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(get_current_user_payload)
+    user_payload: dict = Depends(require_roles("applicant"))
 ):
     user_role = user_payload.get("role")
     inst_id = user_payload.get("institution_id")
     if not inst_id:
-        # Default to first institution if officer/admin is testing creation
         inst = db.query(Institution).first()
         inst_id = inst.id if inst else 1
 
@@ -144,13 +157,13 @@ def create_application(
 def submit_application(
     app_id: int,
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(get_current_user_payload)
+    user_payload: dict = Depends(require_roles("applicant"))
 ):
     app = db.query(Application).filter(Application.id == app_id).first()
     if not app:
         raise HTTPException(status_code=404, detail="Application not found")
 
-    verify_institution_access(user_payload, app.institution_id)
+    verify_institution_access(user_payload, app.institution_id, db=db)
 
     app.status = ApplicationStatus.SUBMITTED_FOR_SCRUTINY
     app.submission_date = datetime.now(timezone.utc)

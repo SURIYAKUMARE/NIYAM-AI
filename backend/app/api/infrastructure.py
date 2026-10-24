@@ -14,13 +14,13 @@ router = APIRouter(prefix="/infrastructure", tags=["Infrastructure Evidence Revi
 def get_application_infrastructure(
     app_id: int,
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(get_current_user_payload)
+    user_payload: dict = Depends(require_roles("applicant", "scrutiny_officer", "supervising_authority", "auditor"))
 ):
     app = db.query(Application).filter(Application.id == app_id).first()
     if not app:
         raise HTTPException(status_code=404, detail="Application not found")
 
-    verify_institution_access(user_payload, app.institution_id)
+    verify_institution_access(user_payload, app.institution_id, db=db)
     return app.infrastructure_items
 
 @router.patch("/{item_id}/review", response_model=InfrastructureEvidenceResponse)
@@ -28,7 +28,7 @@ def review_infrastructure_item(
     item_id: int,
     req: UpdateInfrastructureComments,
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(require_roles([UserRole.SCRUTINY_OFFICER.value, UserRole.SUPERVISING_AUTHORITY.value, UserRole.ADMIN.value]))
+    user_payload: dict = Depends(require_roles("scrutiny_officer", "supervising_authority"))
 ):
     item = db.query(InfrastructureEvidence).filter(InfrastructureEvidence.id == item_id).first()
     if not item:

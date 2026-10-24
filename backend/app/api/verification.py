@@ -17,7 +17,7 @@ def list_verification_queue(
     status_filter: Optional[str] = Query(None, alias="status"),
     source_type: Optional[str] = Query(None),
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(get_current_user_payload)
+    user_payload: dict = Depends(require_roles("applicant", "scrutiny_officer", "supervising_authority", "auditor"))
 ):
     query = db.query(VerificationRequest)
 
@@ -96,14 +96,14 @@ def trigger_authority_verification(
     req: TriggerVerificationRequest,
     simulate_scenario: Optional[str] = Query("NORMAL"),  # NORMAL, SOURCE_UNAVAILABLE, MISMATCH, EXPIRED
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(get_current_user_payload)
+    user_payload: dict = Depends(require_roles("applicant", "scrutiny_officer", "supervising_authority"))
 ):
     doc_version = db.query(DocumentVersion).filter(DocumentVersion.id == req.document_version_id).first()
     if not doc_version:
         raise HTTPException(status_code=404, detail="Document version not found")
 
     app = doc_version.document.application
-    verify_institution_access(user_payload, app.institution_id)
+    verify_institution_access(user_payload, app.institution_id, db=db)
 
     adapter = get_adapter(req.authority_type)
 
@@ -163,7 +163,7 @@ def record_manual_source_confirmation(
     supporting_evidence_ref: str = Query(...),
     observations: str = Query(...),
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(require_roles([UserRole.SCRUTINY_OFFICER.value, UserRole.SUPERVISING_AUTHORITY.value, UserRole.ADMIN.value]))
+    user_payload: dict = Depends(require_roles("scrutiny_officer", "supervising_authority"))
 ):
     """
     Enforces Acceptance Test 12 & Section 5E:

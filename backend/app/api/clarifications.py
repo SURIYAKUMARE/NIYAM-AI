@@ -14,13 +14,13 @@ router = APIRouter(prefix="/clarifications", tags=["Clarifications"])
 def get_application_clarifications(
     app_id: int,
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(get_current_user_payload)
+    user_payload: dict = Depends(require_roles("applicant", "scrutiny_officer", "supervising_authority", "auditor"))
 ):
     app = db.query(Application).filter(Application.id == app_id).first()
     if not app:
         raise HTTPException(status_code=404, detail="Application not found")
 
-    verify_institution_access(user_payload, app.institution_id)
+    verify_institution_access(user_payload, app.institution_id, db=db)
     return app.clarifications
 
 @router.post("/{app_id}", response_model=ClarificationResponse)
@@ -28,7 +28,7 @@ def create_clarification_request(
     app_id: int,
     req: CreateClarificationRequest,
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(require_roles([UserRole.SCRUTINY_OFFICER.value, UserRole.SUPERVISING_AUTHORITY.value, UserRole.ADMIN.value]))
+    user_payload: dict = Depends(require_roles("scrutiny_officer", "supervising_authority"))
 ):
     app = db.query(Application).filter(Application.id == app_id).first()
     if not app:
@@ -69,14 +69,14 @@ def respond_clarification(
     clarification_id: int,
     req: RespondClarificationRequest,
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(get_current_user_payload)
+    user_payload: dict = Depends(require_roles("applicant"))
 ):
     clarification = db.query(ClarificationRequest).filter(ClarificationRequest.id == clarification_id).first()
     if not clarification:
         raise HTTPException(status_code=404, detail="Clarification request not found")
 
     app = clarification.application
-    verify_institution_access(user_payload, app.institution_id)
+    verify_institution_access(user_payload, app.institution_id, db=db)
 
     clarification.applicant_response = req.applicant_response
     clarification.response_document_version_id = req.response_document_version_id

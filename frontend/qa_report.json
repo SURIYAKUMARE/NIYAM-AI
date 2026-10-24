@@ -1,208 +1,328 @@
 {
-  "totalTests": 20,
-  "passedTests": 20,
+  "timestamp": "2026-10-24T16:29:34.199Z",
+  "totalTests": 32,
+  "passedTests": 32,
   "failedTests": 0,
-  "blockedTests": 0,
   "results": [
     {
-      "testId": "FTU-01",
-      "role": "Visitor",
-      "scenario": "Load Home Page / Landing View",
-      "expected": "Page loads with authoritative portal title and clear purpose",
-      "actual": "Loaded successfully. Title: 'Niyam (NIYAM) — Institutional Application Review & Compliance Verification'",
-      "status": "PASS",
-      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\01_landing_page.png",
-      "timestamp": "2026-10-24T12:48:37.931Z"
-    },
-    {
-      "testId": "FTU-02",
-      "role": "Visitor",
-      "scenario": "Inspect Authentication Portal",
-      "expected": "Login screen shows clear role personas and credentials",
-      "actual": "Login screen rendered with persona demonstration panel: YES",
-      "status": "PASS",
-      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\02_login_page.png",
-      "timestamp": "2026-10-24T12:48:39.532Z"
-    },
-    {
-      "testId": "APP-01",
-      "role": "Applicant",
-      "scenario": "Institutional Sign-In",
-      "expected": "Applicant authenticates and enters institutional dashboard",
-      "actual": "Redirected to: http://localhost:3000/institution/dashboard",
-      "status": "PASS",
-      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\03_applicant_dashboard.png",
-      "timestamp": "2026-10-24T12:48:42.885Z"
-    },
-    {
-      "testId": "APP-02",
-      "role": "Applicant",
-      "scenario": "Inspect Institution Profile & Records",
-      "expected": "Verified AICTE Permanent ID (1-3512891911) and NAAC accreditation visible",
-      "actual": "Permanent ID found count: 5",
-      "status": "PASS",
-      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\04_institution_profile.png",
-      "timestamp": "2026-10-24T12:48:44.003Z"
-    },
-    {
-      "testId": "APP-03",
-      "role": "Applicant",
-      "scenario": "Application Creation Wizard",
-      "expected": "Application created in DRAFT status and redirects to workspace",
-      "actual": "Workspace URL: http://localhost:3000/applications/53 (Created ID: 53)",
-      "status": "PASS",
-      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\06_draft_application_workspace.png",
-      "timestamp": "2026-10-24T12:48:47.771Z"
-    },
-    {
-      "testId": "APP-04",
-      "role": "Applicant",
-      "scenario": "Draft Persistence Across Navigation & Refresh",
-      "expected": "Application workspace reopens with preserved institutional data",
-      "actual": "Resumed workspace. Heading: 'Apex Institute of Technology & Science'",
-      "status": "PASS",
-      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\06_draft_application_workspace.png",
-      "timestamp": "2026-10-24T12:48:49.172Z"
-    },
-    {
-      "testId": "APP-05",
-      "role": "Applicant",
-      "scenario": "Checklist File Upload & SHA-256 Hashing",
-      "expected": "PDF uploaded, encrypted hash computed, version logged",
-      "actual": "Sample PDF successfully uploaded to active checklist slot",
-      "status": "PASS",
-      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\06_draft_application_workspace.png",
-      "timestamp": "2026-10-24T12:48:50.750Z"
-    },
-    {
-      "testId": "APP-06",
-      "role": "Applicant",
-      "scenario": "Document Viewer Modal",
-      "expected": "Viewer modal component accessible",
-      "actual": "Document checklist rendered with version controls",
-      "status": "PASS",
-      "evidence": "",
-      "timestamp": "2026-10-24T12:48:50.760Z"
-    },
-    {
-      "testId": "APP-07",
-      "role": "Applicant",
-      "scenario": "Execute AI Advisory Validation Rules",
-      "expected": "Deterministic rule evaluation generates findings against APH norms",
-      "actual": "Validation rules executed; findings populated in review dossier",
-      "status": "PASS",
-      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\08_validation_findings.png",
-      "timestamp": "2026-10-24T12:48:53.101Z"
-    },
-    {
-      "testId": "APP-09",
-      "role": "Applicant",
-      "scenario": "Export Scrutiny Dossier & Submission Receipt",
-      "expected": "CSV Validation Report and JSON Cryptographic Receipt download triggers available",
-      "actual": "CSV Button: Present, Receipt Button: Present",
-      "status": "PASS",
-      "evidence": "",
-      "timestamp": "2026-10-24T12:48:53.142Z"
-    },
-    {
-      "testId": "OFF-01",
-      "role": "Scrutiny Officer",
-      "scenario": "Official Two-Factor Authentication (MFA)",
-      "expected": "MFA prompt verifies 6-digit TOTP code and authenticates regulatory officer",
-      "actual": "Officer authenticated with simulated TOTP code",
-      "status": "PASS",
-      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\11_officer_mfa_login.png",
-      "timestamp": "2026-10-24T12:49:28.029Z"
-    },
-    {
-      "testId": "OFF-02",
-      "role": "Scrutiny Officer",
-      "scenario": "Assigned Review Queue with Search & Filters",
-      "expected": "Scrutiny officer queue loads assigned institutional cases",
-      "actual": "Queue rendered with case records. Elements found: 20",
-      "status": "PASS",
-      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\12_officer_queue.png",
-      "timestamp": "2026-10-24T12:49:29.542Z"
-    },
-    {
-      "testId": "OFF-03",
-      "role": "Scrutiny Officer",
-      "scenario": "Regulatory Review Workspace & Dossier Access",
-      "expected": "Workspace displays officer-specific scrutiny actions and observation triggers",
-      "actual": "Officer observation triggers visible: YES",
-      "status": "PASS",
-      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\13_officer_review_workspace.png",
-      "timestamp": "2026-10-24T12:49:31.499Z"
-    },
-    {
-      "testId": "OFF-04",
-      "role": "Scrutiny Officer",
-      "scenario": "Manual Source Confirmation with Supporting Evidence Reference",
-      "expected": "In-app modal records reviewer identity, physical reference, and observations",
-      "actual": "Manual confirmation submitted; provenance recorded into audit trail",
-      "status": "PASS",
-      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\15_manual_source_confirm_modal.png",
-      "timestamp": "2026-10-24T12:49:35.880Z"
-    },
-    {
-      "testId": "OFF-05",
-      "role": "Scrutiny Officer",
-      "scenario": "Accessible Finding Disposition Modal",
-      "expected": "Modal captures mandatory regulatory justification and updates finding disposition",
-      "actual": "Finding disposition updated to CONFIRMED_BY_OFFICER with justification note",
-      "status": "PASS",
-      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\14_finding_disposition_modal.png",
-      "timestamp": "2026-10-24T12:49:38.557Z"
-    },
-    {
-      "testId": "OFF-07",
-      "role": "Scrutiny Officer",
-      "scenario": "Geo-Tagged Infrastructure Evidence & EVC Dispatch",
-      "expected": "Classroom and laboratory photos displayed with GPS coordinates, timestamp, and inspection trigger",
-      "actual": "Infrastructure evidence gallery loaded with geo-tag provenance",
-      "status": "PASS",
-      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\18_infrastructure_review.png",
-      "timestamp": "2026-10-24T12:49:42.508Z"
-    },
-    {
       "testId": "AUTH-01",
-      "role": "Competent Authority",
-      "scenario": "Record Statutory Regulatory Order",
-      "expected": "Authority decision modal records statutory order with legal justification",
-      "actual": "Statutory order APPROVED_WITH_DEFICIENCIES recorded into permanent dossier",
+      "role": "Visitor",
+      "scenario": "Login Page Has Zero Demo Tooling & Hints",
+      "expected": "No demo bars, instant persona switchers, or hardcoded password hints on UI",
+      "actual": "Demo personas: 0, Demo cards: 0, password hints: 0",
       "status": "PASS",
-      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\19_authority_statutory_decision.png",
-      "timestamp": "2026-10-24T12:49:50.153Z"
+      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\01_production_login.png",
+      "timestamp": "2026-10-24T16:28:18.259Z"
     },
     {
       "testId": "AUTH-02",
-      "role": "Auditor / Authority",
-      "scenario": "Tamper-Evident SHA-256 Chained Audit Ledger",
-      "expected": "Immutable audit log records all user actions with cryptographic hash chaining",
-      "actual": "Audit ledger rendered with verified block logs. Records count: 12",
+      "role": "Visitor",
+      "scenario": "Unauthenticated Root Route Redirects to /login",
+      "expected": "Unauthenticated user navigating to / is redirected to /login",
+      "actual": "Redirected to: http://localhost:3000/login",
       "status": "PASS",
-      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\20_audit_history_ledger.png",
-      "timestamp": "2026-10-24T12:49:51.496Z"
+      "evidence": "",
+      "timestamp": "2026-10-24T16:28:19.504Z"
     },
     {
-      "testId": "UX-01",
-      "role": "Mobile User",
-      "scenario": "Mobile Viewport (375x667) Layout & Overflow Check",
-      "expected": "Responsive layout wraps cleanly without horizontal overflow clipping",
-      "actual": "Horizontal overflow detected: NO (Clean wrapping)",
+      "testId": "ROLE-APPLICANT-01",
+      "role": "applicant",
+      "scenario": "Login Lands on Configured Role Home (/institution/dashboard)",
+      "expected": "Expected URL prefix: /institution/dashboard",
+      "actual": "Actual URL: http://localhost:3000/institution/dashboard",
       "status": "PASS",
-      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\21_mobile_viewport_375x667.png",
-      "timestamp": "2026-10-24T12:49:53.026Z"
+      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\role_applicant_home.png",
+      "timestamp": "2026-10-24T16:28:23.260Z"
+    },
+    {
+      "testId": "ROLE-APPLICANT-02",
+      "role": "applicant",
+      "scenario": "Sidebar Nav Matches Exact Allowed Items for Role",
+      "expected": "Expected: [Dashboard, Institution Profile, New Application, My Applications, Compliance Findings, Clarifications, Verification Status, Infrastructure Evidence]",
+      "actual": "Actual: [Dashboard, Institution Profile, New Application, My Applications, Compliance Findings, Clarifications, Verification Status, Infrastructure Evidence]",
+      "status": "PASS",
+      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\role_applicant_home.png",
+      "timestamp": "2026-10-24T16:28:23.321Z"
+    },
+    {
+      "testId": "ROLE-APPLICANT-03",
+      "role": "applicant",
+      "scenario": "Header Shows Clean Official Role Badge and No Persona Switcher",
+      "expected": "Header has no demo switcher and shows user session info",
+      "actual": "Persona switchers: 0, Role indicator present: true",
+      "status": "PASS",
+      "evidence": "",
+      "timestamp": "2026-10-24T16:28:23.335Z"
+    },
+    {
+      "testId": "ROLE-APPLICANT-04",
+      "role": "applicant",
+      "scenario": "Forbidden Route (/admin/users) Blocked & Redirects to Home",
+      "expected": "Expected redirect to /institution/dashboard",
+      "actual": "Actual destination: http://localhost:3000/institution/dashboard",
+      "status": "PASS",
+      "evidence": "",
+      "timestamp": "2026-10-24T16:28:24.532Z"
+    },
+    {
+      "testId": "ROLE-APPLICANT-05",
+      "role": "applicant",
+      "scenario": "Session Persists on Page Refresh (Validated via /auth/me)",
+      "expected": "Session remains authenticated, token preserved",
+      "actual": "Storage token present: true, Current URL: http://localhost:3000/institution/dashboard",
+      "status": "PASS",
+      "evidence": "",
+      "timestamp": "2026-10-24T16:28:25.593Z"
+    },
+    {
+      "testId": "ROLE-SCRUTINY_OFFICER-01",
+      "role": "scrutiny_officer",
+      "scenario": "Login Lands on Configured Role Home (/officer/queue)",
+      "expected": "Expected URL prefix: /officer/queue",
+      "actual": "Actual URL: http://localhost:3000/officer/queue",
+      "status": "PASS",
+      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\role_scrutiny_officer_home.png",
+      "timestamp": "2026-10-24T16:28:31.175Z"
+    },
+    {
+      "testId": "ROLE-SCRUTINY_OFFICER-02",
+      "role": "scrutiny_officer",
+      "scenario": "Sidebar Nav Matches Exact Allowed Items for Role",
+      "expected": "Expected: [Scrutiny Queue, All Applications, Review Workspace, Findings & Dispositions, Source Verification, Infrastructure Review, Clarifications, Analytics Overview, Audit Ledger]",
+      "actual": "Actual: [Scrutiny Queue, All Applications, Review Workspace, Findings & Dispositions, Source Verification, Infrastructure Review, Clarifications, Analytics Overview, Audit Ledger]",
+      "status": "PASS",
+      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\role_scrutiny_officer_home.png",
+      "timestamp": "2026-10-24T16:28:31.264Z"
+    },
+    {
+      "testId": "ROLE-SCRUTINY_OFFICER-03",
+      "role": "scrutiny_officer",
+      "scenario": "Header Shows Clean Official Role Badge and No Persona Switcher",
+      "expected": "Header has no demo switcher and shows user session info",
+      "actual": "Persona switchers: 0, Role indicator present: true",
+      "status": "PASS",
+      "evidence": "",
+      "timestamp": "2026-10-24T16:28:31.285Z"
+    },
+    {
+      "testId": "ROLE-SCRUTINY_OFFICER-04",
+      "role": "scrutiny_officer",
+      "scenario": "Forbidden Route (/admin/settings) Blocked & Redirects to Home",
+      "expected": "Expected redirect to /officer/queue",
+      "actual": "Actual destination: http://localhost:3000/officer/queue",
+      "status": "PASS",
+      "evidence": "",
+      "timestamp": "2026-10-24T16:28:32.627Z"
+    },
+    {
+      "testId": "ROLE-SCRUTINY_OFFICER-05",
+      "role": "scrutiny_officer",
+      "scenario": "Session Persists on Page Refresh (Validated via /auth/me)",
+      "expected": "Session remains authenticated, token preserved",
+      "actual": "Storage token present: true, Current URL: http://localhost:3000/officer/queue",
+      "status": "PASS",
+      "evidence": "",
+      "timestamp": "2026-10-24T16:28:33.658Z"
+    },
+    {
+      "testId": "ROLE-SUPERVISING_AUTHORITY-01",
+      "role": "supervising_authority",
+      "scenario": "Login Lands on Configured Role Home (/analytics)",
+      "expected": "Expected URL prefix: /analytics",
+      "actual": "Actual URL: http://localhost:3000/analytics",
+      "status": "PASS",
+      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\role_supervising_authority_home.png",
+      "timestamp": "2026-10-24T16:28:41.720Z"
+    },
+    {
+      "testId": "ROLE-SUPERVISING_AUTHORITY-02",
+      "role": "supervising_authority",
+      "scenario": "Sidebar Nav Matches Exact Allowed Items for Role",
+      "expected": "Expected: [Executive Analytics, Institutional Applications, Escalated Queue, Compliance Findings, Regulatory Rules, Authorized Users, Statutory Audit Ledger]",
+      "actual": "Actual: [Executive Analytics, Institutional Applications, Escalated Queue, Compliance Findings, Regulatory Rules, Authorized Users, Statutory Audit Ledger]",
+      "status": "PASS",
+      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\role_supervising_authority_home.png",
+      "timestamp": "2026-10-24T16:28:41.796Z"
+    },
+    {
+      "testId": "ROLE-SUPERVISING_AUTHORITY-03",
+      "role": "supervising_authority",
+      "scenario": "Header Shows Clean Official Role Badge and No Persona Switcher",
+      "expected": "Header has no demo switcher and shows user session info",
+      "actual": "Persona switchers: 0, Role indicator present: true",
+      "status": "PASS",
+      "evidence": "",
+      "timestamp": "2026-10-24T16:28:41.815Z"
+    },
+    {
+      "testId": "ROLE-SUPERVISING_AUTHORITY-04",
+      "role": "supervising_authority",
+      "scenario": "Forbidden Route (/institution/applications/new) Blocked & Redirects to Home",
+      "expected": "Expected redirect to /analytics",
+      "actual": "Actual destination: http://localhost:3000/analytics",
+      "status": "PASS",
+      "evidence": "",
+      "timestamp": "2026-10-24T16:28:43.025Z"
+    },
+    {
+      "testId": "ROLE-SUPERVISING_AUTHORITY-05",
+      "role": "supervising_authority",
+      "scenario": "Session Persists on Page Refresh (Validated via /auth/me)",
+      "expected": "Session remains authenticated, token preserved",
+      "actual": "Storage token present: true, Current URL: http://localhost:3000/analytics",
+      "status": "PASS",
+      "evidence": "",
+      "timestamp": "2026-10-24T16:28:44.063Z"
+    },
+    {
+      "testId": "ROLE-ADMIN-01",
+      "role": "admin",
+      "scenario": "Login Lands on Configured Role Home (/admin/users)",
+      "expected": "Expected URL prefix: /admin/users",
+      "actual": "Actual URL: http://localhost:3000/admin/users",
+      "status": "PASS",
+      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\role_admin_home.png",
+      "timestamp": "2026-10-24T16:28:48.984Z"
+    },
+    {
+      "testId": "ROLE-ADMIN-02",
+      "role": "admin",
+      "scenario": "Sidebar Nav Matches Exact Allowed Items for Role",
+      "expected": "Expected: [User Management, Rules & Checklists, System Settings, System Analytics, Audit Ledger]",
+      "actual": "Actual: [User Management, Rules & Checklists, System Settings, System Analytics, Audit Ledger]",
+      "status": "PASS",
+      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\role_admin_home.png",
+      "timestamp": "2026-10-24T16:28:49.041Z"
+    },
+    {
+      "testId": "ROLE-ADMIN-03",
+      "role": "admin",
+      "scenario": "Header Shows Clean Official Role Badge and No Persona Switcher",
+      "expected": "Header has no demo switcher and shows user session info",
+      "actual": "Persona switchers: 0, Role indicator present: true",
+      "status": "PASS",
+      "evidence": "",
+      "timestamp": "2026-10-24T16:28:49.060Z"
+    },
+    {
+      "testId": "ROLE-ADMIN-04",
+      "role": "admin",
+      "scenario": "Forbidden Route (/institution/profile) Blocked & Redirects to Home",
+      "expected": "Expected redirect to /admin/users",
+      "actual": "Actual destination: http://localhost:3000/admin/users",
+      "status": "PASS",
+      "evidence": "",
+      "timestamp": "2026-10-24T16:28:50.241Z"
+    },
+    {
+      "testId": "ROLE-ADMIN-05",
+      "role": "admin",
+      "scenario": "Session Persists on Page Refresh (Validated via /auth/me)",
+      "expected": "Session remains authenticated, token preserved",
+      "actual": "Storage token present: true, Current URL: http://localhost:3000/admin/users",
+      "status": "PASS",
+      "evidence": "",
+      "timestamp": "2026-10-24T16:28:51.264Z"
+    },
+    {
+      "testId": "ROLE-AUDITOR-01",
+      "role": "auditor",
+      "scenario": "Login Lands on Configured Role Home (/audit)",
+      "expected": "Expected URL prefix: /audit",
+      "actual": "Actual URL: http://localhost:3000/audit",
+      "status": "PASS",
+      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\role_auditor_home.png",
+      "timestamp": "2026-10-24T16:28:54.902Z"
+    },
+    {
+      "testId": "ROLE-AUDITOR-02",
+      "role": "auditor",
+      "scenario": "Sidebar Nav Matches Exact Allowed Items for Role",
+      "expected": "Expected: [Audit Ledger, Compliance Analytics]",
+      "actual": "Actual: [Audit Ledger, Compliance Analytics]",
+      "status": "PASS",
+      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\role_auditor_home.png",
+      "timestamp": "2026-10-24T16:28:54.945Z"
+    },
+    {
+      "testId": "ROLE-AUDITOR-03",
+      "role": "auditor",
+      "scenario": "Header Shows Clean Official Role Badge and No Persona Switcher",
+      "expected": "Header has no demo switcher and shows user session info",
+      "actual": "Persona switchers: 0, Role indicator present: true",
+      "status": "PASS",
+      "evidence": "",
+      "timestamp": "2026-10-24T16:28:54.973Z"
+    },
+    {
+      "testId": "ROLE-AUDITOR-04",
+      "role": "auditor",
+      "scenario": "Forbidden Route (/admin/users) Blocked & Redirects to Home",
+      "expected": "Expected redirect to /audit",
+      "actual": "Actual destination: http://localhost:3000/audit",
+      "status": "PASS",
+      "evidence": "",
+      "timestamp": "2026-10-24T16:28:56.225Z"
+    },
+    {
+      "testId": "ROLE-AUDITOR-05",
+      "role": "auditor",
+      "scenario": "Session Persists on Page Refresh (Validated via /auth/me)",
+      "expected": "Session remains authenticated, token preserved",
+      "actual": "Storage token present: true, Current URL: http://localhost:3000/audit",
+      "status": "PASS",
+      "evidence": "",
+      "timestamp": "2026-10-24T16:28:57.311Z"
+    },
+    {
+      "testId": "WORK-01",
+      "role": "applicant",
+      "scenario": "Applicant Cannot See Official Review / Statutory Action Buttons",
+      "expected": "Statutory decision, finding confirm, and manual confirm buttons must be hidden for applicant",
+      "actual": "Statutory btn: 0, Confirm finding btn: 0, Manual confirm btn: 0",
+      "status": "PASS",
+      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\08_applicant_workspace.png",
+      "timestamp": "2026-10-24T16:29:03.477Z"
+    },
+    {
+      "testId": "WORK-02",
+      "role": "auditor",
+      "scenario": "Auditor Has Strict Read-Only Workspace with Inspection and Export",
+      "expected": "All mutation buttons hidden for auditor; CSV Report export remains available",
+      "actual": "Validation btn: 0, Upload btn: 0, Statutory btn: 0, Export btn: 1",
+      "status": "PASS",
+      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\09_auditor_workspace.png",
+      "timestamp": "2026-10-24T16:29:11.119Z"
+    },
+    {
+      "testId": "WORK-03",
+      "role": "scrutiny_officer",
+      "scenario": "Scrutiny Officer Sees Observation Recording but NOT Statutory Final Decision",
+      "expected": "Observation button is present, Statutory Decision button is reserved for Authority",
+      "actual": "Scrutiny observation btn: 1, Statutory decision btn: 0",
+      "status": "PASS",
+      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\10_officer_workspace.png",
+      "timestamp": "2026-10-24T16:29:19.052Z"
+    },
+    {
+      "testId": "WORK-04",
+      "role": "supervising_authority",
+      "scenario": "Supervising Authority Sees Record Statutory Decision Action",
+      "expected": "Statutory decision button is rendered for competent authority",
+      "actual": "Statutory decision btn count: 1",
+      "status": "PASS",
+      "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\11_authority_workspace.png",
+      "timestamp": "2026-10-24T16:29:27.744Z"
     },
     {
       "testId": "SEC-01",
-      "role": "Applicant",
-      "scenario": "Zero-Trust Tenant Boundary (IDOR Defense)",
-      "expected": "Applicant attempting cross-college dossier access receives unauthorized / access denied",
-      "actual": "Access response: BLOCKED (Unauthorized access confirmed)",
+      "role": "applicant",
+      "scenario": "Zero-Trust Tenant Boundary Enforced Against Cross-College Dossier Access",
+      "expected": "Applicant attempting direct URL access to another college's application is blocked",
+      "actual": "Cross-college access response: BLOCKED (Protected)",
       "status": "PASS",
       "evidence": "",
-      "timestamp": "2026-10-24T12:49:58.058Z"
+      "timestamp": "2026-10-24T16:29:32.665Z"
     }
   ]
 }

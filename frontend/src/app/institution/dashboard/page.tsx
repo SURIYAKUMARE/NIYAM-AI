@@ -135,12 +135,24 @@ export default function InstitutionDashboardPage() {
     <div className="space-y-6">
       {/* Reference-Matched Context Panel */}
       <ContextPanel
-        title="Institutional Application Review"
-        subtitle="Manage approval submissions, track AI advisory findings against APH norms, and monitor official scrutiny progress."
-        badge="Institution Portal"
-        actionText="Create Application & Open Checklist"
+        title="Apex Institute of Technology & Science Portal"
+        subtitle={`Welcome, ${user?.full_name || "Institution Applicant"} (${user?.role || "applicant"}) — Manage statutory approval dossiers, upload verified documents, and rectify compliance observations.`}
+        badge="Applicant Portal"
+        actionText="+ New Application"
         actionHref="/institution/applications/new"
       >
+        <Link
+          href="/applications"
+          className="px-3 py-1.5 text-xs font-semibold text-[#14202B] bg-white hover:bg-[#F7F9FB] border border-[#E3E8EE] rounded-lg transition-colors"
+        >
+          My Applications
+        </Link>
+        <Link
+          href="/clarifications"
+          className="px-3 py-1.5 text-xs font-semibold text-[#14202B] bg-white hover:bg-[#F7F9FB] border border-[#E3E8EE] rounded-lg transition-colors"
+        >
+          Clarifications
+        </Link>
         <button
           onClick={loadData}
           className="p-2 text-[#5B6B7A] hover:text-[#14202B] hover:bg-[#F7F9FB] rounded-lg border border-[#E3E8EE] transition-colors"

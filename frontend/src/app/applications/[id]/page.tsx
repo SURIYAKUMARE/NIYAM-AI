@@ -301,11 +301,13 @@ export default function ApplicationWorkspacePage() {
     );
   }
 
-  const isOfficerOrAuthority =
-    user?.role === "scrutiny_officer" ||
-    user?.role === "supervising_authority" ||
-    user?.role === "admin";
-  const isApplicant = user?.role === "applicant";
+  const role = user?.role;
+  const isApplicant = role === "applicant";
+  const isOfficer = role === "scrutiny_officer";
+  const isAuthority = role === "supervising_authority";
+  const isAdmin = role === "admin";
+  const isAuditor = role === "auditor";
+  const isOfficerOrAuthority = isOfficer || isAuthority || isAdmin;
 
   // Compute 5-Pillar APH Compliance Health Statuses
   const findingsList = application.findings || [];
@@ -415,14 +417,16 @@ export default function ApplicationWorkspacePage() {
 
           {/* Action Buttons */}
           <div className="flex flex-wrap items-center gap-2">
-            <button
-              onClick={handleRunValidation}
-              disabled={isValidating}
-              className="px-3.5 py-2 bg-[#0F6B6B] hover:bg-[#0a4f4f] text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition shadow-xs disabled:opacity-60"
-            >
-              <Play className={`w-3.5 h-3.5 ${isValidating ? "animate-spin" : ""}`} />
-              <span>{isValidating ? "Evaluating Rules..." : "Run AI Advisory Validation"}</span>
-            </button>
+            {!isAuditor && (
+              <button
+                onClick={handleRunValidation}
+                disabled={isValidating}
+                className="px-3.5 py-2 bg-[#0F6B6B] hover:bg-[#0a4f4f] text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition shadow-xs disabled:opacity-60"
+              >
+                <Play className={`w-3.5 h-3.5 ${isValidating ? "animate-spin" : ""}`} />
+                <span>{isValidating ? "Evaluating Rules..." : "Run AI Advisory Validation"}</span>
+              </button>
+            )}
 
             <button
               onClick={handleDownloadReport}
@@ -452,15 +456,23 @@ export default function ApplicationWorkspacePage() {
               </button>
             )}
 
-            {isOfficerOrAuthority && (
+            {isAuthority && (
               <button
                 onClick={() => setStatutoryModalOpen(true)}
                 className="px-4 py-2 bg-[#0F6B6B] hover:bg-[#0a4f4f] text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition shadow-xs"
               >
                 <ShieldCheck className="w-3.5 h-3.5 text-amber-300" />
-                <span>
-                  {user?.role === "supervising_authority" ? "Record Statutory Decision" : "Record Scrutiny Observation"}
-                </span>
+                <span>Record Statutory Decision</span>
+              </button>
+            )}
+
+            {isOfficer && (
+              <button
+                onClick={() => setStatutoryModalOpen(true)}
+                className="px-4 py-2 bg-[#0F6B6B] hover:bg-[#0a4f4f] text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition shadow-xs"
+              >
+                <ShieldCheck className="w-3.5 h-3.5 text-teal-200" />
+                <span>Record Scrutiny Observation</span>
               </button>
             )}
           </div>
@@ -738,13 +750,15 @@ export default function ApplicationWorkspacePage() {
                       </button>
                     )}
 
-                    <button
-                      onClick={() => handleFileUploadTrigger(doc.id)}
-                      className="px-3.5 py-1.5 bg-white hover:bg-[#F7F9FB] text-[#14202B] rounded-lg text-xs font-semibold flex items-center gap-1.5 transition border border-[#E3E8EE] shadow-xs"
-                    >
-                      <UploadCloud className="w-3.5 h-3.5 text-[#5B6B7A]" />
-                      <span>{latestVersion ? "Upload Rectified Version" : "Upload Document"}</span>
-                    </button>
+                    {isApplicant && (
+                      <button
+                        onClick={() => handleFileUploadTrigger(doc.id)}
+                        className="px-3.5 py-1.5 bg-white hover:bg-[#F7F9FB] text-[#14202B] rounded-lg text-xs font-semibold flex items-center gap-1.5 transition border border-[#E3E8EE] shadow-xs"
+                      >
+                        <UploadCloud className="w-3.5 h-3.5 text-[#5B6B7A]" />
+                        <span>{latestVersion ? "Upload Rectified Version" : "Upload Document"}</span>
+                      </button>
+                    )}
                   </div>
                 </div>
               );
@@ -765,13 +779,15 @@ export default function ApplicationWorkspacePage() {
                 Deterministic comparisons against Rule Set {application.rule_set_version} handbook clauses
               </p>
             </div>
-            <button
-              onClick={handleRunValidation}
-              className="px-3.5 py-1.5 bg-[#0F6B6B] text-white rounded-lg text-xs font-semibold hover:bg-[#0a4f4f] transition flex items-center gap-1.5 shadow-xs"
-            >
-              <RefreshCw className="w-3.5 h-3.5" />
-              <span>Re-Evaluate Rules</span>
-            </button>
+            {!isAuditor && !isApplicant && (
+              <button
+                onClick={handleRunValidation}
+                className="px-3.5 py-1.5 bg-[#0F6B6B] text-white rounded-lg text-xs font-semibold hover:bg-[#0a4f4f] transition flex items-center gap-1.5 shadow-xs"
+              >
+                <RefreshCw className="w-3.5 h-3.5" />
+                <span>Re-Evaluate Rules</span>
+              </button>
+            )}
           </div>
 
           {application.findings?.length === 0 ? (
@@ -828,35 +844,41 @@ export default function ApplicationWorkspacePage() {
                     </div>
                   )}
 
-                  {f.officer_notes && (
+                  {!isApplicant && f.officer_notes && (
                     <div className="text-[11px] text-[#14202B] bg-amber-50/60 p-2.5 rounded-lg border border-amber-200">
                       <strong className="text-amber-800">Official Scrutiny Note:</strong> {f.officer_notes}
                     </div>
                   )}
 
                   {/* Officer finding disposition actions */}
-                  {isOfficerOrAuthority && (
+                  {!isAuditor && !isApplicant && (
                     <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#E3E8EE]">
-                      <button
-                        onClick={() => handleOpenFindingDisposition(f.id, "CONFIRMED_BY_OFFICER", f.rule_code)}
-                        className="px-3 py-1 text-[11px] bg-rose-50 text-rose-700 hover:bg-rose-100 rounded-lg font-semibold border border-rose-200 transition"
-                      >
-                        Confirm Finding
-                      </button>
-                      <button
-                        onClick={() => handleOpenFindingDisposition(f.id, "DISMISSED_BY_OFFICER", f.rule_code)}
-                        className="px-3 py-1 text-[11px] bg-[#F7F9FB] text-[#14202B] hover:bg-[#E3E8EE] rounded-lg font-semibold border border-[#E3E8EE] transition"
-                      >
-                        Dismiss Finding
-                      </button>
-                      <button
-                        onClick={() => {
-                          setClarificationModalOpen(true);
-                        }}
-                        className="px-3 py-1 text-[11px] bg-teal-50 text-[#0F6B6B] hover:bg-teal-100 rounded-lg font-semibold border border-teal-200 transition"
-                      >
-                        Raise Clarification
-                      </button>
+                      {isOfficer && (
+                        <>
+                          <button
+                            onClick={() => handleOpenFindingDisposition(f.id, "CONFIRMED_BY_OFFICER", f.rule_code)}
+                            className="px-3 py-1 text-[11px] bg-rose-50 text-rose-700 hover:bg-rose-100 rounded-lg font-semibold border border-rose-200 transition"
+                          >
+                            Confirm Finding
+                          </button>
+                          <button
+                            onClick={() => handleOpenFindingDisposition(f.id, "DISMISSED_BY_OFFICER", f.rule_code)}
+                            className="px-3 py-1 text-[11px] bg-[#F7F9FB] text-[#14202B] hover:bg-[#E3E8EE] rounded-lg font-semibold border border-[#E3E8EE] transition"
+                          >
+                            Dismiss Finding
+                          </button>
+                        </>
+                      )}
+                      {(isOfficer || isAuthority) && (
+                        <button
+                          onClick={() => {
+                            setClarificationModalOpen(true);
+                          }}
+                          className="px-3 py-1 text-[11px] bg-teal-50 text-[#0F6B6B] hover:bg-teal-100 rounded-lg font-semibold border border-teal-200 transition"
+                        >
+                          Raise Clarification
+                        </button>
+                      )}
                     </div>
                   )}
                 </div>
@@ -890,20 +912,22 @@ export default function ApplicationWorkspacePage() {
               </p>
               <div className="pt-2 border-t border-[#E3E8EE] flex justify-between items-center text-[11px] text-[#5B6B7A]">
                 <span>Latency: 135ms</span>
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => handleTriggerVerification(1, "DIGILOCKER", "NORMAL")}
-                    className="text-[#0F6B6B] font-semibold hover:underline"
-                  >
-                    Test Pull (Success)
-                  </button>
-                  <button
-                    onClick={() => handleTriggerVerification(1, "DIGILOCKER", "SOURCE_UNAVAILABLE")}
-                    className="text-amber-700 font-semibold hover:underline"
-                  >
-                    Simulate 504 Timeout
-                  </button>
-                </div>
+                {!isAuditor && !isApplicant && (
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => handleTriggerVerification(1, "DIGILOCKER", "NORMAL")}
+                      className="text-[#0F6B6B] font-semibold hover:underline"
+                    >
+                      Test Pull (Success)
+                    </button>
+                    <button
+                      onClick={() => handleTriggerVerification(1, "DIGILOCKER", "SOURCE_UNAVAILABLE")}
+                      className="text-amber-700 font-semibold hover:underline"
+                    >
+                      Simulate 504 Timeout
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -918,12 +942,14 @@ export default function ApplicationWorkspacePage() {
               </p>
               <div className="pt-2 border-t border-[#E3E8EE] flex justify-between items-center text-[11px] text-[#5B6B7A]">
                 <span>Latency: 180ms</span>
-                <button
-                  onClick={() => handleTriggerVerification(1, "UNIVERSITY_AFFILIATION", "NORMAL")}
-                  className="text-[#0F6B6B] font-semibold hover:underline"
-                >
-                  Re-Verify
-                </button>
+                {!isAuditor && !isApplicant && (
+                  <button
+                    onClick={() => handleTriggerVerification(1, "UNIVERSITY_AFFILIATION", "NORMAL")}
+                    className="text-[#0F6B6B] font-semibold hover:underline"
+                  >
+                    Re-Verify
+                  </button>
+                )}
               </div>
             </div>
 
@@ -938,12 +964,14 @@ export default function ApplicationWorkspacePage() {
               </p>
               <div className="pt-2 border-t border-[#E3E8EE] flex justify-between items-center text-[11px] text-[#5B6B7A]">
                 <span>Latency: 210ms</span>
-                <button
-                  onClick={() => handleTriggerVerification(1, "LAND_REVENUE_PORTAL", "NORMAL")}
-                  className="text-[#0F6B6B] font-semibold hover:underline"
-                >
-                  Re-Verify
-                </button>
+                {!isAuditor && !isApplicant && (
+                  <button
+                    onClick={() => handleTriggerVerification(1, "LAND_REVENUE_PORTAL", "NORMAL")}
+                    className="text-[#0F6B6B] font-semibold hover:underline"
+                  >
+                    Re-Verify
+                  </button>
+                )}
               </div>
             </div>
 
@@ -975,7 +1003,7 @@ export default function ApplicationWorkspacePage() {
               </p>
               <div className="pt-2 border-t border-teal-200 flex justify-between items-center text-[11px]">
                 <span className="text-[#5B6B7A] font-medium">Requires Reviewer Provenance</span>
-                {isOfficerOrAuthority && (
+                {isOfficer && (
                   <button
                     onClick={() => handleOpenManualConfirm(1)}
                     className="px-3.5 py-1.5 bg-[#0F6B6B] hover:bg-[#0a4f4f] text-white rounded-lg font-semibold shadow-xs transition"
@@ -1001,7 +1029,7 @@ export default function ApplicationWorkspacePage() {
                 Formal queries issued by AICTE scrutiny officers and institutional written replies
               </p>
             </div>
-            {isOfficerOrAuthority && (
+            {(isOfficer || isAuthority) && (
               <button
                 onClick={() => setClarificationModalOpen(true)}
                 className="px-3.5 py-1.5 bg-[#0F6B6B] hover:bg-[#0a4f4f] text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition shadow-xs"
@@ -1092,7 +1120,9 @@ export default function ApplicationWorkspacePage() {
                         </span>
                       )}
                     </div>
-                    <p className="text-xs text-[#14202B] leading-relaxed">{act.comments}</p>
+                    {(!isApplicant || act.action_type === "STATUTORY_DECISION_RECORDED") && act.comments && (
+                      <p className="text-xs text-[#14202B] leading-relaxed">{act.comments}</p>
+                    )}
                     <span className="text-[10px] text-[#5B6B7A] block pt-1">
                       Recorded on: {new Date(act.created_at).toLocaleString()}
                     </span>

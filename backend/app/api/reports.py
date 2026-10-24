@@ -7,7 +7,7 @@ from fastapi import APIRouter, Depends, HTTPException, Response
 from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 from ..core.database import get_db
-from ..core.security import get_current_user_payload, verify_institution_access
+from ..core.security import get_current_user_payload, verify_institution_access, require_roles
 from ..models.models import Application, Document, Finding, VerificationRequest, ReviewAction
 from ..services.audit_service import audit_service
 
@@ -18,13 +18,13 @@ def get_application_validation_report(
     app_id: int,
     format: str = "json",  # "json" or "csv"
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(get_current_user_payload)
+    user_payload: dict = Depends(require_roles("applicant", "scrutiny_officer", "supervising_authority", "auditor"))
 ):
     app = db.query(Application).filter(Application.id == app_id).first()
     if not app:
         raise HTTPException(status_code=404, detail="Application not found")
 
-    verify_institution_access(user_payload, app.institution_id)
+    verify_institution_access(user_payload, app.institution_id, db=db)
 
     # Compile structured summary
     report_data = {
@@ -64,7 +64,7 @@ def get_application_validation_report(
                 "observed": f.observed_value,
                 "rule_citation": f.rule_citation,
                 "status": f.status.value,
-                "officer_notes": f.officer_notes,
+                "officer_notes": f.officer_notes if user_payload.get("role") != "applicant" else None,
             }
             for f in app.findings
         ],
@@ -99,49 +99,52 @@ def get_application_validation_report(
         writer.writerow(["Application Number", app.application_number])
         writer.writerow(["Institution", app.institution.name if app.institution else ""])
         writer.writerow(["Status", app.status.value])
-        writer.writerow(["Rule Version", app.rule_set_version])
         writer.writerow([])
-        writer.writerow(["Rule Code", "Category", "Severity", "Explanation", "Expected", "Observed", "Status"])
+        writer.writerow(["CHECKLIST DOCUMENTS"])
+        writer.writerow(["Code", "Title", "Mandatory", "Status"])
+        for doc in app.documents:
+            writer.writerow([doc.checklist_item_code, doc.title, doc.is_mandatory, doc.status.value])
+        writer.writerow([])
+        writer.writerow(["COMPLIANCE FINDINGS"])
+        writer.writerow(["Rule Code", "Category", "Severity", "Explanation", "Status"])
         for f in app.findings:
-            writer.writerow([f.rule_code, f.category, f.severity.value, f.explanation, f.expected_value, f.observed_value, f.status.value])
+            writer.writerow([f.rule_code, f.category, f.severity.value, f.explanation, f.status.value])
 
         output.seek(0)
-        return StreamingResponse(
-            io.BytesIO(output.getvalue().encode("utf-8")),
-            media_type="text/csv",
-            headers={"Content-Disposition": f"attachment; filename=Validation_Report_{app.application_number}.csv"}
-        )
+        return Response(content=output.getvalue(), media_type="text/csv", headers={
+            "Content-Disposition": f"attachment; filename=dossier_{app.application_number}.csv"
+        })
 
     return report_data
 
+@router.get("/application/{app_id}/submission-receipt")
 @router.get("/application/{app_id}/receipt")
 def get_submission_receipt(
     app_id: int,
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(get_current_user_payload)
+    user_payload: dict = Depends(require_roles("applicant", "scrutiny_officer", "supervising_authority", "auditor"))
 ):
     app = db.query(Application).filter(Application.id == app_id).first()
     if not app:
         raise HTTPException(status_code=404, detail="Application not found")
 
-    verify_institution_access(user_payload, app.institution_id)
+    verify_institution_access(user_payload, app.institution_id, db=db)
 
-    # Compute deterministic tamper-evident snapshot hash of this submission receipt
-    snapshot_str = f"{app.application_number}|{app.institution_id}|{app.category_code}|{app.academic_year}|{app.rule_set_version}|{app.status.value}|{app.submission_date}"
-    receipt_hash = hashlib.sha256(snapshot_str.encode("utf-8")).hexdigest()
+    receipt_hash = hashlib.sha256(
+        f"{app.application_number}:{app.submission_date}:{app.ter_transaction_ref}:{len(app.documents)}".encode()
+    ).hexdigest()
 
     return {
-        "title": "Official Regulatory Application Submission Receipt",
-        "receipt_number": f"REC-{app.application_number}-{app.id:04d}",
+        "receipt_number": f"REC-{app.application_number}-{receipt_hash[:8].upper()}",
         "application_number": app.application_number,
-        "institution_name": app.institution.name if app.institution else "N/A",
+        "institution_name": app.institution.name if app.institution else "Apex Institute",
         "aicte_permanent_id": app.institution.aicte_permanent_id if app.institution else "N/A",
-        "category": app.category_code,
-        "academic_session": app.academic_year,
-        "rule_set_version": app.rule_set_version,
         "submission_timestamp": app.submission_date.isoformat() if app.submission_date else datetime.now(timezone.utc).isoformat(),
+        "academic_year": app.academic_year,
         "ter_payment_status": app.ter_payment_status,
         "ter_transaction_ref": app.ter_transaction_ref,
+        "total_documents_catalogued": len(app.documents),
+        "cryptographic_fingerprint_sha256": receipt_hash,
         "cryptographic_receipt_hash": receipt_hash,
-        "notice": "This document certifies formal electronic submission under Niyam Platform rules. Statutory scrutiny and inspection determinations remain with competent AICTE authorities."
+        "issuing_bureau": "AICTE Approval Bureau, New Delhi"
     }

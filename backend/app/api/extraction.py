@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from ..core.database import get_db
-from ..core.security import get_current_user_payload, verify_institution_access
+from ..core.security import get_current_user_payload, verify_institution_access, require_roles
 from ..models.models import ExtractedField, FieldCorrection, DocumentVersion, Document, Application
 from ..schemas.schemas import ExtractedFieldResponse, FieldCorrectionRequest
 from ..services.audit_service import audit_service
@@ -14,7 +14,7 @@ def correct_extracted_field(
     field_id: int,
     req: FieldCorrectionRequest,
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(get_current_user_payload)
+    user_payload: dict = Depends(require_roles("scrutiny_officer", "applicant"))
 ):
     field = db.query(ExtractedField).filter(ExtractedField.id == field_id).first()
     if not field:
@@ -24,7 +24,7 @@ def correct_extracted_field(
     app = doc_version.document.application
 
     # Access control
-    verify_institution_access(user_payload, app.institution_id)
+    verify_institution_access(user_payload, app.institution_id, db=db)
 
     old_val = field.corrected_value if field.is_corrected else field.original_value
 
@@ -72,14 +72,14 @@ def correct_extracted_field(
 def get_extracted_fields_for_version(
     version_id: int,
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(get_current_user_payload)
+    user_payload: dict = Depends(require_roles("applicant", "scrutiny_officer", "supervising_authority", "auditor"))
 ):
     doc_version = db.query(DocumentVersion).filter(DocumentVersion.id == version_id).first()
     if not doc_version:
         raise HTTPException(status_code=404, detail="Document version not found")
 
     app = doc_version.document.application
-    verify_institution_access(user_payload, app.institution_id)
+    verify_institution_access(user_payload, app.institution_id, db=db)
 
     return doc_version.extracted_fields
 
@@ -87,13 +87,13 @@ def get_extracted_fields_for_version(
 def get_extracted_field(
     field_id: int,
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(get_current_user_payload)
+    user_payload: dict = Depends(require_roles("applicant", "scrutiny_officer", "supervising_authority", "auditor"))
 ):
     field = db.query(ExtractedField).filter(ExtractedField.id == field_id).first()
     if not field:
         raise HTTPException(status_code=404, detail="Extracted field not found")
 
     app = field.document_version.document.application
-    verify_institution_access(user_payload, app.institution_id)
+    verify_institution_access(user_payload, app.institution_id, db=db)
 
     return field

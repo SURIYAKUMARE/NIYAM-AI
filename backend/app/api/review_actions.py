@@ -14,7 +14,7 @@ router = APIRouter(prefix="/review-actions", tags=["Review Actions & Statutory D
 def get_application_review_history(
     app_id: int,
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(require_roles([UserRole.SCRUTINY_OFFICER.value, UserRole.SUPERVISING_AUTHORITY.value, UserRole.ADMIN.value, UserRole.AUDITOR.value]))
+    user_payload: dict = Depends(require_roles("scrutiny_officer", "supervising_authority", "auditor"))
 ):
     app = db.query(Application).filter(Application.id == app_id).first()
     if not app:
@@ -26,11 +26,45 @@ def record_review_action(
     app_id: int,
     req: RecordReviewActionRequest,
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(require_roles([UserRole.SCRUTINY_OFFICER.value, UserRole.SUPERVISING_AUTHORITY.value, UserRole.ADMIN.value]))
+    user_payload: dict = Depends(require_roles("scrutiny_officer", "supervising_authority"))
 ):
     app = db.query(Application).filter(Application.id == app_id).first()
     if not app:
         raise HTTPException(status_code=404, detail="Application not found")
+
+    user_role = user_payload.get("role")
+
+    # Task 4 & Task 5: Only supervising_authority can issue statutory decisions
+    if req.action_type == "STATUTORY_DECISION_RECORDED":
+        if user_role != UserRole.SUPERVISING_AUTHORITY.value:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Access denied: Only competent Supervising Authority can record final statutory decisions."
+            )
+        # Server-side validation: Non-empty written justification
+        if not req.comments or not req.comments.strip():
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Mandatory written justification is required for all official statutory regulatory decisions."
+            )
+
+        if req.statutory_decision in ("APPROVE", "APPROVED_WITH_DEFICIENCIES"):
+            app.status = ApplicationStatus.APPROVED_BY_AUTHORITY
+        elif req.statutory_decision in ("REJECT", "REJECTED"):
+            app.status = ApplicationStatus.REJECTED_BY_AUTHORITY
+        elif req.statutory_decision in ("INSPECT", "INSPECTION_ORDERED"):
+            app.status = ApplicationStatus.RECOMMENDED_FOR_INSPECTION
+    else:
+        # Officer actions (recommendations, observations)
+        if user_role not in (UserRole.SCRUTINY_OFFICER.value, UserRole.SUPERVISING_AUTHORITY.value):
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Access denied: Only Scrutiny Officers can record preliminary scrutiny observations."
+            )
+        if req.action_type == "RECOMMENDED_FOR_APPROVAL":
+            app.status = ApplicationStatus.RECOMMENDED_FOR_APPROVAL
+        elif req.action_type == "RECOMMENDED_FOR_INSPECTION":
+            app.status = ApplicationStatus.RECOMMENDED_FOR_INSPECTION
 
     action = ReviewAction(
         application_id=app.id,
@@ -41,21 +75,6 @@ def record_review_action(
         created_at=datetime.now(timezone.utc)
     )
     db.add(action)
-
-    # Workflow state transitions based on statutory action
-    user_role = user_payload.get("role")
-    if req.action_type == "RECOMMENDED_FOR_APPROVAL":
-        app.status = ApplicationStatus.RECOMMENDED_FOR_APPROVAL
-    elif req.action_type == "RECOMMENDED_FOR_INSPECTION":
-        app.status = ApplicationStatus.RECOMMENDED_FOR_INSPECTION
-    elif req.action_type == "STATUTORY_DECISION_RECORDED" and user_role == UserRole.SUPERVISING_AUTHORITY.value:
-        if req.statutory_decision == "APPROVE":
-            app.status = ApplicationStatus.APPROVED_BY_AUTHORITY
-        elif req.statutory_decision == "REJECT":
-            app.status = ApplicationStatus.REJECTED_BY_AUTHORITY
-        elif req.statutory_decision == "INSPECT":
-            app.status = ApplicationStatus.RECOMMENDED_FOR_INSPECTION
-
     db.commit()
     db.refresh(action)
 

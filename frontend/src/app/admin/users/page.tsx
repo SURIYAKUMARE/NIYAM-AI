@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 import { fetchApi } from "@/lib/api";
 import { useAuth } from "@/context/AuthContext";
 import { Card } from "@/components/ui/Card";
@@ -108,31 +109,44 @@ export default function UserManagementPage() {
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pb-4 border-b border-niyam-border">
+      <div className="bg-white p-6 rounded-xl border border-[#E3E8EE] shadow-xs flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="px-2.5 py-0.5 rounded text-[11px] font-semibold bg-rose-50 text-rose-900 border border-rose-200">
-              Screen 17 • Governance & User RBAC
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-teal-50 text-[#0F6B6B] border border-teal-200 uppercase tracking-wider">
+              Administration Workspace
             </span>
-            <span className="text-xs text-niyam-secondary font-mono">Server Enforced</span>
+            <span className="text-xs text-[#5B6B7A]">
+              Welcome, <strong className="text-[#14202B]">{user?.full_name || "Administrator"}</strong> ({user?.role || "admin"})
+            </span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-niyam-text tracking-tight flex items-center gap-2">
-            <Users className="w-7 h-7 text-niyam-accent" />
-            <span>User, Role & Assignment Administration</span>
+          <h1 className="text-xl sm:text-2xl font-bold text-[#14202B] tracking-tight">
+            National Informatics &amp; Infrastructure Administration
           </h1>
-          <p className="text-sm text-niyam-secondary mt-1 max-w-2xl">
-            Manage server-enforced role privileges, institutional isolation mapping, and assigned scrutiny case distribution.
+          <p className="text-xs text-[#5B6B7A] mt-1 max-w-3xl leading-relaxed">
+            Manage institutional user accounts, APH compliance rule engines, system parameters, and scrutiny officer distribution.
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2.5 shrink-0 self-start md:self-auto">
+          <Link
+            href="/admin/rules"
+            className="px-3 py-1.5 text-xs font-semibold text-[#14202B] bg-white hover:bg-[#F7F9FB] border border-[#E3E8EE] rounded-lg transition-colors"
+          >
+            Rules &amp; Checklists
+          </Link>
+          <Link
+            href="/admin/settings"
+            className="px-3 py-1.5 text-xs font-semibold text-[#14202B] bg-white hover:bg-[#F7F9FB] border border-[#E3E8EE] rounded-lg transition-colors"
+          >
+            Settings
+          </Link>
           <Button
             variant="secondary"
             size="sm"
             onClick={loadUsersAndApps}
             leftIcon={<RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />}
           >
-            Refresh Users
+            Refresh
           </Button>
           <Button
             variant="primary"
@@ -140,7 +154,7 @@ export default function UserManagementPage() {
             onClick={() => setAssignModalOpen(true)}
             leftIcon={<UserCheck className="w-3.5 h-3.5" />}
           >
-            Assign Scrutiny Officer
+            Assign Officer
           </Button>
         </div>
       </div>

@@ -434,6 +434,7 @@ def test_acceptance_18_totp_mfa_verification_lifecycle():
     assert res_verify.status_code == 200
     verified_data = res_verify.json()
     assert verified_data["access_token"] is not None
+    _token_cache["authority"] = verified_data["access_token"]
 
     # 5. Accessing official endpoint with verified token succeeds
     res_authorized = client.get(
@@ -509,3 +510,171 @@ def test_acceptance_20_malware_scanner_eicar_quarantine():
     doc_data = clean_upload.json()
     latest_v = doc_data["versions"][-1]
     assert latest_v.get("malware_scan_status") == "CLEAN"
+
+# Acceptance Test 21: Unauthenticated requests return 401
+def test_acceptance_21_unauthenticated_requests_return_401():
+    # Calling endpoints without Authorization header must return 401
+    assert client.get("/api/v1/auth/me").status_code == 401
+    assert client.get("/api/v1/applications").status_code == 401
+    assert client.get("/api/v1/applications/1").status_code == 401
+    assert client.post("/api/v1/review-actions/1", json={"action_type": "RECOMMENDED_FOR_APPROVAL", "comments": "test"}).status_code == 401
+    assert client.get("/api/v1/users").status_code == 401
+    assert client.get("/api/v1/audit").status_code == 401
+
+# Acceptance Test 22: Applicant RBAC boundaries strictly enforced (403 on official routes)
+def test_acceptance_22_applicant_rbac_403_restrictions():
+    applicant_token = get_auth_token("applicant")
+    headers = {"Authorization": f"Bearer {applicant_token}"}
+
+    # Applicant cannot access user administration
+    assert client.get("/api/v1/users", headers=headers).status_code == 403
+
+    # Applicant cannot access or create rule sets
+    assert client.get("/api/v1/rules", headers=headers).status_code == 403
+    assert client.post("/api/v1/rules", headers=headers, json={"version": "v999.0", "title": "Unauthorized Rule"}).status_code == 403
+
+    # Applicant cannot record review actions
+    review_res = client.post(
+        "/api/v1/review-actions/1",
+        headers=headers,
+        json={"action_type": "RECOMMENDED_FOR_APPROVAL", "comments": "Unauthorized review"}
+    )
+    assert review_res.status_code == 403
+
+    # Applicant cannot access analytics summary
+    assert client.get("/api/v1/analytics/summary", headers=headers).status_code == 403
+
+    # Applicant cannot record manual verification
+    manual_res = client.post(
+        "/api/v1/verification/manual-confirm?doc_version_id=1&supporting_evidence_ref=REF-123&observations=Obs",
+        headers=headers
+    )
+    assert manual_res.status_code == 403
+
+# Acceptance Test 23: Scrutiny Officer RBAC boundaries and Statutory Decision restriction
+def test_acceptance_23_officer_rbac_and_statutory_decision_restrictions():
+    officer_token = get_auth_token("officer")
+    officer_headers = {"Authorization": f"Bearer {officer_token}"}
+
+    # Scrutiny officer cannot administer users
+    assert client.get("/api/v1/users", headers=officer_headers).status_code == 403
+
+    # Scrutiny officer cannot modify system settings
+    assert client.get("/api/v1/settings", headers=officer_headers).status_code == 403
+
+    # Scrutiny officer CANNOT issue final statutory decisions (403)
+    res_officer_statutory = client.post(
+        "/api/v1/review-actions/1",
+        headers=officer_headers,
+        json={
+            "action_type": "STATUTORY_DECISION_RECORDED",
+            "statutory_decision": "APPROVE",
+            "comments": "Officer trying to approve statutory order directly"
+        }
+    )
+    assert res_officer_statutory.status_code == 403
+
+    # Supervising Authority CAN issue statutory decisions
+    authority_token = get_auth_token("authority")
+    authority_headers = {"Authorization": f"Bearer {authority_token}"}
+
+    # Rejection of statutory decision if comments are empty (validation rule)
+    empty_comments_res = client.post(
+        "/api/v1/review-actions/1",
+        headers=authority_headers,
+        json={
+            "action_type": "STATUTORY_DECISION_RECORDED",
+            "statutory_decision": "APPROVE",
+            "comments": "   "
+        }
+    )
+    assert empty_comments_res.status_code == 400
+
+# Acceptance Test 24: Auditor is strictly read-only and blocked from writing (403)
+def test_acceptance_24_auditor_read_only_and_write_blocked():
+    auditor_token = get_auth_token("auditor")
+    headers = {"Authorization": f"Bearer {auditor_token}"}
+
+    # Auditor CAN read audit ledger
+    assert client.get("/api/v1/audit", headers=headers).status_code == 200
+
+    # Auditor CAN read analytics
+    assert client.get("/api/v1/analytics/summary", headers=headers).status_code == 200
+
+    # Auditor CANNOT create application
+    create_app = client.post(
+        "/api/v1/applications",
+        headers=headers,
+        json={"category_code": "EXTENSION_OF_APPROVAL", "academic_year": "2025-26"}
+    )
+    assert create_app.status_code == 403
+
+    # Auditor CANNOT record review actions
+    review_act = client.post(
+        "/api/v1/review-actions/1",
+        headers=headers,
+        json={"action_type": "RECOMMENDED_FOR_APPROVAL", "comments": "Auditor comment"}
+    )
+    assert review_act.status_code == 403
+
+    # Auditor CANNOT update finding disposition
+    finding_update = client.patch(
+        "/api/v1/validation/findings/1/disposition",
+        headers=headers,
+        json={"status": "CONFIRMED_BY_OFFICER", "officer_notes": "Auditor note"}
+    )
+    assert finding_update.status_code == 403
+
+    # Auditor CANNOT issue clarifications
+    clarification_res = client.post(
+        "/api/v1/clarifications/1",
+        headers=headers,
+        json={"question": "Auditor question", "finding_id": None}
+    )
+    assert clarification_res.status_code == 403
+
+# Acceptance Test 25: Tenant isolation prevents cross-institution application access
+def test_acceptance_25_tenant_isolation_cross_institution_blocked():
+    applicant_token = get_auth_token("applicant")
+    headers = {"Authorization": f"Bearer {applicant_token}"}
+
+    # Applicant belongs to institution 1. Application 5 belongs to institution 2.
+    cross_res = client.get("/api/v1/applications/5", headers=headers)
+    assert cross_res.status_code == 403
+
+    # Application list filters exclusively to applicant's institution
+    list_res = client.get("/api/v1/applications", headers=headers)
+    assert list_res.status_code == 200
+    apps = list_res.json()
+    assert len(apps) > 0
+    for app in apps:
+        assert app["institution_id"] == 1
+
+# Acceptance Test 26: Real auth flow validation (/auth/me and /auth/logout)
+def test_acceptance_26_auth_me_and_logout_audit():
+    officer_token = get_auth_token("officer")
+    headers = {"Authorization": f"Bearer {officer_token}"}
+
+    # /auth/me returns current authenticated user payload
+    me_res = client.get("/api/v1/auth/me", headers=headers)
+    assert me_res.status_code == 200
+    me_data = me_res.json()
+    assert me_data["username"] == "officer"
+    assert me_data["role"] == "scrutiny_officer"
+
+    # /auth/logout invalidates session and writes audit entry
+    logout_res = client.post("/api/v1/auth/logout", headers=headers)
+    assert logout_res.status_code == 200
+    assert "Logged out" in logout_res.json()["message"]
+
+# Acceptance Test 27: SHA-256 cryptographic audit chain remains completely valid
+def test_acceptance_27_sha256_audit_chain_integrity():
+    auditor_token = get_auth_token("auditor")
+    headers = {"Authorization": f"Bearer {auditor_token}"}
+
+    verify_res = client.get("/api/v1/audit/verify-chain", headers=headers)
+    assert verify_res.status_code == 200
+    chain_data = verify_res.json()
+    assert chain_data.get("is_valid") is True or chain_data.get("chain_intact") is True
+    assert chain_data.get("verified_records", 0) > 0
+

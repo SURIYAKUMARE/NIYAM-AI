@@ -10,7 +10,7 @@ router = APIRouter(prefix="/analytics", tags=["Operational Analytics"])
 @router.get("/summary")
 def get_operational_analytics(
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(require_roles([UserRole.SCRUTINY_OFFICER.value, UserRole.SUPERVISING_AUTHORITY.value, UserRole.ADMIN.value, UserRole.AUDITOR.value]))
+    user_payload: dict = Depends(require_roles("scrutiny_officer", "supervising_authority", "admin", "auditor"))
 ):
     # Application counts by status
     status_counts = db.query(Application.status, func.count(Application.id)).group_by(Application.status).all()

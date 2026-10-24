@@ -13,14 +13,16 @@ router = APIRouter(prefix="/rules", tags=["Rule & Checklist Administration"])
 
 @router.get("", response_model=List[RuleSetResponse])
 def list_rule_sets(
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    user_payload: dict = Depends(require_roles("admin", "supervising_authority", "scrutiny_officer", "auditor"))
 ):
     return db.query(RuleSet).order_by(RuleSet.created_at.desc()).all()
 
 @router.get("/{version}", response_model=RuleSetResponse)
 def get_rule_set(
     version: str,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    user_payload: dict = Depends(require_roles("admin", "supervising_authority", "scrutiny_officer", "auditor"))
 ):
     rs = db.query(RuleSet).filter(RuleSet.version == version).first()
     if not rs:
@@ -31,7 +33,7 @@ def get_rule_set(
 def create_draft_rule_set(
     req: CreateRuleSetRequest,
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(require_roles([UserRole.ADMIN.value]))
+    user_payload: dict = Depends(require_roles("admin"))
 ):
     existing = db.query(RuleSet).filter(RuleSet.version == req.version).first()
     if existing:
@@ -69,7 +71,7 @@ def add_rule_to_version(
     version: str,
     req: CreateRuleRequest,
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(require_roles([UserRole.ADMIN.value]))
+    user_payload: dict = Depends(require_roles("admin"))
 ):
     rs = db.query(RuleSet).filter(RuleSet.version == version).first()
     if not rs:
@@ -111,7 +113,7 @@ def add_rule_to_version(
 def activate_rule_set(
     version: str,
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(require_roles([UserRole.ADMIN.value]))
+    user_payload: dict = Depends(require_roles("admin"))
 ):
     rs = db.query(RuleSet).filter(RuleSet.version == version).first()
     if not rs:
@@ -139,7 +141,7 @@ def test_rule_set_against_sample_application(
     version: str,
     sample_app_id: int,
     db: Session = Depends(get_db),
-    user_payload: dict = Depends(require_roles([UserRole.ADMIN.value]))
+    user_payload: dict = Depends(require_roles("admin"))
 ):
     """
     Executes draft or candidate rule set against existing sample application without committing

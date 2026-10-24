@@ -22,6 +22,18 @@ export async function fetchApi(endpoint: string, options: RequestInit = {}) {
     headers,
   });
 
+  if (response.status === 401) {
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("aicte_token");
+      localStorage.removeItem("aicte_user");
+      // Prevent infinite loop if already on login
+      if (!window.location.pathname.startsWith("/login")) {
+        window.location.replace("/login?expired=1");
+      }
+    }
+    throw new Error("Session expired, please sign in again.");
+  }
+
   if (!response.ok) {
     let errorDetail = "An unexpected error occurred.";
     try {

@@ -15,6 +15,7 @@ from ..core.totp import (
 )
 from ..models.models import User, UserRole
 from ..schemas.schemas import Token, UserResponse, LoginRequest, MfaVerifyRequest, MfaEnrollResponse, MfaConfirmRequest
+from ..services.audit_service import AuditService
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
@@ -24,6 +25,20 @@ OFFICIAL_ROLES = [UserRole.SCRUTINY_OFFICER, UserRole.SUPERVISING_AUTHORITY, Use
 def login(request: LoginRequest, db: Session = Depends(get_db)):
     user = db.query(User).filter(User.username == request.username).first()
     if not user or not verify_password(request.password, user.hashed_password):
+        # Audit log failed authentication attempt
+        try:
+            AuditService.log_event(
+                db=db,
+                event_type="AUTH_LOGIN_FAILED",
+                actor_id=0,
+                actor_role="anonymous",
+                target_entity="USER_LOGIN",
+                target_id=0,
+                details={"attempted_username": request.username}
+            )
+        except Exception:
+            pass
+
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect username or password"
@@ -72,6 +87,20 @@ def login(request: LoginRequest, db: Session = Depends(get_db)):
         "mfa_completed": True
     }
     access_token = create_access_token(token_data)
+
+    # Audit log successful primary authentication
+    try:
+        AuditService.log_event(
+            db=db,
+            event_type="AUTH_LOGIN_SUCCESS",
+            actor_id=user.id,
+            actor_role=user.role.value,
+            target_entity="USER_SESSION",
+            target_id=user.id,
+            details={"username": user.username, "role": user.role.value}
+        )
+    except Exception:
+        pass
 
     return {
         "access_token": access_token,
@@ -156,6 +185,20 @@ def verify_mfa(request: MfaVerifyRequest, db: Session = Depends(get_db)):
     }
     access_token = create_access_token(full_token_data)
 
+    # Audit log successful MFA authentication
+    try:
+        AuditService.log_event(
+            db=db,
+            event_type="AUTH_MFA_SUCCESS",
+            actor_id=user.id,
+            actor_role=user.role.value,
+            target_entity="USER_SESSION",
+            target_id=user.id,
+            details={"username": user.username, "role": user.role.value}
+        )
+    except Exception:
+        pass
+
     return {
         "access_token": access_token,
         "token_type": "bearer",
@@ -172,6 +215,25 @@ def verify_mfa(request: MfaVerifyRequest, db: Session = Depends(get_db)):
             "institution_name": user.institution.name if user.institution else None
         }
     }
+
+@router.post("/logout")
+def logout(payload: dict = Depends(get_current_user_payload), db: Session = Depends(get_db)):
+    """
+    Task 5: Server-side logout endpoint that logs the sign-out event in the immutable audit ledger.
+    """
+    try:
+        AuditService.log_event(
+            db=db,
+            event_type="AUTH_LOGOUT",
+            actor_id=payload.get("user_id"),
+            actor_role=payload.get("role"),
+            target_entity="USER_SESSION",
+            target_id=payload.get("user_id"),
+            details={"username": payload.get("username")}
+        )
+    except Exception:
+        pass
+    return {"status": "SUCCESS", "message": "Logged out successfully"}
 
 @router.post("/mfa/enroll", response_model=MfaEnrollResponse)
 def enroll_mfa(payload: dict = Depends(get_current_user_payload), db: Session = Depends(get_db)):
@@ -218,51 +280,3 @@ def get_current_user_info(payload: dict = Depends(get_current_user_payload), db:
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     return user
-
-@router.get("/demo-accounts")
-def list_demo_accounts():
-    """
-    Returns available synthetic demo accounts for instant 1-click role switching in UI
-    """
-    return [
-        {
-            "username": "applicant",
-            "role": "applicant",
-            "role_title": "Institution Applicant",
-            "name": "Dr. Rajeshwari Sharma",
-            "organization": "Apex Institute of Technology & Science (1-492048123)",
-            "description": "Uploads evidence, tracks preliminary validation, rectifies deficiencies early."
-        },
-        {
-            "username": "officer",
-            "role": "scrutiny_officer",
-            "role_title": "Scrutiny Officer",
-            "name": "Er. Anand Mohan Verma",
-            "organization": "AICTE Western Regional Office, Mumbai",
-            "description": "Inspects extracted evidence, reviews AI advisory findings, raises clarifications."
-        },
-        {
-            "username": "authority",
-            "role": "supervising_authority",
-            "role_title": "Supervising Authority",
-            "name": "Prof. (Dr.) Sudhir K. Sen",
-            "organization": "AICTE Regulation Bureau, New Delhi",
-            "description": "Reviews escalations, recommendations, records final statutory review outcomes."
-        },
-        {
-            "username": "admin",
-            "role": "admin",
-            "role_title": "System Administrator",
-            "name": "Vikramjit Singh",
-            "organization": "AICTE IT Directorate",
-            "description": "Manages rule versions, checklists, source integration adapters without accessing raw confidential records."
-        },
-        {
-            "username": "auditor",
-            "role": "auditor",
-            "role_title": "Statutory Auditor",
-            "name": "Smt. Meenakshi Iyer",
-            "organization": "CAG External Regulatory Oversight",
-            "description": "Read-only access to tamper-evident audit logs and evaluation provenance."
-        }
-    ]
