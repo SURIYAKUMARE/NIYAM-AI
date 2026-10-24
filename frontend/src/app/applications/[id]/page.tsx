@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { fetchApi } from "@/lib/api";
+import { fetchApi, API_BASE_URL } from "@/lib/api";
 import { useAuth } from "@/context/AuthContext";
 import { StatusBadge } from "@/components/common/StatusBadge";
 import { DocumentViewerModal } from "@/components/common/DocumentViewerModal";
@@ -47,6 +47,27 @@ export default function ApplicationWorkspacePage() {
   const [isValidating, setIsValidating] = useState(false);
   const [uploadingDocId, setUploadingDocId] = useState<number | null>(null);
 
+  // Accessible Modal States replacing browser prompt/confirm
+  const [submitConfirmOpen, setSubmitConfirmOpen] = useState(false);
+  const [submittingScrutiny, setSubmittingScrutiny] = useState(false);
+
+  const [manualConfirmModal, setManualConfirmModal] = useState<{
+    open: boolean;
+    docVersionId: number | null;
+  } | null>(null);
+  const [manualEvidenceRef, setManualEvidenceRef] = useState("DOTE-CONFIRM-REG-2025/892");
+  const [manualObservations, setManualObservations] = useState("Physically cross-checked with State Directorate records");
+  const [submittingManual, setSubmittingManual] = useState(false);
+
+  const [findingDispositionModal, setFindingDispositionModal] = useState<{
+    open: boolean;
+    findingId: number;
+    action: string;
+    ruleCode: string;
+  } | null>(null);
+  const [findingDispositionNote, setFindingDispositionNote] = useState("");
+  const [submittingFindingDisposition, setSubmittingFindingDisposition] = useState(false);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const loadApplication = async () => {
@@ -84,14 +105,20 @@ export default function ApplicationWorkspacePage() {
   };
 
   // Submit for Scrutiny
-  const handleSubmitForScrutiny = async () => {
-    if (!confirm("Are you sure you want to formally submit this application for official scrutiny?")) return;
+  const handleOpenSubmitModal = () => {
+    setSubmitConfirmOpen(true);
+  };
+
+  const handleExecuteSubmitForScrutiny = async () => {
+    setSubmittingScrutiny(true);
     try {
       await fetchApi(`/applications/${appId}/submit`, { method: "POST" });
-      alert("Application formally submitted for AICTE regulatory scrutiny.");
+      setSubmitConfirmOpen(false);
       loadApplication();
     } catch (err: any) {
       alert(`Submission error: ${err.message}`);
+    } finally {
+      setSubmittingScrutiny(false);
     }
   };
 
@@ -113,7 +140,7 @@ export default function ApplicationWorkspacePage() {
 
     try {
       const token = localStorage.getItem("aicte_token");
-      const res = await fetch(`http://127.0.0.1:8000/api/v1/documents/upload/${uploadingDocId}`, {
+      const res = await fetch(`${API_BASE_URL}/documents/upload/${uploadingDocId}`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -157,7 +184,7 @@ export default function ApplicationWorkspacePage() {
   const handleDownloadReport = async () => {
     try {
       const token = localStorage.getItem("aicte_token");
-      const res = await fetch(`http://127.0.0.1:8000/api/v1/reports/application/${appId}/summary?format=csv`, {
+      const res = await fetch(`${API_BASE_URL}/reports/application/${appId}/summary?format=csv`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!res.ok) throw new Error("Report generation failed");
@@ -192,21 +219,63 @@ export default function ApplicationWorkspacePage() {
     }
   };
 
-  // Manual Source Confirmation
-  const handleManualSourceConfirm = async (docVersionId: number) => {
-    const evidenceRef = prompt("Enter official supporting document / file reference for manual confirmation:", "OFFICIAL-DISPATCH-REG-2025/892");
-    if (!evidenceRef) return;
-    const notes = prompt("Enter officer manual verification observations:", "Physically cross-checked with State Directorate records");
-    if (!notes) return;
+  // Manual Source Confirmation Modal Handlers
+  const handleOpenManualConfirm = (docVersionId: number) => {
+    setManualConfirmModal({ open: true, docVersionId });
+    setManualEvidenceRef("DOTE-CONFIRM-REG-2025/892");
+    setManualObservations("Physically cross-checked with State Directorate records");
+  };
 
+  const handleExecuteManualConfirm = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!manualConfirmModal?.docVersionId || !manualEvidenceRef.trim()) return;
+
+    setSubmittingManual(true);
     try {
-      await fetchApi(`/verification/manual-confirm?doc_version_id=${docVersionId}&supporting_evidence_ref=${encodeURIComponent(evidenceRef)}&observations=${encodeURIComponent(notes)}`, {
-        method: "POST",
-      });
-      alert("Manual confirmation recorded with supporting evidence and officer provenance.");
+      await fetchApi(
+        `/verification/manual-confirm?doc_version_id=${manualConfirmModal.docVersionId}&supporting_evidence_ref=${encodeURIComponent(
+          manualEvidenceRef.trim()
+        )}&observations=${encodeURIComponent(manualObservations.trim())}`,
+        { method: "POST" }
+      );
+      setManualConfirmModal(null);
       loadApplication();
     } catch (err: any) {
       alert(`Manual confirmation failed: ${err.message}`);
+    } finally {
+      setSubmittingManual(false);
+    }
+  };
+
+  // Finding Disposition Modal Handlers
+  const handleOpenFindingDisposition = (findingId: number, action: string, ruleCode: string) => {
+    setFindingDispositionModal({ open: true, findingId, action, ruleCode });
+    setFindingDispositionNote(
+      action === "CONFIRMED_BY_OFFICER"
+        ? "Verified deficiency against Approval Process Handbook norms"
+        : "Permitted variance under institutional compliance guidelines"
+    );
+  };
+
+  const handleExecuteFindingDisposition = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!findingDispositionModal || !findingDispositionNote.trim()) return;
+
+    setSubmittingFindingDisposition(true);
+    try {
+      await fetchApi(`/validation/findings/${findingDispositionModal.findingId}/disposition`, {
+        method: "PATCH",
+        body: JSON.stringify({
+          status: findingDispositionModal.action,
+          officer_notes: findingDispositionNote.trim(),
+        }),
+      });
+      setFindingDispositionModal(null);
+      loadApplication();
+    } catch (err: any) {
+      alert(`Error updating finding: ${err.message}`);
+    } finally {
+      setSubmittingFindingDisposition(false);
     }
   };
 
@@ -292,7 +361,7 @@ export default function ApplicationWorkspacePage() {
 
             {isApplicant && application.status === "DRAFT" && (
               <button
-                onClick={handleSubmitForScrutiny}
+                onClick={handleOpenSubmitModal}
                 className="px-4 py-2 bg-navy-900 hover:bg-navy-850 text-white rounded text-xs font-semibold flex items-center space-x-1.5 transition shadow-sm"
               >
                 <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />
@@ -580,29 +649,13 @@ export default function ApplicationWorkspacePage() {
                   {isOfficerOrAuthority && (
                     <div className="flex items-center justify-end space-x-2 pt-2 border-t border-slate-100">
                       <button
-                        onClick={async () => {
-                          const note = prompt("Enter officer observation for confirming deficiency:", "Verified during scrutiny");
-                          if (!note) return;
-                          await fetchApi(`/validation/findings/${f.id}/disposition`, {
-                            method: "PATCH",
-                            body: JSON.stringify({ status: "CONFIRMED_BY_OFFICER", officer_notes: note }),
-                          });
-                          loadApplication();
-                        }}
+                        onClick={() => handleOpenFindingDisposition(f.id, "CONFIRMED_BY_OFFICER", f.rule_code)}
                         className="px-2.5 py-1 text-[11px] bg-red-50 text-red-700 hover:bg-red-100 rounded font-medium border border-red-200"
                       >
                         Confirm Finding
                       </button>
                       <button
-                        onClick={async () => {
-                          const note = prompt("Enter justification for dismissing finding:", "Verified acceptable under waiver clause");
-                          if (!note) return;
-                          await fetchApi(`/validation/findings/${f.id}/disposition`, {
-                            method: "PATCH",
-                            body: JSON.stringify({ status: "DISMISSED_BY_OFFICER", officer_notes: note }),
-                          });
-                          loadApplication();
-                        }}
+                        onClick={() => handleOpenFindingDisposition(f.id, "DISMISSED_BY_OFFICER", f.rule_code)}
                         className="px-2.5 py-1 text-[11px] bg-slate-100 text-slate-700 hover:bg-slate-200 rounded font-medium border border-slate-300"
                       >
                         Dismiss Finding
@@ -733,7 +786,7 @@ export default function ApplicationWorkspacePage() {
                 <span className="text-blue-600 font-medium">Requires Reviewer Provenance</span>
                 {isOfficerOrAuthority && (
                   <button
-                    onClick={() => handleManualSourceConfirm(1)}
+                    onClick={() => handleOpenManualConfirm(1)}
                     className="px-2.5 py-1 bg-navy-900 hover:bg-navy-850 text-white rounded font-medium shadow-sm"
                   >
                     Record Manual Confirmation
@@ -903,6 +956,221 @@ export default function ApplicationWorkspacePage() {
           isResponding={true}
           onSuccess={loadApplication}
         />
+      )}
+
+      {/* Accessible Submit for Scrutiny Modal */}
+      {submitConfirmOpen && (
+        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-xl shadow-xl border border-slate-200 max-w-md w-full p-6 space-y-4 animate-in fade-in zoom-in-95 duration-150">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div className="flex items-center space-x-2">
+                <CheckCircle className="w-5 h-5 text-emerald-600" />
+                <h3 className="text-sm font-bold text-slate-900">Confirm Application Submission</h3>
+              </div>
+              <button
+                onClick={() => setSubmitConfirmOpen(false)}
+                className="text-slate-400 hover:text-slate-600 text-lg leading-none"
+              >
+                &times;
+              </button>
+            </div>
+            
+            <p className="text-xs text-slate-600 leading-relaxed">
+              You are about to submit Application <strong className="font-mono text-slate-900">{application.application_number}</strong> for formal regulatory scrutiny by AICTE scrutiny officers.
+            </p>
+
+            <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg text-xs text-amber-900 space-y-1">
+              <p className="font-semibold">Statutory Scrutiny Notice:</p>
+              <p className="text-[11px] text-amber-800">
+                Upon submission, application documents and data become immutable. Modifications can only be executed in response to formal clarification queries issued by assigned scrutiny officers.
+              </p>
+            </div>
+
+            <div className="flex items-center justify-end space-x-2 pt-2">
+              <button
+                type="button"
+                onClick={() => setSubmitConfirmOpen(false)}
+                className="px-3 py-1.5 border border-slate-300 rounded text-xs font-medium text-slate-700 hover:bg-slate-50 transition"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleExecuteSubmitForScrutiny}
+                disabled={submittingScrutiny}
+                className="px-4 py-1.5 bg-navy-900 hover:bg-navy-850 text-white rounded text-xs font-semibold flex items-center space-x-1.5 shadow-sm transition disabled:opacity-50"
+              >
+                {submittingScrutiny ? (
+                  <>
+                    <span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    <span>Submitting...</span>
+                  </>
+                ) : (
+                  <>
+                    <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>Confirm &amp; Lock Submission</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Accessible Manual Source Confirmation Modal */}
+      {manualConfirmModal?.open && (
+        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <form
+            onSubmit={handleExecuteManualConfirm}
+            className="bg-white rounded-xl shadow-xl border border-slate-200 max-w-lg w-full p-6 space-y-4 animate-in fade-in zoom-in-95 duration-150"
+          >
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div className="flex items-center space-x-2">
+                <ShieldCheck className="w-5 h-5 text-blue-600" />
+                <h3 className="text-sm font-bold text-slate-900">Record Manual Source Confirmation</h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setManualConfirmModal(null)}
+                className="text-slate-400 hover:text-slate-600 text-lg leading-none"
+              >
+                &times;
+              </button>
+            </div>
+
+            <p className="text-xs text-slate-600">
+              Section 5E &amp; Acceptance Test 12 mandate: When external electronic registries are unavailable or require physical corroboration, authorized reviewers can record manual confirmation backed by verified document references.
+            </p>
+
+            <div className="space-y-3">
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  Supporting Evidence / Registry Reference <span className="text-rose-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={manualEvidenceRef}
+                  onChange={(e) => setManualEvidenceRef(e.target.value)}
+                  placeholder="e.g. DOTE-CONFIRM-REG-2025/892 or DOTE/DISP/4501"
+                  className="w-full text-xs p-2.5 border border-slate-300 rounded font-mono focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  Reviewer Observations &amp; Verification Notes
+                </label>
+                <textarea
+                  rows={3}
+                  value={manualObservations}
+                  onChange={(e) => setManualObservations(e.target.value)}
+                  placeholder="Observations from direct inspection, physical verification, or department record check..."
+                  className="w-full text-xs p-2.5 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              <div className="p-3 bg-blue-50 rounded-lg border border-blue-200 text-[11px] text-blue-800">
+                <strong>Provenance Notice:</strong> This action will record your user identity, timestamp, and audit trail entry as statutory officer verification.
+              </div>
+            </div>
+
+            <div className="flex items-center justify-end space-x-2 pt-2 border-t border-slate-100">
+              <button
+                type="button"
+                onClick={() => setManualConfirmModal(null)}
+                className="px-3 py-1.5 border border-slate-300 rounded text-xs font-medium text-slate-700 hover:bg-slate-50 transition"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={submittingManual}
+                className="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded text-xs font-semibold flex items-center space-x-1.5 shadow-sm transition disabled:opacity-50"
+              >
+                {submittingManual ? "Saving..." : "Record Official Confirmation"}
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+
+      {/* Accessible Finding Disposition Modal */}
+      {findingDispositionModal?.open && (
+        <div className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <form
+            onSubmit={handleExecuteFindingDisposition}
+            className="bg-white rounded-xl shadow-xl border border-slate-200 max-w-lg w-full p-6 space-y-4 animate-in fade-in zoom-in-95 duration-150"
+          >
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div className="flex items-center space-x-2">
+                <AlertTriangle className={`w-5 h-5 ${findingDispositionModal.action === "CONFIRMED_BY_OFFICER" ? "text-rose-600" : "text-slate-600"}`} />
+                <h3 className="text-sm font-bold text-slate-900">
+                  {findingDispositionModal.action === "CONFIRMED_BY_OFFICER" ? "Confirm Deficiency Finding" : "Dismiss Advisory Finding"}
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setFindingDispositionModal(null)}
+                className="text-slate-400 hover:text-slate-600 text-lg leading-none"
+              >
+                &times;
+              </button>
+            </div>
+
+            <div className="flex items-center space-x-2 text-xs">
+              <span className="font-semibold text-slate-700">Rule Code:</span>
+              <span className="font-mono bg-slate-100 px-2 py-0.5 rounded text-slate-800 font-bold">
+                {findingDispositionModal.ruleCode}
+              </span>
+              <span className="text-slate-400">|</span>
+              <span className="text-slate-500">Finding #{findingDispositionModal.findingId}</span>
+            </div>
+
+            <div className="space-y-3">
+              <div>
+                <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  Official Scrutiny Note &amp; Regulatory Justification <span className="text-rose-500">*</span>
+                </label>
+                <textarea
+                  rows={4}
+                  required
+                  value={findingDispositionNote}
+                  onChange={(e) => setFindingDispositionNote(e.target.value)}
+                  placeholder="Provide statutory justification referencing Approval Process Handbook norms or institutional evidence..."
+                  className="w-full text-xs p-2.5 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              <div className="p-2.5 bg-slate-50 rounded border border-slate-200 text-[11px] text-slate-600">
+                <strong>Core Regulatory Principle:</strong> AI findings are advisory suggestions. Your disposition overrides or validates this finding with officer provenance in the statutory scrutiny dossier.
+              </div>
+            </div>
+
+            <div className="flex items-center justify-end space-x-2 pt-2 border-t border-slate-100">
+              <button
+                type="button"
+                onClick={() => setFindingDispositionModal(null)}
+                className="px-3 py-1.5 border border-slate-300 rounded text-xs font-medium text-slate-700 hover:bg-slate-50 transition"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={submittingFindingDisposition}
+                className={`px-4 py-1.5 text-white rounded text-xs font-semibold flex items-center space-x-1.5 shadow-sm transition disabled:opacity-50 ${
+                  findingDispositionModal.action === "CONFIRMED_BY_OFFICER"
+                    ? "bg-rose-600 hover:bg-rose-700"
+                    : "bg-slate-800 hover:bg-slate-900"
+                }`}
+              >
+                {submittingFindingDisposition ? "Updating..." : (
+                  findingDispositionModal.action === "CONFIRMED_BY_OFFICER" ? "Confirm Deficiency" : "Dismiss Advisory Finding"
+                )}
+              </button>
+            </div>
+          </form>
+        </div>
       )}
     </div>
   );
