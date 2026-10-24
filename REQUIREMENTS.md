@@ -1,4 +1,4 @@
-# NIYAM — Requirements Specification & Traceability Matrix
+# NIYAM — Requirements Specification, Traceability Matrix & Integration Inventory
 **Problem Statement ID:** 26261 | **AICTE Regulation Bureau Prototype**  
 **Title:** AI-Powered Application Validation, Document Authentication and Regulatory Compliance Verification
 
@@ -67,10 +67,27 @@ Every single functional requirement is verified by an automated acceptance test 
 
 ---
 
-## 4. UI/UX Design System & Google Stitch Alignment
+## 4. Authoritative Integration Inventory
+
+Niyam defines modular connector adapters implementing the abstract base interface [`BaseIssuingAuthorityAdapter`](backend/app/adapters/base_adapter.py):
+
+| Connector Name | Target Registry | Implemented Class | Method | Current State | Release Blocker / Production Credentials Needed |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **DigiLocker Gateway** | National Academic Depository & State NOCs | `DigiLockerAdapter` | REST / OAuth 2.0 | **SIMULATED DEMO** | Requires DigiLocker Client ID, Client Secret, and Production RSA Keypair. |
+| **State Land Revenue Registry** | State Land Records (e.g. Mahabhulekh / Bhulekh) | `LandRevenueAdapter` | REST / XML Gateway | **SIMULATED DEMO** | Requires State Revenue Department API Access Token and IP Whitelisting. |
+| **Affiliating University Portal** | State Technical Universities | `AffiliationAdapter` | REST API | **SIMULATED DEMO** | Requires University Examination & Affiliation Division API Key. |
+| **TER Bank Gateway** | Scheduled Commercial Bank (Payment Reconciliation) | `BankTERAdapter` | Webhook / API | **SIMULATED DEMO** | Requires Bank Merchant Key, Salt, and Webhook Signing Secret. |
+| **Cryptographic QR Decoder** | Document Quick Response Codes | `QRDecoderAdapter` | Digital PKI Decryption | **OPERATIONAL** | Requires Issuing Body Public Key X.509 Certificate for signature verification. |
+
+> [!NOTE]
+> All simulated connector responses in demonstration mode are unambiguously tagged with `[SIMULATED DEMO ADAPTER]` and clearly report simulated latency. The system never represents simulated data as live government records.
+
+---
+
+## 5. UI/UX Design System & Google Stitch Alignment
 
 The user interface follows the design tokens specified in [`DESIGN.md`](DESIGN.md):
-- **Google Stitch Connection Note:** In accordance with the prompt guidance, direct external Google Stitch API integration is not available in this offline execution runtime. The application strictly adheres to the supplied Stitch design specifications:
+- **Google Stitch Connection Note:** In accordance with prompt guidance, direct external Google Stitch API integration is not available in this offline execution runtime. The application strictly adheres to the supplied Stitch design specifications:
   - Palette: `#F8FAFC` canvas, `#FFFFFF` surfaces, `#17212B` primary text, `#526170` secondary text, `#DCE3E9` borders, and `#167D8D` interaction accent.
   - Typography: Geist for UI prose and Geist Mono for code, timestamps, and hashes.
   - Touch targets: Minimum 44px on all clickable elements (`Button.tsx`).
