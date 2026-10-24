@@ -88,9 +88,9 @@ export const Header: React.FC<HeaderProps> = ({ onToggleMobileMenu }) => {
   };
 
   return (
-    <header className="no-print bg-white border-b border-[#E3E8EE] h-14 px-4 lg:px-6 flex items-center justify-between sticky top-0 z-30 shadow-xs text-[#14202B]">
-      {/* Left: Mobile Drawer Trigger & Brand */}
-      <div className="flex items-center gap-3">
+    <header className="no-print bg-white border-b border-[#E3E8EE] h-14 px-4 lg:px-6 flex items-center justify-between sticky top-0 z-30 shadow-[0_1px_2px_rgba(0,0,0,0.03)] text-[#14202B]">
+      {/* Left: Mobile Drawer Trigger & Official Brand */}
+      <div className="flex items-center gap-3 lg:gap-4">
         {onToggleMobileMenu && (
           <button
             onClick={onToggleMobileMenu}
@@ -101,54 +101,64 @@ export const Header: React.FC<HeaderProps> = ({ onToggleMobileMenu }) => {
           </button>
         )}
 
-        <Link href="/" className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-[#0F6B6B] flex items-center justify-center text-white font-extrabold text-xs shadow-xs">
+        <Link href="/" className="flex items-center gap-2.5 group">
+          <div className="w-8 h-8 rounded-lg bg-[#0F6B6B] group-hover:bg-[#0a4f4f] transition-colors flex items-center justify-center text-white font-extrabold text-xs shadow-xs tracking-wider">
             NY
           </div>
           <div>
             <div className="text-sm font-bold tracking-tight text-[#14202B] leading-none flex items-center gap-1.5">
               <span>NIYAM</span>
               <span className="text-[9px] uppercase font-bold px-1.5 py-0.5 rounded bg-teal-50 text-[#0F6B6B] border border-teal-200">
-                APH Norms
+                APH 2025-26
               </span>
             </div>
-            <p className="text-[10px] text-[#5B6B7A] leading-none mt-0.5 hidden sm:block">
-              AICTE Regulation Bureau
+            <p className="text-[10px] text-[#5B6B7A] leading-none mt-1 hidden sm:block font-medium">
+              AICTE Regulation Bureau • Gov of India
             </p>
           </div>
         </Link>
+      </div>
+
+      {/* Center: Quick Search Command Hint (Desktop) */}
+      <div className="hidden xl:flex items-center">
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-[#E3E8EE] bg-[#F7F9FB] text-xs text-[#5B6B7A] w-72 cursor-pointer hover:border-[#0F6B6B]/40 transition-colors">
+          <span className="text-[11px] truncate">Search application ID, permanent ID, or doc hash...</span>
+          <kbd className="ml-auto text-[10px] font-mono px-1.5 py-0.5 rounded bg-white border border-[#E3E8EE] text-[#5B6B7A] shadow-2xs">
+            ⌘K
+          </kbd>
+        </div>
       </div>
 
       {/* Right side: Connection Status, Notifications, Persona Switcher, User Badge */}
       <div className="flex items-center gap-2 sm:gap-3">
         {/* Actual Live Connection Status Indicator */}
         <div
-          className={`hidden sm:flex items-center gap-1.5 px-2 py-1 rounded-lg text-[10px] font-semibold border ${
+          className={`hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-semibold border ${
             isOnline
-              ? "bg-emerald-50 text-emerald-700 border-emerald-200"
-              : "bg-rose-50 text-rose-700 border-rose-200"
+              ? "bg-emerald-50 text-emerald-800 border-emerald-200"
+              : "bg-rose-50 text-rose-800 border-rose-200"
           }`}
-          title={isOnline ? "Supabase / PostgreSQL and Storage Connected" : "Connection Interrupted"}
+          title={isOnline ? "Regulatory Engine Live · SHA-256 Ledger Synchronized" : "Connection Interrupted"}
         >
           <span
             className={`w-1.5 h-1.5 rounded-full ${
               isOnline ? "bg-emerald-500 animate-pulse" : "bg-rose-500"
             }`}
           />
-          <span>{isOnline ? "Online" : "Offline"}</span>
+          <span>{isOnline ? "Online · Connected" : "Offline · Reconnecting"}</span>
         </div>
 
         {/* Notifications Bell */}
         <div className="relative">
           <button
             onClick={() => setNotifOpen(!notifOpen)}
-            className="relative p-1.5 rounded-lg text-[#5B6B7A] hover:text-[#14202B] hover:bg-[#F7F9FB] transition-colors"
+            className="relative p-2 rounded-lg text-[#5B6B7A] hover:text-[#14202B] hover:bg-[#F7F9FB] transition-colors"
             title="Notifications"
             aria-label="In-App Notifications"
           >
             <Bell className="w-4 h-4" />
             {unreadCount > 0 && (
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center shadow-xs">
+              <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-rose-600 text-white text-[9px] font-bold rounded-full flex items-center justify-center shadow-xs">
                 {unreadCount}
               </span>
             )}
@@ -157,7 +167,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleMobileMenu }) => {
           {notifOpen && (
             <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-xl shadow-xl bg-white border border-[#E3E8EE] py-2 text-xs z-50 text-[#14202B]">
               <div className="px-4 py-2 border-b border-[#E3E8EE] flex items-center justify-between">
-                <span className="font-bold text-[#14202B] text-xs">Official Notifications</span>
+                <span className="font-bold text-[#14202B] text-xs">Regulatory Alerts & Notifications</span>
                 <span className="text-[10px] font-semibold text-[#5B6B7A] bg-[#F7F9FB] px-2 py-0.5 rounded border border-[#E3E8EE]">
                   {unreadCount} Unread
                 </span>

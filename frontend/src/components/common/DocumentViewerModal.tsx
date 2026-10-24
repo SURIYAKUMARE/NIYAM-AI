@@ -2,7 +2,17 @@
 
 import React, { useState } from "react";
 import { fetchApi } from "@/lib/api";
-import { X, Check, Edit2, AlertCircle, FileText, Shield, ExternalLink } from "lucide-react";
+import {
+  X,
+  Check,
+  Edit2,
+  AlertCircle,
+  FileText,
+  Shield,
+  Layers,
+  Sparkles,
+  Search,
+} from "lucide-react";
 
 interface ExtractedField {
   id: number;
@@ -37,7 +47,9 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
   fields,
   onFieldCorrected,
 }) => {
-  const [selectedField, setSelectedField] = useState<ExtractedField | null>(fields[0] || null);
+  const [selectedField, setSelectedField] = useState<ExtractedField | null>(
+    fields[0] || null
+  );
   const [editingFieldId, setEditingFieldId] = useState<number | null>(null);
   const [correctionValue, setCorrectionValue] = useState("");
   const [correctionReason, setCorrectionReason] = useState("");
@@ -80,122 +92,136 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/75 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg shadow-2xl border border-slate-300 w-full max-w-5xl h-[88vh] flex flex-col overflow-hidden">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-[#14202B]/80 backdrop-blur-xs flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl shadow-2xl border border-[#E3E8EE] w-full max-w-5xl h-[88vh] flex flex-col overflow-hidden">
         {/* Header */}
-        <div className="bg-navy-950 text-white px-6 py-4 flex items-center justify-between border-b border-navy-850">
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 rounded bg-blue-600/20 text-blue-400 flex items-center justify-center font-bold">
-              <FileText className="w-4 h-4" />
+        <div className="bg-[#14202B] text-white px-6 py-4 flex items-center justify-between border-b border-[#243447]">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-teal-500/20 text-teal-400 border border-teal-500/30 flex items-center justify-center font-bold">
+              <FileText className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-white tracking-wide">
-                Document Evidence Workspace: {documentTitle}
-              </h3>
-              <p className="text-xs text-slate-400">
-                File: {fileName} | Checklist Code: {checklistCode} | AI Advisory OCR Extraction
+              <div className="flex items-center gap-2">
+                <h3 className="text-sm font-bold text-white tracking-wide">
+                  {documentTitle}
+                </h3>
+                <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded bg-teal-900/60 text-teal-300 border border-teal-700/50">
+                  {checklistCode}
+                </span>
+              </div>
+              <p className="text-xs text-[#8FA2B4] mt-0.5">
+                File: {fileName} · AI Advisory OCR Extraction with Bounding-Box Geometry
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="text-slate-400 hover:text-white p-1 rounded hover:bg-navy-850 transition"
+            className="text-[#8FA2B4] hover:text-white px-2.5 py-1 rounded-lg hover:bg-white/10 transition text-xs font-semibold flex items-center gap-1"
+            title="Close Viewer"
           >
-            <X className="w-5 h-5" />
+            <span>Close</span>
+            <X className="w-4 h-4" />
           </button>
         </div>
 
         {/* Body - Split View */}
-        <div className="flex-1 flex overflow-hidden">
+        <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
           {/* Left: Document Visual Preview & Bounding Box */}
-          <div className="w-1/2 bg-slate-100 border-r border-slate-200 p-6 flex flex-col justify-between overflow-y-auto">
+          <div className="w-full md:w-1/2 bg-[#F7F9FB] border-r border-[#E3E8EE] p-6 flex flex-col justify-between overflow-y-auto">
             <div>
-              <div className="flex items-center justify-between mb-3 text-xs text-slate-500 font-medium">
-                <span>Visual Evidence Scan (Page {selectedField?.page_number || 1})</span>
-                <span className="text-[11px] bg-white px-2 py-0.5 rounded border border-slate-200">
-                  Scale: 100% | Bounding Box Overlay Active
+              <div className="flex items-center justify-between mb-3 text-xs text-[#5B6B7A] font-medium">
+                <span className="font-semibold text-[#14202B]">
+                  Visual Evidence Scan (Page {selectedField?.page_number || 1})
+                </span>
+                <span className="text-[10px] font-mono bg-white px-2 py-0.5 rounded border border-[#E3E8EE] text-[#0F6B6B] font-bold">
+                  Scale: 100% · Overlay Active
                 </span>
               </div>
 
               {/* Simulated Official Document Sheet */}
-              <div className="relative bg-white border border-slate-300 rounded shadow-md p-8 min-h-[460px] text-slate-800 text-xs font-serif leading-relaxed">
+              <div className="relative bg-white border border-[#E3E8EE] rounded-xl shadow-xs p-8 min-h-[460px] text-[#14202B] text-xs font-serif leading-relaxed">
                 {/* Government Watermark Header */}
-                <div className="text-center pb-4 mb-4 border-b border-slate-200">
-                  <div className="font-sans font-bold text-slate-900 uppercase tracking-widest text-[11px]">
-                    Statutory Regulatory Document
+                <div className="text-center pb-4 mb-4 border-b border-[#E3E8EE]">
+                  <div className="font-sans font-extrabold text-[#14202B] uppercase tracking-widest text-[11px]">
+                    Statutory Institutional Evidence Record
                   </div>
-                  <div className="text-[10px] text-slate-500 font-sans mt-0.5">
-                    Official Approval & Certification Record
+                  <div className="text-[10px] text-[#5B6B7A] font-sans mt-0.5">
+                    Official Regulatory Filing · AICTE National Bureau
                   </div>
                 </div>
 
                 <div className="space-y-4">
-                  <p className="text-[11px] text-slate-600">
-                    To Whom It May Concern / AICTE Western Regional Bureau,
+                  <p className="text-[11px] text-[#5B6B7A] font-sans">
+                    To Competent Scrutiny Authority / AICTE Bureau,
                   </p>
 
-                  <p className="text-justify text-[11px]">
-                    This is to verify that the compliance requirements under the prescribed Technical Education
-                    Regulations have been scrutinized for the academic session 2025-26.
+                  <p className="text-justify text-[11px] text-[#14202B] leading-relaxed">
+                    This is to formally certify and place on record that the statutory requirements
+                    and institutional norms under the AICTE Approval Process Handbook (APH 2025-26)
+                    have been compiled for the referenced engineering and technical programmes.
                   </p>
 
                   {/* Highlighted Bounding Box Target */}
                   {selectedField && (
-                    <div className="relative p-2.5 rounded bg-blue-50/70 border-2 border-blue-500 shadow-sm transition">
-                      <div className="absolute -top-2.5 left-2 px-1.5 py-0.2 rounded bg-blue-600 text-white font-sans text-[9px] font-bold tracking-wider">
-                        EXTRACTED FIELD: {selectedField.field_name.toUpperCase()}
+                    <div className="relative p-3 rounded-lg bg-teal-50/80 border-2 border-[#0F6B6B] shadow-xs transition-all">
+                      <div className="absolute -top-2.5 left-2 px-2 py-0.5 rounded bg-[#0F6B6B] text-white font-sans text-[9px] font-bold tracking-wider uppercase">
+                        FIELD: {selectedField.field_name.replace(/_/g, " ")}
                       </div>
-                      <p className="font-mono text-xs text-blue-900 font-semibold mt-1">
+                      <p className="font-mono text-xs text-[#14202B] font-bold mt-1">
                         &quot;{selectedField.raw_text_excerpt || selectedField.original_value}&quot;
                       </p>
-                      <div className="text-[10px] font-sans text-slate-500 mt-1 flex items-center justify-between">
-                        <span>Confidence: {(selectedField.confidence_score * 100).toFixed(0)}%</span>
-                        <span>Parser: {selectedField.extraction_method}</span>
+                      <div className="text-[10px] font-sans text-[#5B6B7A] mt-2 flex items-center justify-between border-t border-teal-200/60 pt-1">
+                        <span className="font-semibold text-[#0F6B6B]">
+                          Confidence: {(selectedField.confidence_score * 100).toFixed(0)}%
+                        </span>
+                        <span className="font-mono text-[9px]">
+                          Parser: {selectedField.extraction_method}
+                        </span>
                       </div>
                     </div>
                   )}
 
-                  <p className="text-[11px] text-slate-600 text-justify">
-                    The details provided above are referenced in accordance with the official registration records
-                    and land / structural safety clearances issued by the competent regional authority.
+                  <p className="text-[11px] text-[#5B6B7A] text-justify font-sans leading-relaxed">
+                    All land titles, structural safety assurances, building carpet measurements, and
+                    cadre ratios attested herein conform strictly with relevant legal enactments.
                   </p>
 
-                  <div className="pt-8 flex justify-between items-end text-[10px] text-slate-500 font-sans">
+                  <div className="pt-8 flex justify-between items-end text-[10px] text-[#5B6B7A] font-sans border-t border-[#E3E8EE]/50 mt-6">
                     <div>
-                      <div className="font-semibold text-slate-700">Digital Seal / QR Verified</div>
-                      <div>Ref: AICTE-SEC-DOC-2025</div>
+                      <div className="font-bold text-[#14202B]">Digital Verification Stamp</div>
+                      <div className="font-mono text-[9px]">SHA256: 8f3a9e...e7b2</div>
                     </div>
                     <div className="text-right">
-                      <div className="font-bold text-slate-800">Authorized Signatory</div>
-                      <div>Competent Regulatory Authority</div>
+                      <div className="font-bold text-[#14202B]">Authorized Signatory</div>
+                      <div>Apex Institute Registrar</div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="mt-4 p-2.5 bg-blue-50 rounded border border-blue-200 text-blue-800 text-[11px] flex items-center space-x-2">
-              <Shield className="w-4 h-4 text-blue-600 flex-shrink-0" />
+            <div className="mt-4 p-3 bg-white rounded-xl border border-[#E3E8EE] text-[11px] text-[#5B6B7A] flex items-center gap-2.5">
+              <Shield className="w-4 h-4 text-[#0F6B6B] shrink-0" />
               <span>
-                Visual bounding boxes are computed directly from document layout geometry to ensure verifiable provenance.
+                Bounding box coordinates provide traceable spatial provenance directly from the uploaded artifact.
               </span>
             </div>
           </div>
 
           {/* Right: Extracted Fields & Human-in-the-Loop Correction */}
-          <div className="w-1/2 bg-white p-6 overflow-y-auto flex flex-col">
-            <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-200">
-              <h4 className="text-xs font-bold text-slate-800 uppercase tracking-wider">
-                Extracted Regulatory Fields ({fields.length})
+          <div className="w-full md:w-1/2 bg-white p-6 overflow-y-auto flex flex-col">
+            <div className="flex items-center justify-between pb-3 mb-4 border-b border-[#E3E8EE]">
+              <h4 className="text-xs font-bold text-[#14202B] uppercase tracking-wider">
+                Extracted Fields ({fields.length})
               </h4>
-              <span className="text-[11px] text-slate-500">
-                Click a field to inspect bounding box
+              <span className="text-[11px] text-[#5B6B7A]">
+                Select a field to highlight geometry
               </span>
             </div>
 
             {successMsg && (
-              <div className="mb-4 p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs rounded flex items-center space-x-2">
-                <Check className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+              <div className="mb-4 p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs rounded-xl flex items-center gap-2">
+                <Check className="w-4 h-4 text-emerald-600 shrink-0" />
                 <span>{successMsg}</span>
               </div>
             )}
@@ -209,25 +235,25 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
                   <div
                     key={f.id}
                     onClick={() => setSelectedField(f)}
-                    className={`p-3 rounded-lg border transition cursor-pointer ${
+                    className={`p-3.5 rounded-xl border transition-all cursor-pointer ${
                       isSelected
-                        ? "border-blue-500 bg-blue-50/30 ring-1 ring-blue-500"
-                        : "border-slate-200 hover:border-slate-300 bg-slate-50/50"
+                        ? "border-[#0F6B6B] bg-teal-50/30 ring-1 ring-[#0F6B6B]"
+                        : "border-[#E3E8EE] hover:border-[#0F6B6B]/40 bg-white"
                     }`}
                   >
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-center space-x-2">
-                        <span className="text-xs font-bold text-slate-900 capitalize">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="text-xs font-bold text-[#14202B] capitalize">
                           {f.field_name.replace(/_/g, " ")}
                         </span>
                         {f.is_low_confidence && !f.is_corrected && (
-                          <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-amber-100 text-amber-800 border border-amber-300 flex items-center space-x-1">
-                            <AlertCircle className="w-3 h-3" />
+                          <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200 flex items-center gap-1">
+                            <AlertCircle className="w-3 h-3 text-amber-600" />
                             <span>Low Conf ({(f.confidence_score * 100).toFixed(0)}%)</span>
                           </span>
                         )}
                         {f.is_corrected && (
-                          <span className="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-100 text-emerald-800 border border-emerald-300">
+                          <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
                             Human Corrected
                           </span>
                         )}
@@ -239,7 +265,7 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
                             e.stopPropagation();
                             handleStartCorrection(f);
                           }}
-                          className="flex items-center space-x-1 text-[11px] text-blue-600 hover:text-blue-800 font-medium px-2 py-0.5 rounded hover:bg-blue-100 transition"
+                          className="flex items-center gap-1 text-[11px] text-[#0F6B6B] hover:text-[#0a4f4f] font-semibold px-2 py-0.5 rounded-lg hover:bg-teal-50 transition"
                         >
                           <Edit2 className="w-3 h-3" />
                           <span>Correct</span>
@@ -249,49 +275,50 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
 
                     {!isEditing ? (
                       <div className="mt-2 text-xs">
-                        <div className="text-slate-700 font-medium font-mono bg-white px-2.5 py-1.5 rounded border border-slate-200">
+                        <div className="text-[#14202B] font-mono font-bold bg-[#F7F9FB] px-3 py-1.5 rounded-lg border border-[#E3E8EE]">
                           {f.corrected_value || f.original_value || "<Empty>"}
                         </div>
                         {f.is_corrected && (
-                          <div className="text-[11px] text-slate-500 mt-1">
-                            Original OCR extracted value: <span className="line-through">{f.original_value}</span>
+                          <div className="text-[11px] text-[#5B6B7A] mt-1.5 font-medium">
+                            Original OCR extracted value:{" "}
+                            <span className="line-through text-rose-600">{f.original_value}</span>
                           </div>
                         )}
                       </div>
                     ) : (
-                      <div className="mt-3 p-3 bg-white border border-blue-300 rounded space-y-2.5">
-                        <div className="text-[11px] font-semibold text-slate-700">
-                          Authorize Field Value Correction:
+                      <div className="mt-3 p-3.5 bg-[#F7F9FB] border border-[#0F6B6B]/40 rounded-xl space-y-2.5">
+                        <div className="text-[11px] font-bold text-[#14202B]">
+                          Authorize Field Value Correction
                         </div>
                         <div>
-                          <label className="text-[10px] text-slate-500 font-medium block mb-1">
+                          <label className="text-[10px] text-[#5B6B7A] font-bold uppercase tracking-wider block mb-1">
                             New Verified Value
                           </label>
                           <input
                             type="text"
                             value={correctionValue}
                             onChange={(e) => setCorrectionValue(e.target.value)}
-                            className="w-full text-xs px-2.5 py-1.5 border border-slate-300 rounded focus:ring-1 focus:ring-blue-500 outline-none"
+                            className="w-full text-xs px-3 py-1.5 border border-[#E3E8EE] rounded-lg bg-white text-[#14202B] focus:ring-2 focus:ring-[#0F6B6B] outline-none"
                             placeholder="Enter corrected value"
                           />
                         </div>
                         <div>
-                          <label className="text-[10px] text-slate-500 font-medium block mb-1">
+                          <label className="text-[10px] text-[#5B6B7A] font-bold uppercase tracking-wider block mb-1">
                             Mandatory Correction Reason (Audit Trail)
                           </label>
                           <input
                             type="text"
                             value={correctionReason}
                             onChange={(e) => setCorrectionReason(e.target.value)}
-                            className="w-full text-xs px-2.5 py-1.5 border border-slate-300 rounded focus:ring-1 focus:ring-blue-500 outline-none"
+                            className="w-full text-xs px-3 py-1.5 border border-[#E3E8EE] rounded-lg bg-white text-[#14202B] focus:ring-2 focus:ring-[#0F6B6B] outline-none"
                             placeholder="e.g., OCR misread blurred character 'I' as '1' in institute name"
                           />
                         </div>
-                        <div className="flex items-center justify-end space-x-2 pt-1">
+                        <div className="flex items-center justify-end gap-2 pt-1">
                           <button
                             type="button"
                             onClick={() => setEditingFieldId(null)}
-                            className="px-2.5 py-1 text-xs text-slate-600 hover:bg-slate-100 rounded"
+                            className="px-3 py-1 text-xs text-[#5B6B7A] hover:bg-[#E3E8EE] rounded-lg font-medium"
                           >
                             Cancel
                           </button>
@@ -299,7 +326,7 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
                             type="button"
                             disabled={isSubmitting}
                             onClick={() => handleSaveCorrection(f.id)}
-                            className="px-3 py-1 text-xs bg-blue-600 text-white font-medium rounded hover:bg-blue-700 transition"
+                            className="px-3.5 py-1 text-xs bg-[#0F6B6B] hover:bg-[#0a4f4f] text-white font-semibold rounded-lg transition shadow-xs disabled:opacity-60"
                           >
                             {isSubmitting ? "Saving..." : "Save & Record Audit"}
                           </button>
@@ -311,8 +338,8 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
               })}
             </div>
 
-            <div className="mt-4 pt-3 border-t border-slate-200 text-[11px] text-slate-500">
-              Note: Field corrections maintain an append-only cryptographic log linking the modifying user, original OCR reading, timestamp, and justification.
+            <div className="mt-4 pt-3 border-t border-[#E3E8EE] text-[10px] text-[#5B6B7A] leading-relaxed">
+              Field corrections maintain an append-only cryptographic log linking the modifying user, original OCR reading, timestamp, and justification.
             </div>
           </div>
         </div>

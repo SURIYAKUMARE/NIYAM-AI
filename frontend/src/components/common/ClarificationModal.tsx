@@ -2,8 +2,7 @@
 
 import React, { useState } from "react";
 import { fetchApi } from "@/lib/api";
-import { useAuth } from "@/context/AuthContext";
-import { X, MessageSquare, Send, CheckCircle2 } from "lucide-react";
+import { X, MessageSquare, Send } from "lucide-react";
 
 interface ClarificationModalProps {
   isOpen: boolean;
@@ -65,73 +64,78 @@ export const ClarificationModal: React.FC<ClarificationModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/75 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg shadow-2xl border border-slate-300 w-full max-w-lg overflow-hidden">
-        <div className="bg-navy-950 text-white px-6 py-4 flex items-center justify-between border-b border-navy-850">
-          <div className="flex items-center space-x-2.5">
-            <MessageSquare className="w-5 h-5 text-blue-400" />
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-[#14202B]/80 backdrop-blur-xs flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl shadow-2xl border border-[#E3E8EE] w-full max-w-lg overflow-hidden">
+        {/* Header */}
+        <div className="bg-[#14202B] text-white px-6 py-4 flex items-center justify-between border-b border-[#243447]">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-teal-500/20 text-teal-400 border border-teal-500/30 flex items-center justify-center font-bold">
+              <MessageSquare className="w-5 h-5" />
+            </div>
             <h3 className="text-sm font-bold text-white">
-              {isResponding ? "Respond to Official Clarification Query" : "Issue Scrutiny Clarification Notice"}
+              {isResponding
+                ? "Respond to Official Clarification Query"
+                : "Issue Scrutiny Clarification Notice"}
             </h3>
           </div>
-          <button onClick={onClose} className="text-slate-400 hover:text-white">
+          <button
+            onClick={onClose}
+            className="text-[#8FA2B4] hover:text-white p-1.5 rounded-lg hover:bg-white/10 transition"
+          >
             <X className="w-5 h-5" />
           </button>
         </div>
 
+        {/* Form */}
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          {existingQuestion && (
-            <div className="p-3 bg-blue-50 border border-blue-200 rounded text-xs">
-              <span className="font-bold text-blue-900 block mb-1">Official Query from Scrutiny Officer:</span>
-              <p className="text-blue-800">{existingQuestion}</p>
+          {isResponding && existingQuestion && (
+            <div className="p-3.5 bg-[#F7F9FB] rounded-xl border border-[#E3E8EE] space-y-1">
+              <span className="text-[10px] font-bold text-[#5B6B7A] uppercase tracking-wider block">
+                Official Scrutiny Query:
+              </span>
+              <p className="text-xs text-[#14202B] font-medium leading-relaxed">
+                &quot;{existingQuestion}&quot;
+              </p>
             </div>
           )}
 
-          {!isResponding ? (
-            <div>
-              <label className="text-xs font-bold text-slate-800 block mb-1">
-                Specific Clarification Required from Institution
-              </label>
-              <textarea
-                rows={4}
-                value={question}
-                onChange={(e) => setQuestion(e.target.value)}
-                className="w-full text-xs px-3 py-2 border border-slate-300 rounded focus:ring-1 focus:ring-blue-500 outline-none"
-                placeholder="Specify the exact document, clause, discrepancy, or missing information the institution must rectify..."
-                required
-              />
-            </div>
-          ) : (
-            <div>
-              <label className="text-xs font-bold text-slate-800 block mb-1">
-                Institutional Explanation / Rectification Statement
-              </label>
-              <textarea
-                rows={4}
-                value={response}
-                onChange={(e) => setResponse(e.target.value)}
-                className="w-full text-xs px-3 py-2 border border-slate-300 rounded focus:ring-1 focus:ring-blue-500 outline-none"
-                placeholder="State your institutional clarification, resolution steps, or references to uploaded rectification documents..."
-                required
-              />
-            </div>
-          )}
+          <div>
+            <label className="text-xs font-bold text-[#14202B] block mb-1.5">
+              {isResponding
+                ? "Institutional Response & Evidence Submission"
+                : "Clarification Query for Applicant"}
+            </label>
+            <textarea
+              required
+              rows={4}
+              value={isResponding ? response : question}
+              onChange={(e) =>
+                isResponding ? setResponse(e.target.value) : setQuestion(e.target.value)
+              }
+              placeholder={
+                isResponding
+                  ? "Provide point-by-point clarification, land registration references, or rectified document details..."
+                  : "Specify the clause deficiency, illegible document page, or clarification required..."
+              }
+              className="w-full text-xs p-3 border border-[#E3E8EE] rounded-xl bg-[#F7F9FB] text-[#14202B] focus:ring-2 focus:ring-[#0F6B6B] outline-none placeholder-[#5B6B7A]/60"
+            />
+          </div>
 
-          <div className="flex items-center justify-end space-x-3 pt-3 border-t border-slate-200">
+          <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-[#E3E8EE]">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-xs text-slate-700 hover:bg-slate-100 rounded border border-slate-300"
+              className="px-4 py-2 text-xs font-semibold text-[#5B6B7A] hover:bg-[#F7F9FB] rounded-xl transition"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-5 py-2 text-xs bg-navy-900 text-white font-medium rounded hover:bg-navy-850 transition flex items-center space-x-1.5"
+              className="px-5 py-2 text-xs font-semibold bg-[#0F6B6B] hover:bg-[#0a4f4f] text-white rounded-xl shadow-xs transition flex items-center gap-1.5 disabled:opacity-60"
             >
-              <Send className="w-4 h-4 text-blue-400" />
-              <span>{isSubmitting ? "Submitting..." : isResponding ? "Submit Institutional Response" : "Dispatch Clarification"}</span>
+              <Send className="w-3.5 h-3.5" />
+              <span>{isSubmitting ? "Submitting..." : isResponding ? "Submit Reply" : "Issue Notice"}</span>
             </button>
           </div>
         </form>

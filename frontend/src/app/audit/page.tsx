@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchApi } from "@/lib/api";
 import { useAuth } from "@/context/AuthContext";
+import { ContextPanel } from "@/components/stitch/ContextPanel";
 import {
   History,
   ShieldCheck,
@@ -12,7 +13,7 @@ import {
   Search,
   Filter,
   Lock,
-  ExternalLink
+  Download,
 } from "lucide-react";
 
 export default function AuditHistoryPage() {
@@ -34,7 +35,7 @@ export default function AuditHistoryPage() {
         fetchApi(`/audit?${params.toString()}`),
         fetchApi("/audit/verify-chain"),
       ]);
-      setLogs(logsData);
+      setLogs(logsData || []);
       setChainStatus(chainData);
     } catch (err) {
       console.error(err);
@@ -54,31 +55,28 @@ export default function AuditHistoryPage() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-white p-6 rounded-lg border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div>
-          <span className="px-2.5 py-0.5 rounded text-[11px] font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
-            Statutory Oversight & Traceability
-          </span>
-          <h1 className="text-xl font-bold text-slate-900 mt-1">
-            Append-Only Audit History & Provenance Ledger
-          </h1>
-          <p className="text-xs text-slate-500 mt-0.5">
-            Cryptographically chained SHA-256 historical log of all uploads, OCR extractions, rule runs, corrections, and authority decisions
-          </p>
-        </div>
-
-        <div className="flex items-center space-x-2">
+      <ContextPanel
+        title="Tamper-Evident Regulatory Audit Ledger"
+        subtitle="Cryptographically chained SHA-256 historical log of all uploads, OCR extractions, rule runs, field corrections, and authority determinations."
+        badge="Statutory Traceability"
+      >
+        <div className="flex items-center gap-2">
           <button
             onClick={() => {
-              const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(logs, null, 2));
+              const dataStr =
+                "data:text/json;charset=utf-8," +
+                encodeURIComponent(JSON.stringify(logs, null, 2));
               const downloadAnchor = document.createElement("a");
               downloadAnchor.setAttribute("href", dataStr);
-              downloadAnchor.setAttribute("download", `Audit_Ledger_Export_${new Date().toISOString().slice(0, 10)}.json`);
+              downloadAnchor.setAttribute(
+                "download",
+                `Audit_Ledger_Export_${new Date().toISOString().slice(0, 10)}.json`
+              );
               document.body.appendChild(downloadAnchor);
               downloadAnchor.click();
               downloadAnchor.remove();
             }}
-            className="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded shadow-sm"
+            className="px-3 py-1.5 bg-white border border-[#E3E8EE] hover:bg-[#F7F9FB] text-[#14202B] text-xs font-semibold rounded-lg shadow-xs transition"
           >
             Export JSON
           </button>
@@ -100,77 +98,83 @@ export default function AuditHistoryPage() {
               a.click();
               a.remove();
             }}
-            className="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded shadow-sm"
+            className="px-3 py-1.5 bg-white border border-[#E3E8EE] hover:bg-[#F7F9FB] text-[#14202B] text-xs font-semibold rounded-lg shadow-xs transition"
           >
             Export CSV
           </button>
           <button
             onClick={loadAuditData}
-            className="p-2 text-slate-500 hover:text-slate-800 hover:bg-slate-100 rounded transition self-start md:self-auto"
+            className="p-2 text-[#5B6B7A] hover:text-[#14202B] hover:bg-[#F7F9FB] rounded-lg border border-[#E3E8EE] transition"
             title="Refresh Audit Records"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
           </button>
         </div>
-      </div>
+      </ContextPanel>
 
       {/* Cryptographic Chain Integrity Verification Banner */}
       {chainStatus && (
-        <div className="p-4 rounded-lg bg-slate-900 text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-md border border-slate-800 text-xs">
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 rounded bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold">
+        <div className="p-4 sm:p-5 rounded-xl bg-[#14202B] text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs border border-[#243447]">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-teal-500/20 text-teal-400 border border-teal-500/30 flex items-center justify-center font-bold shrink-0">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
-              <div className="flex items-center space-x-2">
-                <span className="font-bold text-emerald-400">
-                  {chainStatus.status === "VERIFIED_TAMPER_EVIDENT" ? "Cryptographic Chain Verified Intact" : "Chain Integrity Anomaly"}
+              <div className="flex items-center gap-2">
+                <span className="font-bold text-teal-300 text-xs">
+                  {chainStatus.status === "VERIFIED_TAMPER_EVIDENT"
+                    ? "Cryptographic Chain Verified Intact"
+                    : "Chain Integrity Anomaly"}
                 </span>
-                <span className="text-[10px] bg-slate-800 px-2 py-0.5 rounded font-mono text-slate-300">
+                <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded font-mono text-white">
                   {chainStatus.verified_records} Blocks Verified
                 </span>
               </div>
-              <p className="text-slate-400 text-[11px] mt-0.5">
-                Every record is hashed and salted with the preceding record block. Tamper-evident chaining active.
+              <p className="text-[#8FA2B4] text-[11px] mt-0.5">
+                Every record is hashed and chained with the preceding block. Tamper-evident verification active.
               </p>
             </div>
           </div>
 
-          <div className="text-right text-[10px] font-mono text-slate-400">
-            <div>Latest Block Hash: <span className="text-slate-200">{chainStatus.latest_block_hash?.slice(0, 16)}...</span></div>
-            <div>Genesis Block: <span className="text-slate-400">GENESIS_BLOCK_2025</span></div>
+          <div className="text-right text-[10px] font-mono text-[#8FA2B4] shrink-0">
+            <div>
+              Latest Block: <span className="text-white font-bold">{chainStatus.latest_block_hash?.slice(0, 16)}...</span>
+            </div>
+            <div>
+              Genesis Block: <span className="text-[#8FA2B4]">GENESIS_BLOCK_2025</span>
+            </div>
           </div>
         </div>
       )}
 
       {/* Filter and Search Bar */}
-      <div className="bg-white p-4 rounded-lg border border-slate-200 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
-        <form onSubmit={handleSearchSubmit} className="flex items-center space-x-2 w-full sm:w-80">
+      <div className="bg-white p-4 rounded-xl border border-[#E3E8EE] shadow-xs flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+        <form onSubmit={handleSearchSubmit} className="flex items-center gap-2 w-full sm:w-80">
           <div className="relative w-full">
-            <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-slate-400" />
+            <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-[#5B6B7A]" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by action, actor, or entity..."
-              className="w-full pl-8 pr-3 py-1.5 border border-slate-300 rounded focus:ring-1 focus:ring-blue-500 outline-none text-xs"
+              className="w-full pl-8 pr-3 py-1.5 border border-[#E3E8EE] rounded-xl bg-white text-[#14202B] focus:ring-2 focus:ring-[#0F6B6B] outline-none text-xs"
             />
           </div>
           <button
             type="submit"
-            className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium rounded transition"
+            className="px-3 py-1.5 bg-[#F7F9FB] hover:bg-[#E3E8EE] text-[#14202B] font-semibold rounded-xl transition border border-[#E3E8EE]"
           >
             Search
           </button>
         </form>
 
-        <div className="flex items-center space-x-2 w-full sm:w-auto">
-          <Filter className="w-3.5 h-3.5 text-slate-400" />
-          <span className="text-slate-500 font-medium">Event Category:</span>
+        <div className="flex items-center gap-2 w-full sm:w-auto">
+          <Filter className="w-3.5 h-3.5 text-[#5B6B7A]" />
+          <span className="text-[#5B6B7A] font-semibold">Event Category:</span>
           <select
             value={eventTypeFilter}
             onChange={(e) => setEventTypeFilter(e.target.value)}
-            className="px-2.5 py-1.5 border border-slate-300 rounded focus:ring-1 focus:ring-blue-500 outline-none text-xs"
+            className="px-2.5 py-1.5 border border-[#E3E8EE] rounded-xl bg-white text-[#14202B] focus:ring-1 focus:ring-[#0F6B6B] outline-none text-xs"
           >
             <option value="">All Event Categories ({logs.length})</option>
             <option value="APPLICATION_SUBMISSION">Application Submissions</option>
@@ -187,61 +191,63 @@ export default function AuditHistoryPage() {
       </div>
 
       {/* Audit Log Table */}
-      <div className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
-        <table className="w-full text-left text-xs">
-          <thead className="bg-slate-50 text-slate-600 font-semibold border-b border-slate-200">
-            <tr>
-              <th className="px-6 py-3">Timestamp (UTC)</th>
-              <th className="px-6 py-3">Actor & Role</th>
-              <th className="px-6 py-3">Event Type</th>
-              <th className="px-6 py-3">Action Description & Target</th>
-              <th className="px-6 py-3 text-right">Cryptographic SHA-256 Block</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100">
-            {loading ? (
+      <div className="bg-white rounded-xl border border-[#E3E8EE] shadow-xs overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-xs">
+            <thead className="bg-[#F7F9FB] text-[#5B6B7A] font-bold text-[10px] uppercase tracking-wider border-b border-[#E3E8EE]">
               <tr>
-                <td colSpan={5} className="px-6 py-8 text-center text-slate-400">
-                  Loading audit logs...
-                </td>
+                <th className="px-5 py-3">Timestamp (UTC)</th>
+                <th className="px-5 py-3">Actor & Role</th>
+                <th className="px-5 py-3">Event Type</th>
+                <th className="px-5 py-3">Action Description & Target</th>
+                <th className="px-5 py-3 text-right">Cryptographic SHA-256 Block</th>
               </tr>
-            ) : logs.length === 0 ? (
-              <tr>
-                <td colSpan={5} className="px-6 py-8 text-center text-slate-400">
-                  No audit log entries found matching criteria.
-                </td>
-              </tr>
-            ) : (
-              logs.map((log) => (
-                <tr key={log.id} className="hover:bg-slate-50/70 transition">
-                  <td className="px-6 py-3.5 font-mono text-slate-500 text-[11px] whitespace-nowrap">
-                    {new Date(log.timestamp).toLocaleString()}
-                  </td>
-                  <td className="px-6 py-3.5 whitespace-nowrap">
-                    <div className="font-semibold text-slate-900">{log.actor_username}</div>
-                    <span className="text-[10px] text-slate-400 uppercase font-mono">{log.actor_role}</span>
-                  </td>
-                  <td className="px-6 py-3.5 whitespace-nowrap">
-                    <span className="font-mono text-[10px] bg-slate-100 text-slate-700 px-2 py-0.5 rounded border border-slate-200">
-                      {log.event_type}
-                    </span>
-                  </td>
-                  <td className="px-6 py-3.5 text-slate-700">
-                    <div className="font-medium text-slate-900">{log.action}</div>
-                    <div className="text-[11px] text-slate-400 mt-0.5">
-                      Target: {log.entity_type} ({log.entity_id}) | IP: {log.ip_address}
-                    </div>
-                  </td>
-                  <td className="px-6 py-3.5 text-right font-mono text-[10px] text-slate-400 whitespace-nowrap">
-                    <span className="bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200">
-                      {log.record_hash?.slice(0, 16)}...
-                    </span>
+            </thead>
+            <tbody className="divide-y divide-[#E3E8EE]/70">
+              {loading ? (
+                <tr>
+                  <td colSpan={5} className="px-6 py-8 text-center text-[#5B6B7A]">
+                    Loading audit logs...
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : logs.length === 0 ? (
+                <tr>
+                  <td colSpan={5} className="px-6 py-8 text-center text-[#5B6B7A]">
+                    No audit log entries found matching criteria.
+                  </td>
+                </tr>
+              ) : (
+                logs.map((log) => (
+                  <tr key={log.id} className="hover:bg-[#F7F9FB]/60 transition">
+                    <td className="px-5 py-3.5 font-mono text-[#5B6B7A] text-[11px] whitespace-nowrap">
+                      {new Date(log.timestamp).toLocaleString()}
+                    </td>
+                    <td className="px-5 py-3.5 whitespace-nowrap">
+                      <div className="font-bold text-[#14202B]">{log.actor_username}</div>
+                      <span className="text-[10px] text-[#5B6B7A] uppercase font-mono">{log.actor_role}</span>
+                    </td>
+                    <td className="px-5 py-3.5 whitespace-nowrap">
+                      <span className="font-mono text-[10px] bg-[#F7F9FB] text-[#14202B] px-2 py-0.5 rounded border border-[#E3E8EE]">
+                        {log.event_type}
+                      </span>
+                    </td>
+                    <td className="px-5 py-3.5 text-[#14202B]">
+                      <div className="font-semibold text-[#14202B]">{log.action}</div>
+                      <div className="text-[11px] text-[#5B6B7A] mt-0.5">
+                        Target: {log.entity_type} ({log.entity_id}) · IP: {log.ip_address}
+                      </div>
+                    </td>
+                    <td className="px-5 py-3.5 text-right font-mono text-[10px] text-[#5B6B7A] whitespace-nowrap">
+                      <span className="bg-[#F7F9FB] px-2 py-0.5 rounded border border-[#E3E8EE] font-bold text-[#0F6B6B]">
+                        {log.record_hash?.slice(0, 16)}...
+                      </span>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

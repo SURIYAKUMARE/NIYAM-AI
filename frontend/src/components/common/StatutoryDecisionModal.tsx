@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { fetchApi } from "@/lib/api";
 import { useAuth } from "@/context/AuthContext";
-import { X, CheckCircle2, ShieldCheck, AlertOctagon, HelpCircle } from "lucide-react";
+import { X, ShieldCheck, AlertOctagon, CheckCircle2 } from "lucide-react";
 
 interface StatutoryDecisionModalProps {
   isOpen: boolean;
@@ -62,96 +62,111 @@ export const StatutoryDecisionModal: React.FC<StatutoryDecisionModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-900/75 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg shadow-2xl border border-slate-300 w-full max-w-xl overflow-hidden">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-[#14202B]/80 backdrop-blur-xs flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl shadow-2xl border border-[#E3E8EE] w-full max-w-xl overflow-hidden">
         {/* Header */}
-        <div className="bg-navy-950 text-white px-6 py-4 flex items-center justify-between border-b border-navy-850">
-          <div className="flex items-center space-x-2.5">
-            <ShieldCheck className="w-5 h-5 text-blue-400" />
+        <div className="bg-[#14202B] text-white px-6 py-4 flex items-center justify-between border-b border-[#243447]">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-teal-500/20 text-teal-400 border border-teal-500/30 flex items-center justify-center font-bold">
+              <ShieldCheck className="w-5 h-5" />
+            </div>
             <div>
               <h3 className="text-sm font-bold text-white">
                 {isSupervisingAuthority ? "Record Statutory Regulatory Decision" : "Record Officer Scrutiny Recommendation"}
               </h3>
-              <p className="text-xs text-slate-400">
-                Application: {applicationNumber} ({institutionName})
+              <p className="text-xs text-[#8FA2B4] mt-0.5">
+                Application: <span className="font-mono text-white">{applicationNumber}</span> ({institutionName})
               </p>
             </div>
           </div>
-          <button onClick={onClose} className="text-slate-400 hover:text-white">
+          <button
+            onClick={onClose}
+            className="text-[#8FA2B4] hover:text-white p-1.5 rounded-lg hover:bg-white/10 transition"
+          >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          <div className="p-3 bg-amber-50 rounded border border-amber-200 text-amber-900 text-xs flex items-start space-x-2">
-            <AlertOctagon className="w-4 h-4 text-amber-700 flex-shrink-0 mt-0.5" />
+          <div className="p-3.5 bg-amber-50 rounded-xl border border-amber-200 text-amber-900 text-xs flex items-start gap-2.5">
+            <AlertOctagon className="w-4 h-4 text-amber-700 shrink-0 mt-0.5" />
             <div>
-              <span className="font-semibold">Statutory Authority Mandate:</span> Automated AI findings provide advisory risk indicators only. The authorized human official retains statutory authority and full legal accountability for approval, inspection, or deficiency decisions.
+              <span className="font-bold">Statutory Authority Mandate:</span> Automated AI advisory findings assist review. Authorized human officials retain exclusive statutory jurisdiction and full legal accountability for approval, inspection, or rejection orders.
             </div>
           </div>
 
           {!isSupervisingAuthority ? (
             <div>
-              <label className="text-xs font-bold text-slate-800 block mb-1">
+              <label className="text-xs font-bold text-[#14202B] block mb-1.5">
                 Scrutiny Officer Recommendation
               </label>
               <select
                 value={actionType}
                 onChange={(e) => setActionType(e.target.value)}
-                className="w-full text-xs px-3 py-2 border border-slate-300 rounded focus:ring-1 focus:ring-blue-500 outline-none"
+                className="w-full text-xs p-2.5 border border-[#E3E8EE] rounded-xl bg-[#F7F9FB] text-[#14202B] focus:ring-2 focus:ring-[#0F6B6B] outline-none"
               >
-                <option value="RECOMMENDED_FOR_APPROVAL">Recommend for Approval to Bureau Authority</option>
-                <option value="RECOMMENDED_FOR_INSPECTION">Recommend for Physical Campus Inspection / Expert Visit</option>
-                <option value="CLARIFICATION_REQUESTED">Recommend Clarification / Rectification Notice</option>
+                <option value="RECOMMENDED_FOR_APPROVAL">Recommend for Formal Approval</option>
+                <option value="DEFICIENCIES_COMMUNICATED">Communicate Deficiencies to Institution</option>
+                <option value="EXPERT_VISIT_SCHEDULED">Schedule Physical Expert Visit Committee (EVC)</option>
               </select>
             </div>
           ) : (
             <div>
-              <label className="text-xs font-bold text-slate-800 block mb-1">
-                Supervising Bureau Statutory Decision
+              <label className="text-xs font-bold text-[#14202B] block mb-1.5">
+                Final Regulatory Statutory Determination
               </label>
-              <select
-                value={statutoryDecision}
-                onChange={(e) => setStatutoryDecision(e.target.value)}
-                className="w-full text-xs px-3 py-2 border border-slate-300 rounded focus:ring-1 focus:ring-blue-500 outline-none"
-              >
-                <option value="APPROVE">GRANT APPROVAL (Issue Extension of Approval / Intake Letter)</option>
-                <option value="INSPECT">SANCTION EXPERT PHYSICAL INSPECTION</option>
-                <option value="REJECT">REFUSE APPROVAL (Deficiencies Unresolved)</option>
-              </select>
+              <div className="grid grid-cols-3 gap-2">
+                {[
+                  { id: "APPROVE", label: "Grant Approval", color: "border-emerald-500 bg-emerald-50 text-emerald-800" },
+                  { id: "DEFICIENT", label: "Issue Deficiency", color: "border-amber-500 bg-amber-50 text-amber-800" },
+                  { id: "REJECT", label: "Reject Order", color: "border-rose-500 bg-rose-50 text-rose-800" },
+                ].map((opt) => (
+                  <button
+                    key={opt.id}
+                    type="button"
+                    onClick={() => setStatutoryDecision(opt.id)}
+                    className={`py-2 px-3 text-xs font-bold rounded-xl border transition-all ${
+                      statutoryDecision === opt.id
+                        ? `${opt.color} ring-2 ring-[#0F6B6B]`
+                        : "border-[#E3E8EE] bg-white text-[#5B6B7A] hover:bg-[#F7F9FB]"
+                    }`}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
             </div>
           )}
 
           <div>
-            <label className="text-xs font-bold text-slate-800 block mb-1">
-              Statutory Justification & Observations (Recorded in Permanent Audit Trail)
+            <label className="text-xs font-bold text-[#14202B] block mb-1.5">
+              Official Comments & Statutory Justification
             </label>
             <textarea
+              required
               rows={4}
               value={comments}
               onChange={(e) => setComments(e.target.value)}
-              className="w-full text-xs px-3 py-2 border border-slate-300 rounded focus:ring-1 focus:ring-blue-500 outline-none"
-              placeholder="Detail the factual findings, document verifications, handbook clauses evaluated, and justification for this outcome..."
-              required
+              placeholder="Record detailed statutory justification, handbook clause references, and specific committee notes..."
+              className="w-full text-xs p-3 border border-[#E3E8EE] rounded-xl bg-[#F7F9FB] text-[#14202B] focus:ring-2 focus:ring-[#0F6B6B] outline-none placeholder-[#5B6B7A]/60"
             />
           </div>
 
-          <div className="flex items-center justify-end space-x-3 pt-3 border-t border-slate-200">
+          <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-[#E3E8EE]">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-xs text-slate-700 hover:bg-slate-100 rounded border border-slate-300"
+              className="px-4 py-2 text-xs font-semibold text-[#5B6B7A] hover:bg-[#F7F9FB] rounded-xl transition"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-5 py-2 text-xs bg-navy-900 text-white font-medium rounded hover:bg-navy-850 transition flex items-center space-x-1.5 shadow-sm"
+              className="px-5 py-2 text-xs font-semibold bg-[#0F6B6B] hover:bg-[#0a4f4f] text-white rounded-xl shadow-xs transition disabled:opacity-60"
             >
-              <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-              <span>{isSubmitting ? "Submitting..." : "Sign & Record Official Outcome"}</span>
+              {isSubmitting ? "Submitting..." : "Sign & Record Official Outcome"}
             </button>
           </div>
         </form>
