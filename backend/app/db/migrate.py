@@ -6,7 +6,7 @@ def run_migrations(db_path: str = "aicte_verify.db"):
         print(f"Database {db_path} does not exist yet. create_all will create schema.")
         return
 
-    conn = sqlite3.connect(db_path)
+    conn = sqlite3.connect(db_path, timeout=15.0)
     cursor = conn.cursor()
 
     columns_to_add = [

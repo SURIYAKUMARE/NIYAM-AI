@@ -44,3 +44,6 @@ Thumbs.db
 # Assistant & Agent Metadata
 .agents/
 skills-lock.json
+
+*.db-shm
+*.db-wal

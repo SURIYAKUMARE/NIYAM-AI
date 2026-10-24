@@ -2,9 +2,11 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { API_BASE_URL, fetchApi } from "@/lib/api";
+import { createClient } from "@/lib/supabase/client";
 
 export interface User {
   id: number;
+  auth_user_id?: string;
   username: string;
   email: string;
   full_name: string;
@@ -12,6 +14,7 @@ export interface User {
   institution_id?: number | null;
   institution_name?: string | null;
   designation?: string | null;
+  mfa_enrolled?: boolean;
 }
 
 export interface DemoAccount {
@@ -23,16 +26,25 @@ export interface DemoAccount {
   description: string;
 }
 
+export interface MfaChallengeState {
+  required: boolean;
+  factorId?: string;
+  sessionToken?: string;
+  user?: User;
+}
+
 interface AuthContextType {
   user: User | null;
   token: string | null;
   isLoading: boolean;
   demoAccounts: DemoAccount[];
-  login: (username: string, password?: string) => Promise<void>;
+  login: (emailOrUsername: string, password?: string) => Promise<{ mfaRequired?: boolean; sessionToken?: string; user?: User }>;
+  verifyMfa: (code: string, sessionToken?: string) => Promise<User | void>;
   switchRole: (username: string) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
   activeScenario: number | null;
   setActiveScenario: (scenarioNum: number | null) => void;
+  getRoleRedirect: (role?: string) => string;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -121,63 +133,250 @@ export const DEMO_SCENARIOS = [
   }
 ];
 
+export function getRoleRedirect(role?: string): string {
+  switch (role) {
+    case "applicant":
+      return "/institution/dashboard";
+    case "scrutiny_officer":
+      return "/officer/queue";
+    case "supervising_authority":
+      return "/authority/dashboard";
+    case "admin":
+      return "/admin/rules";
+    case "auditor":
+      return "/auditor/logs";
+    default:
+      return "/institution/dashboard";
+  }
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [demoAccounts, setDemoAccounts] = useState<DemoAccount[]>([]);
   const [activeScenario, setActiveScenario] = useState<number | null>(null);
+  const [currentSessionToken, setCurrentSessionToken] = useState<string | null>(null);
+
+  const supabase = createClient();
 
   useEffect(() => {
-    // Load demo accounts
+    // 1. Fetch demo personas for quick auditor switching
     fetch(`${API_BASE_URL}/auth/demo-accounts`)
       .then((res) => res.json())
       .then((data) => setDemoAccounts(data))
       .catch(() => {});
 
-    // Check stored token
-    const storedToken = localStorage.getItem("aicte_token");
-    const storedUser = localStorage.getItem("aicte_user");
-    if (storedToken && storedUser) {
-      setToken(storedToken);
+    // 2. Check for active Supabase Auth session
+    const checkSupabaseSession = async () => {
       try {
-        setUser(JSON.parse(storedUser));
-      } catch {}
-    } else {
-      // Auto-login as Scrutiny Officer by default so user immediately sees rich overview
-      login("officer", "password123").catch(() => {});
-    }
-    setIsLoading(false);
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+          setToken(session.access_token);
+          // Query user profile
+          const { data: profile } = await supabase
+            .from("users")
+            .select("*")
+            .eq("auth_user_id", session.user.id)
+            .single();
+
+          if (profile) {
+            setUser({
+              id: profile.id,
+              auth_user_id: session.user.id,
+              username: profile.username,
+              email: profile.email,
+              full_name: profile.full_name,
+              role: profile.role,
+              institution_id: profile.institution_id,
+              designation: profile.designation,
+              mfa_enrolled: profile.mfa_enrolled,
+            });
+            setIsLoading(false);
+            return;
+          }
+        }
+      } catch (e) {
+        // Fallback to backend session check
+      }
+
+      // 3. Fallback: Check backend session from cookies / local session storage
+      const storedToken = typeof window !== "undefined" ? localStorage.getItem("aicte_token") : null;
+      const storedUser = typeof window !== "undefined" ? localStorage.getItem("aicte_user") : null;
+      if (storedToken && storedUser) {
+        setToken(storedToken);
+        try {
+          setUser(JSON.parse(storedUser));
+        } catch {}
+      }
+      setIsLoading(false);
+    };
+
+    checkSupabaseSession();
+
+    // 4. Supabase Auth state listener
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (session) {
+        setToken(session.access_token);
+        try {
+          const { data: profile } = await supabase
+            .from("users")
+            .select("*")
+            .eq("auth_user_id", session.user.id)
+            .single();
+          if (profile) {
+            setUser({
+              id: profile.id,
+              auth_user_id: session.user.id,
+              username: profile.username,
+              email: profile.email,
+              full_name: profile.full_name,
+              role: profile.role,
+              institution_id: profile.institution_id,
+              designation: profile.designation,
+              mfa_enrolled: profile.mfa_enrolled,
+            });
+          }
+        } catch (err) {}
+      } else if (event === "SIGNED_OUT") {
+        setToken(null);
+        setUser(null);
+      }
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
 
-  const login = async (username: string, password = "password123") => {
+  const login = async (emailOrUsername: string, password = "password123") => {
     setIsLoading(true);
     try {
-      const data = await fetchApi("/auth/login", {
+      // Step A: Attempt Supabase Auth if configured
+      if (process.env.NEXT_PUBLIC_SUPABASE_URL && emailOrUsername.includes("@")) {
+        const { data: supaData, error: supaError } = await supabase.auth.signInWithPassword({
+          email: emailOrUsername,
+          password,
+        });
+
+        if (!supaError && supaData.session) {
+          // Check MFA AAL level
+          const { data: aalData } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+          if (aalData?.nextLevel === "aal2" && aalData.currentLevel !== "aal2") {
+            // Official account requires MFA challenge
+            return { mfaRequired: true };
+          }
+
+          setToken(supaData.session.access_token);
+          return { mfaRequired: false };
+        }
+      }
+
+      // Step B: Authenticate via NIYAM backend API
+      const res = await fetch(`${API_BASE_URL}/auth/login`, {
         method: "POST",
-        body: JSON.stringify({ username, password }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: emailOrUsername, password }),
       });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.detail || "Invalid user credentials. Please check your username and password.");
+      }
+
+      const data = await res.json();
+      if (data.mfa_required) {
+        setCurrentSessionToken(data.mfa_session_token);
+        return { mfaRequired: true, sessionToken: data.mfa_session_token, user: data.user };
+      }
+
       setToken(data.access_token);
       setUser(data.user);
-      localStorage.setItem("aicte_token", data.access_token);
-      localStorage.setItem("aicte_user", JSON.stringify(data.user));
-    } catch (err) {
-      console.error("Login failed:", err);
-      throw err;
+      if (typeof window !== "undefined") {
+        localStorage.setItem("aicte_token", data.access_token);
+        localStorage.setItem("aicte_user", JSON.stringify(data.user));
+      }
+      return { mfaRequired: false, user: data.user };
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const verifyMfa = async (code: string, sessionToken?: string) => {
+    setIsLoading(true);
+    try {
+      const tokenToUse = sessionToken || currentSessionToken;
+      if (!tokenToUse) {
+        throw new Error("No active MFA challenge session found. Please sign in again.");
+      }
+
+      const res = await fetch(`${API_BASE_URL}/auth/mfa/verify`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ mfa_session_token: tokenToUse, code }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.detail || "Invalid verification code or expired session.");
+      }
+
+      const data = await res.json();
+      setToken(data.access_token);
+      setUser(data.user);
+      if (typeof window !== "undefined") {
+        localStorage.setItem("aicte_token", data.access_token);
+        localStorage.setItem("aicte_user", JSON.stringify(data.user));
+      }
+      return data.user;
     } finally {
       setIsLoading(false);
     }
   };
 
   const switchRole = async (username: string) => {
-    await login(username, "password123");
+    // Quick persona switch for demonstration and audit evaluation
+    const res = await fetch(`${API_BASE_URL}/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, password: "password123" }),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.mfa_required) {
+        // Complete with demo TOTP secret
+        const totpRes = await fetch(`${API_BASE_URL}/auth/mfa/verify`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ mfa_session_token: data.mfa_session_token, code: "REC-DEMO-2025" }),
+        });
+        if (totpRes.ok) {
+          const verified = await totpRes.json();
+          setToken(verified.access_token);
+          setUser(verified.user);
+          localStorage.setItem("aicte_token", verified.access_token);
+          localStorage.setItem("aicte_user", JSON.stringify(verified.user));
+          return;
+        }
+      }
+      setToken(data.access_token);
+      setUser(data.user);
+      localStorage.setItem("aicte_token", data.access_token);
+      localStorage.setItem("aicte_user", JSON.stringify(data.user));
+    }
   };
 
-  const logout = () => {
+  const logout = async () => {
+    try {
+      await supabase.auth.signOut();
+    } catch {}
     setToken(null);
     setUser(null);
-    localStorage.removeItem("aicte_token");
-    localStorage.removeItem("aicte_user");
+    setCurrentSessionToken(null);
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("aicte_token");
+      localStorage.removeItem("aicte_user");
+    }
   };
 
   return (
@@ -188,10 +387,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         isLoading,
         demoAccounts,
         login,
+        verifyMfa,
         switchRole,
         logout,
         activeScenario,
         setActiveScenario,
+        getRoleRedirect,
       }}
     >
       {children}

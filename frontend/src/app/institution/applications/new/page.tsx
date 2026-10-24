@@ -91,7 +91,6 @@ export default function NewApplicationWizard() {
           notes: notes.trim() || undefined,
         }),
       });
-      alert(`Application ${res.application_number} successfully initiated! Loading checklist workspace.`);
       router.push(`/applications/${res.id}`);
     } catch (err: any) {
       alert(`Error creating application: ${err.message}`);

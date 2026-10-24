@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
-import { Header } from "@/components/layout/Header";
-import { Sidebar } from "@/components/layout/Sidebar";
-import { DemoScenarioBar } from "@/components/common/DemoScenarioBar";
+import { AppShell } from "@/components/layout/AppShell";
 
 export const metadata: Metadata = {
-  title: "Niyam — Institutional Application Review Platform",
-  description: "Decision-support workspace for preliminary application validation, document authentication, regulatory checking, and evidence-based review | AICTE Regulation Bureau Prototype.",
+  title: "Niyam (NIYAM) — Institutional Application Review & Compliance Verification",
+  description: "Administrative workspace for institutional application validation, document authentication, APH regulatory checking, and evidence-based review | AICTE Regulation Bureau.",
 };
 
 export default function RootLayout({
@@ -17,18 +15,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-slate-50 flex flex-col antialiased">
+      <body className="min-h-screen bg-[#F7F9FB] flex flex-col antialiased">
         <AuthProvider>
-          <DemoScenarioBar />
-          <Header />
-          <div className="flex-1 flex overflow-hidden">
-            <Sidebar />
-            <main className="flex-1 overflow-y-auto overflow-x-hidden bg-slate-50 p-4 sm:p-6 w-full max-w-full">
-              <div className="max-w-7xl mx-auto w-full">
-                {children}
-              </div>
-            </main>
-          </div>
+          <AppShell>
+            {children}
+          </AppShell>
         </AuthProvider>
       </body>
     </html>

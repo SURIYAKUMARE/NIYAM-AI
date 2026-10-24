@@ -310,23 +310,23 @@ export default function ApplicationWorkspacePage() {
       />
 
       {/* Flagship Header Card */}
-      <div className="bg-white p-6 rounded-lg border border-slate-200 shadow-sm">
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 pb-4 border-b border-slate-100">
+      <div className="bg-white p-6 rounded-xl border border-[#E3E8EE] shadow-xs">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 pb-4 border-b border-[#E3E8EE]/60">
           <div>
             <div className="flex flex-wrap items-center gap-2">
-              <span className="font-mono text-xs font-bold text-blue-900 bg-blue-50 px-2 py-0.5 rounded border border-blue-200">
+              <span className="font-mono text-xs font-bold text-[#0F6B6B] bg-teal-50 px-2.5 py-0.5 rounded-full border border-teal-200">
                 {application.application_number}
               </span>
               <StatusBadge status={application.status} type="application" />
-              <span className="text-[11px] text-slate-500 font-mono">
-                Rule Set Version: <strong className="text-slate-800">{application.rule_set_version}</strong>
+              <span className="text-[11px] text-[#5B6B7A] font-mono">
+                Rule Set Version: <strong className="text-[#14202B]">{application.rule_set_version}</strong>
               </span>
             </div>
-            <h1 className="text-xl font-bold text-slate-900 mt-2">
+            <h1 className="text-xl font-bold text-[#14202B] mt-2">
               {application.institution?.name || "Apex Institute of Technology"}
             </h1>
-            <p className="text-xs text-slate-500 mt-0.5">
-              Category: <span className="font-semibold text-slate-700 capitalize">{application.category_code.replace(/_/g, " ")}</span> | Academic Year: {application.academic_year} | AICTE ID: {application.institution?.aicte_permanent_id}
+            <p className="text-xs text-[#5B6B7A] mt-0.5">
+              Category: <span className="font-semibold text-[#14202B] capitalize">{application.category_code?.replace(/_/g, " ")}</span> | Academic Year: {application.academic_year} | AICTE ID: {application.institution?.aicte_permanent_id}
             </p>
           </div>
 
@@ -335,7 +335,7 @@ export default function ApplicationWorkspacePage() {
             <button
               onClick={handleRunValidation}
               disabled={isValidating}
-              className="px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded text-xs font-semibold flex items-center space-x-1.5 transition shadow-sm"
+              className="px-3.5 py-2 bg-[#0F6B6B] hover:bg-[#0a4f4f] text-white rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition shadow-sm disabled:opacity-60"
             >
               <Play className={`w-3.5 h-3.5 ${isValidating ? "animate-spin" : ""}`} />
               <span>{isValidating ? "Evaluating Rules..." : "Run AI Advisory Validation"}</span>
@@ -343,28 +343,28 @@ export default function ApplicationWorkspacePage() {
 
             <button
               onClick={handleDownloadReport}
-              className="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded text-xs font-semibold flex items-center space-x-1.5 transition border border-slate-300"
+              className="px-3 py-2 bg-white hover:bg-[#F7F9FB] text-[#14202B] rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition border border-[#E3E8EE] shadow-xs"
               title="Download CSV Validation Report"
             >
-              <Download className="w-3.5 h-3.5 text-slate-600" />
+              <Download className="w-3.5 h-3.5 text-[#5B6B7A]" />
               <span>CSV Report</span>
             </button>
 
             <button
               onClick={handleDownloadReceipt}
-              className="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded text-xs font-semibold flex items-center space-x-1.5 transition border border-slate-300"
+              className="px-3 py-2 bg-white hover:bg-[#F7F9FB] text-[#14202B] rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition border border-[#E3E8EE] shadow-xs"
               title="Download Tamper-Evident Submission Receipt"
             >
-              <FileText className="w-3.5 h-3.5 text-slate-600" />
+              <FileText className="w-3.5 h-3.5 text-[#5B6B7A]" />
               <span>Receipt</span>
             </button>
 
             {isApplicant && application.status === "DRAFT" && (
               <button
                 onClick={handleOpenSubmitModal}
-                className="px-4 py-2 bg-navy-900 hover:bg-navy-850 text-white rounded text-xs font-semibold flex items-center space-x-1.5 transition shadow-sm"
+                className="px-4 py-2 bg-[#0F6B6B] hover:bg-[#0a4f4f] text-white rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition shadow-sm"
               >
-                <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />
+                <CheckCircle className="w-3.5 h-3.5 text-emerald-300" />
                 <span>Submit for Scrutiny</span>
               </button>
             )}
@@ -372,9 +372,9 @@ export default function ApplicationWorkspacePage() {
             {isOfficerOrAuthority && (
               <button
                 onClick={() => setStatutoryModalOpen(true)}
-                className="px-4 py-2 bg-navy-900 hover:bg-navy-850 text-white rounded text-xs font-semibold flex items-center space-x-1.5 transition shadow-sm"
+                className="px-4 py-2 bg-[#0F6B6B] hover:bg-[#0a4f4f] text-white rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition shadow-sm"
               >
-                <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
+                <ShieldCheck className="w-3.5 h-3.5 text-amber-300" />
                 <span>
                   {user?.role === "supervising_authority" ? "Record Statutory Decision" : "Record Scrutiny Observation"}
                 </span>
@@ -385,35 +385,35 @@ export default function ApplicationWorkspacePage() {
 
         {/* Advisory Risk Bar & Snapshot */}
         <div className="mt-4 grid grid-cols-1 sm:grid-cols-4 gap-4 text-xs">
-          <div className="p-3 bg-slate-50 rounded border border-slate-200">
-            <span className="text-slate-500 text-[11px] block">AI Advisory Risk Score</span>
+          <div className="p-3 bg-white rounded-xl border border-[#E3E8EE] shadow-xs">
+            <span className="text-[#5B6B7A] text-[11px] block">AI Advisory Risk Score</span>
             <div className="flex items-center space-x-2 mt-1">
-              <span className={`text-base font-bold font-mono ${application.overall_risk_score > 50 ? "text-rose-600" : application.overall_risk_score > 20 ? "text-amber-600" : "text-emerald-600"}`}>
-                {application.overall_risk_score.toFixed(0)}%
+              <span className={`text-base font-bold font-mono ${application.overall_risk_score > 50 ? "text-rose-600" : application.overall_risk_score > 20 ? "text-amber-600" : "text-[#0F6B6B]"}`}>
+                {application.overall_risk_score?.toFixed(0) || 0}%
               </span>
-              <span className="text-[10px] text-slate-400">
+              <span className="text-[10px] text-[#5B6B7A]">
                 ({application.findings?.length || 0} advisory findings)
               </span>
             </div>
           </div>
 
-          <div className="p-3 bg-slate-50 rounded border border-slate-200">
-            <span className="text-slate-500 text-[11px] block">Checklist Completeness</span>
-            <span className="text-base font-bold text-slate-800 mt-1 block">
+          <div className="p-3 bg-white rounded-xl border border-[#E3E8EE] shadow-xs">
+            <span className="text-[#5B6B7A] text-[11px] block">Checklist Completeness</span>
+            <span className="text-base font-bold text-[#14202B] mt-1 block">
               {application.documents?.filter((d: any) => d.current_version_id).length} / {application.documents?.length || 6} Uploaded
             </span>
           </div>
 
-          <div className="p-3 bg-slate-50 rounded border border-slate-200">
-            <span className="text-slate-500 text-[11px] block">TER Regulatory Fee</span>
-            <span className="text-base font-bold text-emerald-600 mt-1 block">
+          <div className="p-3 bg-white rounded-xl border border-[#E3E8EE] shadow-xs">
+            <span className="text-[#5B6B7A] text-[11px] block">TER Regulatory Fee</span>
+            <span className="text-base font-bold text-emerald-700 mt-1 block">
               PAID & SETTLED
             </span>
           </div>
 
-          <div className="p-3 bg-slate-50 rounded border border-slate-200">
-            <span className="text-slate-500 text-[11px] block">Active Programme Intake</span>
-            <span className="text-base font-bold text-slate-800 mt-1 block">
+          <div className="p-3 bg-white rounded-xl border border-[#E3E8EE] shadow-xs">
+            <span className="text-[#5B6B7A] text-[11px] block">Active Programme Intake</span>
+            <span className="text-base font-bold text-[#14202B] mt-1 block">
               {application.approved_programmes?.reduce((s: number, p: any) => s + (p.intake || 0), 0) || 240} Seats
             </span>
           </div>
@@ -421,93 +421,93 @@ export default function ApplicationWorkspacePage() {
       </div>
 
       {/* Tabs Navigation */}
-      <div className="border-b border-slate-200 flex space-x-4 text-xs font-semibold">
+      <div className="bg-white rounded-t-xl border border-b-0 border-[#E3E8EE] px-4 pt-1 flex items-center gap-1 overflow-x-auto text-xs font-semibold">
         <button
           onClick={() => setActiveTab("checklist")}
-          className={`pb-3 px-2 flex items-center space-x-1.5 border-b-2 transition ${
+          className={`px-3.5 py-2.5 flex items-center gap-2 border-b-2 transition whitespace-nowrap -mb-px ${
             activeTab === "checklist"
-              ? "border-blue-600 text-blue-600 font-bold"
-              : "border-transparent text-slate-500 hover:text-slate-800"
+              ? "border-[#0F6B6B] text-[#0F6B6B] font-bold"
+              : "border-transparent text-[#5B6B7A] hover:text-[#14202B] hover:border-[#E3E8EE]"
           }`}
         >
-          <FileText className="w-4 h-4" />
+          <FileText className="w-3.5 h-3.5" />
           <span>Statutory Checklist & Uploads ({application.documents?.length || 0})</span>
         </button>
 
         <button
           onClick={() => setActiveTab("findings")}
-          className={`pb-3 px-2 flex items-center space-x-1.5 border-b-2 transition ${
+          className={`px-3.5 py-2.5 flex items-center gap-2 border-b-2 transition whitespace-nowrap -mb-px ${
             activeTab === "findings"
-              ? "border-blue-600 text-blue-600 font-bold"
-              : "border-transparent text-slate-500 hover:text-slate-800"
+              ? "border-[#0F6B6B] text-[#0F6B6B] font-bold"
+              : "border-transparent text-[#5B6B7A] hover:text-[#14202B] hover:border-[#E3E8EE]"
           }`}
         >
-          <AlertTriangle className="w-4 h-4" />
+          <AlertTriangle className="w-3.5 h-3.5" />
           <span>Compliance Findings ({application.findings?.length || 0})</span>
         </button>
 
         <button
           onClick={() => setActiveTab("verification")}
-          className={`pb-3 px-2 flex items-center space-x-1.5 border-b-2 transition ${
+          className={`px-3.5 py-2.5 flex items-center gap-2 border-b-2 transition whitespace-nowrap -mb-px ${
             activeTab === "verification"
-              ? "border-blue-600 text-blue-600 font-bold"
-              : "border-transparent text-slate-500 hover:text-slate-800"
+              ? "border-[#0F6B6B] text-[#0F6B6B] font-bold"
+              : "border-transparent text-[#5B6B7A] hover:text-[#14202B] hover:border-[#E3E8EE]"
           }`}
         >
-          <ShieldCheck className="w-4 h-4" />
+          <ShieldCheck className="w-3.5 h-3.5" />
           <span>Source Verifications</span>
         </button>
 
         <button
           onClick={() => setActiveTab("clarifications")}
-          className={`pb-3 px-2 flex items-center space-x-1.5 border-b-2 transition ${
+          className={`px-3.5 py-2.5 flex items-center gap-2 border-b-2 transition whitespace-nowrap -mb-px ${
             activeTab === "clarifications"
-              ? "border-blue-600 text-blue-600 font-bold"
-              : "border-transparent text-slate-500 hover:text-slate-800"
+              ? "border-[#0F6B6B] text-[#0F6B6B] font-bold"
+              : "border-transparent text-[#5B6B7A] hover:text-[#14202B] hover:border-[#E3E8EE]"
           }`}
         >
-          <MessageSquare className="w-4 h-4" />
+          <MessageSquare className="w-3.5 h-3.5" />
           <span>Official Clarifications</span>
         </button>
 
         <button
           onClick={() => setActiveTab("timeline")}
-          className={`pb-3 px-2 flex items-center space-x-1.5 border-b-2 transition ${
+          className={`px-3.5 py-2.5 flex items-center gap-2 border-b-2 transition whitespace-nowrap -mb-px ${
             activeTab === "timeline"
-              ? "border-blue-600 text-blue-600 font-bold"
-              : "border-transparent text-slate-500 hover:text-slate-800"
+              ? "border-[#0F6B6B] text-[#0F6B6B] font-bold"
+              : "border-transparent text-[#5B6B7A] hover:text-[#14202B] hover:border-[#E3E8EE]"
           }`}
         >
-          <Clock className="w-4 h-4" />
+          <Clock className="w-3.5 h-3.5" />
           <span>Review Actions & History</span>
         </button>
       </div>
 
       {/* TAB 1: Checklist & Evidence Upload */}
       {activeTab === "checklist" && (
-        <div className="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
-          <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
+        <div className="bg-white rounded-b-xl border border-[#E3E8EE] shadow-xs overflow-hidden">
+          <div className="px-6 py-4 border-b border-[#E3E8EE] flex items-center justify-between">
             <div>
-              <h3 className="text-sm font-bold text-slate-900">
+              <h3 className="text-xs font-bold text-[#14202B] uppercase tracking-wider">
                 Statutory Document Checklist (Rule Set {application.rule_set_version})
               </h3>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <p className="text-xs text-[#5B6B7A] mt-0.5">
                 Every document maintains immutable versioning, SHA-256 cryptographic provenance, and structured extraction
               </p>
             </div>
           </div>
 
-          <div className="divide-y divide-slate-100">
+          <div className="divide-y divide-[#E3E8EE]/60">
             {application.documents?.map((doc: any) => {
               const latestVersion = doc.versions?.[doc.versions.length - 1];
               return (
-                <div key={doc.id} className="p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-slate-50/50 transition">
+                <div key={doc.id} className="p-6 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-[#F7F9FB]/60 transition">
                   <div className="space-y-1">
                     <div className="flex items-center space-x-2">
-                      <span className="font-mono text-[10px] font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">
+                      <span className="font-mono text-[10px] font-semibold text-[#5B6B7A] bg-[#F7F9FB] px-2 py-0.5 rounded border border-[#E3E8EE]">
                         {doc.checklist_item_code}
                       </span>
-                      <h4 className="text-sm font-bold text-slate-900">{doc.title}</h4>
+                      <h4 className="text-sm font-bold text-[#14202B]">{doc.title}</h4>
                       {doc.is_mandatory && (
                         <span className="text-[10px] text-rose-700 bg-rose-50 px-1.5 py-0.5 rounded font-semibold border border-rose-200">
                           Mandatory
@@ -516,11 +516,11 @@ export default function ApplicationWorkspacePage() {
                     </div>
 
                     {latestVersion ? (
-                      <div className="text-xs text-slate-500 space-y-0.5 pt-1">
+                      <div className="text-xs text-[#5B6B7A] space-y-0.5 pt-1">
                         <div>
-                          File: <span className="font-semibold text-slate-800">{latestVersion.file_name}</span> (Version {latestVersion.version_number})
+                          File: <span className="font-semibold text-[#14202B]">{latestVersion.file_name}</span> (Version {latestVersion.version_number})
                         </div>
-                        <div className="font-mono text-[11px] text-slate-400">
+                        <div className="font-mono text-[11px] text-[#5B6B7A]">
                           SHA-256: {latestVersion.sha256_hash.slice(0, 16)}... | Size: {(latestVersion.file_size / 1024).toFixed(1)} KB
                         </div>
                       </div>
@@ -542,18 +542,18 @@ export default function ApplicationWorkspacePage() {
                             fields: latestVersion.extracted_fields || [],
                           });
                         }}
-                        className="px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded text-xs font-semibold flex items-center space-x-1.5 transition border border-blue-200"
+                        className="px-3 py-1.5 bg-teal-50 hover:bg-teal-100 text-[#0F6B6B] rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition border border-teal-200"
                       >
                         <SearchCode className="w-3.5 h-3.5" />
-                        <span>Inspect Extraction ({latestVersion.extracted_fields?.length || 0} fields)</span>
+                        <span>View & Verify ({latestVersion.extracted_fields?.length || 0} fields)</span>
                       </button>
                     )}
 
                     <button
                       onClick={() => handleFileUploadTrigger(doc.id)}
-                      className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded text-xs font-medium flex items-center space-x-1.5 transition border border-slate-300"
+                      className="px-3 py-1.5 bg-white hover:bg-[#F7F9FB] text-[#14202B] rounded-lg text-xs font-medium flex items-center space-x-1.5 transition border border-[#E3E8EE] shadow-xs"
                     >
-                      <UploadCloud className="w-3.5 h-3.5" />
+                      <UploadCloud className="w-3.5 h-3.5 text-[#5B6B7A]" />
                       <span>{latestVersion ? "Upload Rectified Version" : "Upload Document"}</span>
                     </button>
                   </div>

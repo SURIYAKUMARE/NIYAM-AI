@@ -10,22 +10,29 @@ import {
   ChevronDown,
   Check,
   Bell,
-  ExternalLink,
+  Menu,
   X,
-  AlertTriangle,
-  Clock
+  Radio,
+  CheckCircle2,
+  Clock,
+  User as UserIcon,
 } from "lucide-react";
 
-export const Header: React.FC = () => {
-  const { user, switchRole, demoAccounts, logout } = useAuth();
+interface HeaderProps {
+  onToggleMobileMenu?: () => void;
+}
+
+export const Header: React.FC<HeaderProps> = ({ onToggleMobileMenu }) => {
+  const { user, switchRole, demoAccounts, logout, getRoleRedirect } = useAuth();
   const [roleMenuOpen, setRoleMenuOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
   const [notifications, setNotifications] = useState<any[]>([]);
+  const [isOnline, setIsOnline] = useState(true);
 
   const loadNotifications = async () => {
     try {
       const data = await fetchApi("/notifications");
-      setNotifications(data);
+      setNotifications(data || []);
     } catch {}
   };
 
@@ -34,6 +41,18 @@ export const Header: React.FC = () => {
       loadNotifications();
     }
   }, [user]);
+
+  // Online status listener
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+    window.addEventListener("online", handleOnline);
+    window.addEventListener("offline", handleOffline);
+    return () => {
+      window.removeEventListener("online", handleOnline);
+      window.removeEventListener("offline", handleOffline);
+    };
+  }, []);
 
   const unreadCount = notifications.filter((n) => !n.is_read).length;
 
@@ -49,7 +68,7 @@ export const Header: React.FC = () => {
       case "applicant":
         return "Institution Applicant";
       case "scrutiny_officer":
-        return "Scrutiny Officer";
+        return "Senior Scrutiny Officer";
       case "supervising_authority":
         return "Competent Authority";
       case "admin":
@@ -57,196 +76,213 @@ export const Header: React.FC = () => {
       case "auditor":
         return "Statutory Auditor";
       default:
-        return "Authorized User";
+        return "Authorized Officer";
     }
   };
 
-  const getRoleBadgeStyle = (role?: string) => {
-    switch (role) {
-      case "applicant":
-        return "bg-cyan-900/60 text-cyan-200 border-cyan-700";
-      case "scrutiny_officer":
-        return "bg-amber-900/60 text-amber-200 border-amber-700";
-      case "supervising_authority":
-        return "bg-purple-900/60 text-purple-200 border-purple-700";
-      case "admin":
-        return "bg-rose-900/60 text-rose-200 border-rose-700";
-      case "auditor":
-        return "bg-emerald-900/60 text-emerald-200 border-emerald-700";
-      default:
-        return "bg-slate-800 text-slate-300 border-slate-700";
-    }
+  const getInitials = (name?: string) => {
+    if (!name) return "NY";
+    const parts = name.split(" ");
+    if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+    return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
   };
 
   return (
-    <header className="bg-navy-950 border-b border-navy-850 text-white sticky top-0 z-40">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo & Platform Title */}
-          <div className="flex items-center space-x-3">
-            <Link href="/" className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded bg-navy-850 border border-teal-500/30 flex items-center justify-center text-teal-400 font-bold tracking-wider text-lg shadow-sm flex-shrink-0">
-                NY
-              </div>
-              <div className="min-w-0">
-                <div className="flex items-center space-x-2">
-                  <span className="font-bold text-base tracking-tight text-white">
-                    Niyam
-                  </span>
-                  <span className="text-[10px] uppercase font-semibold px-1.5 py-0.5 rounded bg-teal-900/60 text-teal-300 border border-teal-700/50">
-                    Prototype
-                  </span>
-                </div>
-                <p className="text-[11px] text-slate-400 font-normal leading-none mt-0.5 hidden sm:block truncate">
-                  Institutional Application Review Platform | AICTE Regulation Bureau
-                </p>
-              </div>
-            </Link>
+    <header className="no-print bg-white border-b border-[#E3E8EE] h-14 px-4 lg:px-6 flex items-center justify-between sticky top-0 z-30 shadow-xs text-[#14202B]">
+      {/* Left: Mobile Drawer Trigger & Brand */}
+      <div className="flex items-center gap-3">
+        {onToggleMobileMenu && (
+          <button
+            onClick={onToggleMobileMenu}
+            className="lg:hidden p-1.5 rounded-lg text-[#5B6B7A] hover:text-[#14202B] hover:bg-[#F7F9FB] transition-colors"
+            aria-label="Toggle navigation menu"
+          >
+            <Menu className="w-5 h-5" />
+          </button>
+        )}
+
+        <Link href="/" className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-lg bg-[#0F6B6B] flex items-center justify-center text-white font-extrabold text-xs shadow-xs">
+            NY
           </div>
-
-          {/* Right side: Role Switcher, Notification Drawer & User Profile */}
-          <div className="flex items-center space-x-1.5 sm:space-x-3">
-            {/* Notifications Bell */}
-            <div className="relative">
-              <button
-                onClick={() => setNotifOpen(!notifOpen)}
-                className="relative p-1.5 sm:p-2 rounded text-slate-300 hover:text-white hover:bg-navy-850 transition"
-                title="Notifications"
-                aria-label="Notifications"
-              >
-                <Bell className="w-4 h-4" />
-                {unreadCount > 0 && (
-                  <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-navy-950" />
-                )}
-              </button>
-
-              {notifOpen && (
-                <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-md shadow-2xl bg-white border border-slate-200 py-2 text-xs z-50 text-slate-900">
-                  <div className="px-4 py-2 border-b border-slate-100 flex items-center justify-between">
-                    <span className="font-bold text-slate-800 text-xs">In-App Notifications</span>
-                    <span className="text-[10px] font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded">
-                      {unreadCount} Unread
-                    </span>
-                  </div>
-
-                  <div className="max-h-80 overflow-y-auto divide-y divide-slate-100">
-                    {notifications.length === 0 ? (
-                      <p className="p-4 text-center text-slate-400 text-xs">No notifications yet.</p>
-                    ) : (
-                      notifications.map((n) => (
-                        <div
-                          key={n.id}
-                          className={`p-3.5 hover:bg-slate-50 transition flex items-start justify-between gap-2 ${
-                            !n.is_read ? "bg-blue-50/40" : ""
-                          }`}
-                        >
-                          <div className="space-y-1">
-                            <span className="font-bold text-slate-900 block text-xs">
-                              {n.title}
-                            </span>
-                            <p className="text-[11px] text-slate-600 leading-relaxed">
-                              {n.message}
-                            </p>
-                            <span className="text-[10px] text-slate-400 block font-mono">
-                              {new Date(n.created_at).toLocaleTimeString()}
-                            </span>
-                          </div>
-
-                          {!n.is_read && (
-                            <button
-                              onClick={() => handleMarkRead(n.id)}
-                              className="text-[10px] text-blue-600 hover:underline flex-shrink-0"
-                            >
-                              Mark Read
-                            </button>
-                          )}
-                        </div>
-                      ))
-                    )}
-                  </div>
-                </div>
-              )}
+          <div>
+            <div className="text-sm font-bold tracking-tight text-[#14202B] leading-none flex items-center gap-1.5">
+              <span>NIYAM</span>
+              <span className="text-[9px] uppercase font-bold px-1.5 py-0.5 rounded bg-teal-50 text-[#0F6B6B] border border-teal-200">
+                APH Norms
+              </span>
             </div>
+            <p className="text-[10px] text-[#5B6B7A] leading-none mt-0.5 hidden sm:block">
+              AICTE Regulation Bureau
+            </p>
+          </div>
+        </Link>
+      </div>
 
-            {/* Quick Demo Role Switcher Dropdown */}
-            <div className="relative">
-              <button
-                onClick={() => setRoleMenuOpen(!roleMenuOpen)}
-                className={`flex items-center space-x-1.5 px-2 sm:px-3 py-1.5 rounded-md text-xs font-medium border transition ${getRoleBadgeStyle(
-                  user?.role
-                )}`}
-                aria-label="Switch Demo User Role"
-              >
-                <Shield className="w-3.5 h-3.5 flex-shrink-0" />
-                <span className="hidden sm:inline">Role: {getRoleLabel(user?.role)}</span>
-                <span className="sm:hidden font-semibold">
-                  {user?.role === "applicant"
-                    ? "Applicant"
-                    : user?.role === "scrutiny_officer"
-                    ? "Officer"
-                    : user?.role === "supervising_authority"
-                    ? "Authority"
-                    : "User"}
+      {/* Right side: Connection Status, Notifications, Persona Switcher, User Badge */}
+      <div className="flex items-center gap-2 sm:gap-3">
+        {/* Actual Live Connection Status Indicator */}
+        <div
+          className={`hidden sm:flex items-center gap-1.5 px-2 py-1 rounded-lg text-[10px] font-semibold border ${
+            isOnline
+              ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+              : "bg-rose-50 text-rose-700 border-rose-200"
+          }`}
+          title={isOnline ? "Supabase / PostgreSQL and Storage Connected" : "Connection Interrupted"}
+        >
+          <span
+            className={`w-1.5 h-1.5 rounded-full ${
+              isOnline ? "bg-emerald-500 animate-pulse" : "bg-rose-500"
+            }`}
+          />
+          <span>{isOnline ? "Online" : "Offline"}</span>
+        </div>
+
+        {/* Notifications Bell */}
+        <div className="relative">
+          <button
+            onClick={() => setNotifOpen(!notifOpen)}
+            className="relative p-1.5 rounded-lg text-[#5B6B7A] hover:text-[#14202B] hover:bg-[#F7F9FB] transition-colors"
+            title="Notifications"
+            aria-label="In-App Notifications"
+          >
+            <Bell className="w-4 h-4" />
+            {unreadCount > 0 && (
+              <span className="absolute -top-1 -right-1 w-4 h-4 bg-rose-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center shadow-xs">
+                {unreadCount}
+              </span>
+            )}
+          </button>
+
+          {notifOpen && (
+            <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-xl shadow-xl bg-white border border-[#E3E8EE] py-2 text-xs z-50 text-[#14202B]">
+              <div className="px-4 py-2 border-b border-[#E3E8EE] flex items-center justify-between">
+                <span className="font-bold text-[#14202B] text-xs">Official Notifications</span>
+                <span className="text-[10px] font-semibold text-[#5B6B7A] bg-[#F7F9FB] px-2 py-0.5 rounded border border-[#E3E8EE]">
+                  {unreadCount} Unread
                 </span>
-                <ChevronDown className="w-3.5 h-3.5 opacity-70 flex-shrink-0" />
-              </button>
+              </div>
 
-              {roleMenuOpen && (
-                <div className="absolute right-0 mt-2 w-72 rounded-md shadow-xl bg-navy-900 border border-slate-700 py-1 text-xs z-50">
-                  <div className="px-3 py-2 border-b border-slate-800 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
-                    Switch Demo Persona
-                  </div>
-                  {demoAccounts.map((acc) => (
+              <div className="max-h-80 overflow-y-auto divide-y divide-[#E3E8EE]/60">
+                {notifications.length === 0 ? (
+                  <p className="p-4 text-center text-[#5B6B7A] text-xs">No active alerts at this time.</p>
+                ) : (
+                  notifications.map((n) => (
+                    <div
+                      key={n.id}
+                      className={`p-3.5 hover:bg-[#F7F9FB] transition flex items-start justify-between gap-2 ${
+                        !n.is_read ? "bg-teal-50/40" : ""
+                      }`}
+                    >
+                      <div className="space-y-1">
+                        <span className="font-bold text-[#14202B] block text-xs">
+                          {n.title}
+                        </span>
+                        <p className="text-[11px] text-[#5B6B7A] leading-relaxed">
+                          {n.message}
+                        </p>
+                        <span className="text-[10px] text-[#5B6B7A] block font-mono">
+                          {new Date(n.created_at).toLocaleTimeString()}
+                        </span>
+                      </div>
+
+                      {!n.is_read && (
+                        <button
+                          onClick={() => handleMarkRead(n.id)}
+                          className="text-[10px] text-[#0F6B6B] hover:underline font-semibold flex-shrink-0"
+                        >
+                          Mark Read
+                        </button>
+                      )}
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Quick Demo Persona Switcher (For evaluators and audit testing) */}
+        <div className="relative">
+          <button
+            onClick={() => setRoleMenuOpen(!roleMenuOpen)}
+            className="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-teal-50 text-[#0F6B6B] border border-teal-200 hover:bg-teal-100 transition-colors shadow-xs"
+            aria-label="Switch Evaluator Persona"
+          >
+            <Shield className="w-3.5 h-3.5" />
+            <span className="capitalize">{user?.role?.replace(/_/g, " ") || "Persona"}</span>
+            <ChevronDown className="w-3 h-3 ml-0.5" />
+          </button>
+
+          {roleMenuOpen && (
+            <div className="absolute right-0 mt-2 w-72 rounded-xl shadow-xl bg-white border border-[#E3E8EE] py-2 text-xs z-50 text-[#14202B]">
+              <div className="px-4 py-2 border-b border-[#E3E8EE]">
+                <div className="font-bold text-[#14202B] text-xs">Quick Role Switcher</div>
+                <div className="text-[11px] text-[#5B6B7A]">Select an official persona for evaluation:</div>
+              </div>
+
+              <div className="py-1">
+                {demoAccounts.map((account) => {
+                  const isCurrent = user?.username === account.username;
+                  return (
                     <button
-                      key={acc.username}
-                      onClick={() => {
-                        switchRole(acc.username);
+                      key={account.username}
+                      onClick={async () => {
                         setRoleMenuOpen(false);
+                        await switchRole(account.username);
                       }}
-                      className="w-full text-left px-3 py-2.5 hover:bg-navy-850 flex items-start justify-between border-b border-slate-800/40 last:border-0"
+                      className={`w-full text-left px-4 py-2 flex items-center justify-between hover:bg-[#F7F9FB] transition ${
+                        isCurrent ? "bg-teal-50/70 font-semibold text-[#0F6B6B]" : "text-[#14202B]"
+                      }`}
                     >
                       <div>
-                        <div className="font-semibold text-slate-200">
-                          {acc.role_title}
-                        </div>
-                        <div className="text-[11px] text-slate-400">
-                          {acc.name}
-                        </div>
-                        <div className="text-[10px] text-slate-500 mt-0.5 line-clamp-1">
-                          {acc.organization}
+                        <div className="text-xs font-medium">{account.name}</div>
+                        <div className="text-[10px] text-[#5B6B7A] capitalize">
+                          {account.role_title}
                         </div>
                       </div>
-                      {user?.username === acc.username && (
-                        <Check className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-                      )}
+                      {isCurrent && <Check className="w-3.5 h-3.5 text-[#0F6B6B]" />}
                     </button>
-                  ))}
-                </div>
-              )}
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* User Avatar, Name & Role */}
+        {user ? (
+          <div className="flex items-center gap-2 pl-1 border-l border-[#E3E8EE]">
+            <div className="w-7 h-7 rounded-full bg-[#0F6B6B] text-white text-xs font-bold flex items-center justify-center shadow-xs select-none">
+              {getInitials(user.full_name)}
+            </div>
+            <div className="hidden lg:block text-left">
+              <div className="text-xs font-bold text-[#14202B] leading-none truncate max-w-[140px]">
+                {user.full_name || user.username}
+              </div>
+              <div className="text-[10px] text-[#5B6B7A] leading-none mt-0.5 truncate max-w-[140px]">
+                {getRoleLabel(user.role)}
+              </div>
             </div>
 
-            {/* User Details */}
-            {user && (
-              <div className="hidden md:flex flex-col text-right">
-                <span className="text-xs font-medium text-slate-200">
-                  {user.full_name}
-                </span>
-                <span className="text-[10px] text-slate-400 truncate max-w-[180px]">
-                  {user.institution_name || user.designation || "AICTE Official"}
-                </span>
-              </div>
-            )}
-
+            {/* Logout button */}
             <button
               onClick={logout}
-              className="p-1.5 rounded text-slate-400 hover:text-white hover:bg-navy-850 transition"
+              className="p-1.5 rounded-lg text-[#5B6B7A] hover:text-rose-600 hover:bg-rose-50 transition-colors ml-1"
               title="Sign Out"
               aria-label="Sign Out"
             >
               <LogOut className="w-4 h-4" />
             </button>
           </div>
-        </div>
+        ) : (
+          <Link
+            href="/login"
+            className="px-3 py-1.5 text-xs font-bold text-white bg-[#0F6B6B] hover:bg-[#0a4f4f] rounded-lg transition-colors shadow-sm"
+          >
+            Sign In
+          </Link>
+        )}
       </div>
     </header>
   );

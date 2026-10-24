@@ -18,17 +18,6 @@ Base.metadata.create_all(bind=engine)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Run migrations if sqlite
-    try:
-        run_migrations()
-    except Exception as e:
-        print(f"Migration note: {e}")
-    # Startup seed
-    db = SessionLocal()
-    try:
-        seed_database(db)
-    finally:
-        db.close()
     yield
 
 app = FastAPI(
@@ -48,6 +37,16 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Security Headers Middleware (pure ASGI to prevent BaseHTTPMiddleware deadlock on Windows Python 3.13)
+# @app.middleware("http")
+# async def add_security_headers(request: Request, call_next):
+#     response = await call_next(request)
+#     response.headers["X-Content-Type-Options"] = "nosniff"
+#     response.headers["X-Frame-Options"] = "DENY"
+#     response.headers["X-XSS-Protection"] = "1; mode=block"
+#     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+#     return response
 
 # Security Headers Middleware
 @app.middleware("http")
