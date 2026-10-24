@@ -1,5 +1,5 @@
 import os
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing import Optional
 
 class Settings(BaseSettings):
@@ -30,8 +30,7 @@ class Settings(BaseSettings):
     AUDIT_LOG_TAMPER_KEY: str = "aicte-audit-chain-tamper-proof-salt-2025"
     DATA_RETENTION_DAYS: int = 365
     
-    class Config:
-        case_sensitive = True
+    model_config = SettingsConfigDict(case_sensitive=True)
 
 settings = Settings()
 os.makedirs(settings.UPLOAD_DIR, exist_ok=True)

@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr, Field, ConfigDict
 from typing import Optional, List, Dict, Any
 from datetime import datetime
 from ..models.models import UserRole, ApplicationStatus, DocumentStatus, FindingSeverity, FindingStatus, VerificationStatus, AuthoritySourceType, RuleSetStatus
@@ -23,8 +23,7 @@ class UserResponse(BaseModel):
     designation: Optional[str] = None
     is_active: bool
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 # Institution
 class InstitutionBase(BaseModel):
@@ -44,8 +43,7 @@ class InstitutionResponse(InstitutionBase):
     id: int
     created_at: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 # Extracted Fields & Corrections
 class ExtractedFieldResponse(BaseModel):
@@ -63,8 +61,7 @@ class ExtractedFieldResponse(BaseModel):
     is_corrected: bool
     corrected_at: Optional[datetime] = None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class FieldCorrectionRequest(BaseModel):
     new_value: str
@@ -84,8 +81,7 @@ class DocumentVersionResponse(BaseModel):
     metadata_json: Dict[str, Any]
     extracted_fields: List[ExtractedFieldResponse] = []
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class DocumentResponse(BaseModel):
     id: int
@@ -98,8 +94,7 @@ class DocumentResponse(BaseModel):
     current_version_id: Optional[int] = None
     versions: List[DocumentVersionResponse] = []
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 # Verification
 class VerificationRequestResponse(BaseModel):
@@ -119,8 +114,7 @@ class VerificationRequestResponse(BaseModel):
     supporting_evidence_ref: Optional[str] = None
     timestamp: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class TriggerVerificationRequest(BaseModel):
     authority_type: AuthoritySourceType
@@ -142,8 +136,7 @@ class NotificationResponse(BaseModel):
     is_read: bool
     created_at: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 # Findings
 class FindingResponse(BaseModel):
@@ -167,8 +160,7 @@ class FindingResponse(BaseModel):
     officer_notes: Optional[str] = None
     created_at: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class UpdateFindingDispositionRequest(BaseModel):
     status: FindingStatus  # DISMISSED_BY_OFFICER, CONFIRMED_BY_OFFICER, WAIVED_BY_AUTHORITY
@@ -202,8 +194,7 @@ class ApplicationResponse(BaseModel):
     documents: List[DocumentResponse] = []
     findings: List[FindingResponse] = []
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 # Clarification
 class CreateClarificationRequest(BaseModel):
@@ -225,8 +216,7 @@ class ClarificationResponse(BaseModel):
     created_at: datetime
     responded_at: Optional[datetime] = None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 # Review & Statutory Decision
 class RecordReviewActionRequest(BaseModel):
@@ -243,8 +233,7 @@ class ReviewActionResponse(BaseModel):
     statutory_decision: Optional[str] = None
     created_at: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 # Infrastructure Evidence
 class InfrastructureEvidenceResponse(BaseModel):
@@ -264,8 +253,7 @@ class InfrastructureEvidenceResponse(BaseModel):
     officer_comments: Optional[str] = None
     created_at: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class UpdateInfrastructureComments(BaseModel):
     inspection_recommended: bool
@@ -285,8 +273,7 @@ class RuleResponse(BaseModel):
     source_handbook_ref: str
     is_active: bool
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class ChecklistItemResponse(BaseModel):
     id: int
@@ -299,8 +286,7 @@ class ChecklistItemResponse(BaseModel):
     required_fields: List[str] = []
     accepted_mime_types: List[str] = []
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class RuleSetResponse(BaseModel):
     id: int
@@ -314,8 +300,7 @@ class RuleSetResponse(BaseModel):
     rules: List[RuleResponse] = []
     checklist_items: List[ChecklistItemResponse] = []
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class CreateRuleSetRequest(BaseModel):
     version: str
@@ -350,5 +335,4 @@ class AuditLogResponse(BaseModel):
     timestamp: datetime
     record_hash: str
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)

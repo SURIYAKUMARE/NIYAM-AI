@@ -2,7 +2,7 @@ import os
 import shutil
 import tarfile
 import hashlib
-from datetime import datetime
+from datetime import datetime, timezone
 from backend.app.core.config import settings
 
 def calculate_sha256(filepath: str) -> str:
@@ -18,7 +18,7 @@ def create_system_backup(backup_dir: str = "backups") -> dict:
     Records archive SHA-256 for tamper-evident restoration verification.
     """
     os.makedirs(backup_dir, exist_ok=True)
-    timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+    timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
     archive_name = f"niyam_backup_{timestamp}.tar.gz"
     archive_path = os.path.join(backup_dir, archive_name)
 
@@ -47,7 +47,7 @@ def create_system_backup(backup_dir: str = "backups") -> dict:
         "archive_name": archive_name,
         "archive_hash": archive_hash,
         "size_bytes": file_size_bytes,
-        "created_at": datetime.utcnow().isoformat() + "Z",
+        "created_at": datetime.now(timezone.utc).isoformat(),
         "included_items": items_to_backup,
     }
 
@@ -62,7 +62,10 @@ def restore_system_backup(archive_path: str, restore_dir: str = "restore_test") 
 
     os.makedirs(restore_dir, exist_ok=True)
     with tarfile.open(archive_path, "r:gz") as tar:
-        tar.extractall(path=restore_dir)
+        try:
+            tar.extractall(path=restore_dir, filter="data")
+        except TypeError:
+            tar.extractall(path=restore_dir)
 
     restored_items = os.listdir(restore_dir)
 
@@ -71,5 +74,5 @@ def restore_system_backup(archive_path: str, restore_dir: str = "restore_test") 
         "verified_hash": pre_restore_hash,
         "restored_items": restored_items,
         "restore_location": restore_dir,
-        "restored_at": datetime.utcnow().isoformat() + "Z",
+        "restored_at": datetime.now(timezone.utc).isoformat(),
     }

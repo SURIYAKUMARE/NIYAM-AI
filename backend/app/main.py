@@ -1,4 +1,5 @@
 import os
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from .core.config import settings
@@ -14,12 +15,23 @@ from .api import (
 # Initialize database schema
 Base.metadata.create_all(bind=engine)
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup seed
+    db = SessionLocal()
+    try:
+        seed_database(db)
+    finally:
+        db.close()
+    yield
+
 app = FastAPI(
     title=settings.PROJECT_NAME,
     description="AICTE Verify — Application & Compliance Intelligence. Secure platform for preliminary validation, document authentication, regulatory checking, and evidence-based human review.",
     version="1.0.0",
     docs_url="/docs",
-    redoc_url="/redoc"
+    redoc_url="/redoc",
+    lifespan=lifespan
 )
 
 # CORS Middleware (configured for local dev + containerized environments)
@@ -58,14 +70,6 @@ app.include_router(settings_api.router, prefix=settings.API_V1_STR)
 app.include_router(notifications.router, prefix=settings.API_V1_STR)
 app.include_router(reports.router, prefix=settings.API_V1_STR)
 app.include_router(users.router, prefix=settings.API_V1_STR)
-
-@app.on_event("startup")
-def startup_event():
-    db = SessionLocal()
-    try:
-        seed_database(db)
-    finally:
-        db.close()
 
 @app.get("/health")
 def health_check():
