@@ -2,6 +2,7 @@ import os
 from datetime import datetime, timezone, timedelta, date
 from sqlalchemy.orm import Session
 from ..core.security import hash_password
+from ..core.totp import hash_recovery_code
 from ..core.config import settings
 from ..core.storage import storage_provider
 from ..models.models import (
@@ -259,6 +260,9 @@ def seed_database(db: Session):
     # 4. Seed Users (5 Demo Roles)
     # Password for all demo accounts: 'password123'
     hashed_pwd = hash_password("password123")
+    demo_totp_secret = "JBSWY3DPEHPK3PXPJBSWY3DPEHPK3PXP"
+    demo_rec_hash = hash_recovery_code("REC-DEMO-2025")
+
     user_applicant = User(
         username="applicant",
         email="applicant@apexinstitute.edu.in",
@@ -267,7 +271,8 @@ def seed_database(db: Session):
         role=UserRole.APPLICANT,
         institution_id=inst1.id,
         designation="Principal / Authorized Institutional Representative",
-        is_active=True
+        is_active=True,
+        mfa_enrolled=False
     )
     user_officer = User(
         username="officer",
@@ -277,7 +282,10 @@ def seed_database(db: Session):
         role=UserRole.SCRUTINY_OFFICER,
         institution_id=None,
         designation="Senior Scrutiny Officer, Western Regional Office",
-        is_active=True
+        is_active=True,
+        mfa_secret=demo_totp_secret,
+        mfa_enrolled=True,
+        recovery_codes_hash=demo_rec_hash
     )
     user_authority = User(
         username="authority",
@@ -287,7 +295,10 @@ def seed_database(db: Session):
         role=UserRole.SUPERVISING_AUTHORITY,
         institution_id=None,
         designation="Advisor / Competent Statutory Authority, Regulation Bureau",
-        is_active=True
+        is_active=True,
+        mfa_secret=demo_totp_secret,
+        mfa_enrolled=True,
+        recovery_codes_hash=demo_rec_hash
     )
     user_admin = User(
         username="admin",
@@ -297,7 +308,10 @@ def seed_database(db: Session):
         role=UserRole.ADMIN,
         institution_id=None,
         designation="Chief System & Compliance Administrator",
-        is_active=True
+        is_active=True,
+        mfa_secret=demo_totp_secret,
+        mfa_enrolled=True,
+        recovery_codes_hash=demo_rec_hash
     )
     user_auditor = User(
         username="auditor",
@@ -307,7 +321,8 @@ def seed_database(db: Session):
         role=UserRole.AUDITOR,
         institution_id=None,
         designation="Statutory Compliance & Regulatory Auditor",
-        is_active=True
+        is_active=True,
+        mfa_enrolled=False
     )
     db.add(user_applicant)
     db.add(user_officer)

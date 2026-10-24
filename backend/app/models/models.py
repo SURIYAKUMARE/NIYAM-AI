@@ -106,6 +106,14 @@ class User(Base):
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
 
+    # Server-enforced TOTP Multi-Factor Authentication
+    mfa_secret = Column(String(64), nullable=True)
+    mfa_enrolled = Column(Boolean, default=False)
+    mfa_last_verified_counter = Column(Integer, nullable=True)
+    mfa_failed_attempts = Column(Integer, default=0)
+    mfa_locked_until = Column(DateTime, nullable=True)
+    recovery_codes_hash = Column(String(512), nullable=True)
+
     institution = relationship("Institution", back_populates="users")
 
 
@@ -181,6 +189,8 @@ class DocumentVersion(Base):
     uploaded_by_user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     uploaded_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
     is_duplicate_detected = Column(Boolean, default=False)
+    malware_scan_status = Column(String(50), default="CLEAN")
+    scan_engine = Column(String(100), default="Heuristic Signature Engine v2.4")
     metadata_json = Column(JSON, default=dict)
 
     document = relationship("Document", back_populates="versions")

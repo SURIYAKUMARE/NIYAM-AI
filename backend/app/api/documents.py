@@ -13,6 +13,7 @@ from ..models.models import (
 from ..schemas.schemas import DocumentResponse, DocumentVersionResponse
 from ..services.ocr_service import ocr_service
 from ..services.audit_service import audit_service
+from ..services.malware_scanner import malware_scanner
 
 router = APIRouter(prefix="/documents", tags=["Documents"])
 
@@ -36,6 +37,30 @@ async def upload_document_version(
     if not file_bytes:
         raise HTTPException(status_code=400, detail="Empty file uploaded")
 
+    # Operational malware and threat quarantine scanner
+    scan_report = malware_scanner.scan_file(file_bytes, file.filename or "uploaded_document.pdf")
+    if not scan_report["is_safe"]:
+        audit_service.log_event(
+            db=db,
+            event_type="MALWARE_BLOCKED",
+            actor_username=user_payload.get("username", "system"),
+            actor_role=user_payload.get("role", "unknown"),
+            entity_type="DOCUMENT",
+            entity_id=str(doc_id),
+            action="UPLOAD_BLOCKED_MALWARE",
+            details={
+                "threat": scan_report["threat_name"],
+                "file_name": file.filename,
+                "quarantined_at": scan_report["quarantine_path"],
+                "sha256": scan_report["sha256"]
+            },
+            actor_user_id=user_payload.get("user_id")
+        )
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Security Violation: File rejected by operational malware scanner ({scan_report['threat_name']}). Payload quarantined."
+        )
+
     # Store via storage provider (computes SHA-256 and validates MIME)
     storage_path, sha256_hash, mime_type, file_size = storage_provider.store_file(
         content=file_bytes,
@@ -55,7 +80,9 @@ async def upload_document_version(
         storage_path=storage_path,
         uploaded_by_user_id=user_payload.get("user_id"),
         uploaded_at=datetime.now(timezone.utc),
-        is_duplicate_detected=False
+        is_duplicate_detected=False,
+        malware_scan_status=scan_report["scan_status"],
+        scan_engine=scan_report["scanner_engine"]
     )
     db.add(doc_version)
     db.flush()
@@ -112,6 +139,18 @@ async def upload_document_version(
         actor_user_id=user_payload.get("user_id")
     )
 
+    return doc
+
+@router.get("/{doc_id}", response_model=DocumentResponse)
+def get_document_by_id(
+    doc_id: int,
+    db: Session = Depends(get_db),
+    user_payload: dict = Depends(get_current_user_payload)
+):
+    doc = db.query(Document).filter(Document.id == doc_id).first()
+    if not doc:
+        raise HTTPException(status_code=404, detail="Document checklist slot not found")
+    verify_institution_access(user_payload, doc.application.institution_id)
     return doc
 
 @router.get("/{doc_id}/access-token")

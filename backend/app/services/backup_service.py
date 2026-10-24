@@ -34,9 +34,15 @@ def create_system_backup(backup_dir: str = "backups") -> dict:
     if os.path.exists(uploads_dir):
         items_to_backup.append(uploads_dir)
 
+    def backup_filter(tarinfo):
+        # Exclude quarantine folder from system backups
+        if "quarantine" in tarinfo.name.lower():
+            return None
+        return tarinfo
+
     with tarfile.open(archive_path, "w:gz") as tar:
         for item in items_to_backup:
-            tar.add(item, arcname=os.path.basename(item))
+            tar.add(item, arcname=os.path.basename(item), filter=backup_filter)
 
     archive_hash = calculate_sha256(archive_path)
     file_size_bytes = os.path.getsize(archive_path)

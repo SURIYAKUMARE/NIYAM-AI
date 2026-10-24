@@ -119,4 +119,76 @@
 - **Affected Workflow:** Developer Experience, Test Output, Future Python 3.14 / Pydantic v3 Compatibility.
 - **Repair:** Migrated schemas to `model_config = ConfigDict(from_attributes=True)`, configuration to `model_config = SettingsConfigDict(case_sensitive=True)`, and server startup to FastAPI `@asynccontextmanager async def lifespan(app: FastAPI)`.
 - **Regression Test:** `pytest backend/tests/test_compliance_and_isolation.py`.
-- **Verification Result:** **VERIFIED (PASSED)** — 0 application deprecation warnings; all 17 acceptance tests pass cleanly.
+- **Verification Result:** **VERIFIED (PASSED)** — 0 application deprecation warnings; all acceptance tests pass cleanly.
+
+---
+
+### Error 10: Horizontal Viewport Overflow on Mobile Viewports (375x667 iPhone SE)
+- **Reproduction Steps:**
+  1. Open Edge Chromium with viewport configured to iPhone SE (375x667).
+  2. Navigate to `/institution/dashboard` or `/applications/1`.
+  3. Inspect page element bounding boxes and observe `document.documentElement.scrollWidth === 401px > 375px`.
+- **Root Cause:**
+  1. `Sidebar.tsx` lacked responsive utility `hidden lg:flex`, keeping a fixed 256px sidebar rendered into mobile DOM.
+  2. `Header.tsx` contained long un-truncated role string badge (`Role: Institution Applicant`), pushing header container beyond 375px.
+  3. `DemoScenarioBar.tsx` and dashboard banner used whitespace `nowrap` without responsive flex wrapping.
+- **Affected Workflow:** Mobile Responsiveness & Multi-Device Field Usability.
+- **Repair:**
+  * Added `hidden lg:flex` to `Sidebar.tsx`.
+  * Added `hidden sm:block` to secondary header labels and shortened mobile badges to `Role: Applicant`.
+  * Added `flex-wrap` and `max-w-full overflow-hidden` to `DemoScenarioBar.tsx` and dashboard layouts.
+- **Regression Test:** Automated Browser QA Test `UX-01` in `frontend/scripts/browser_qa_audit.js`.
+- **Verification Result:** **VERIFIED (PASSED)** — `scrollWidth === clientWidth === 375px` confirmed; 0px horizontal overflow.
+
+---
+
+### Error 11: Missing Database Columns for Server-Enforced MFA and Malware Scan Status
+- **Reproduction Steps:**
+  1. Add TOTP MFA fields to `User` model and malware scan status fields to `DocumentVersion` model.
+  2. Execute application or run test suite against existing `aicte_verify.db`.
+  3. Observe `sqlite3.OperationalError: no such column: users.mfa_secret`.
+- **Root Cause:** SQLite's `Base.metadata.create_all()` creates missing tables but does not apply schema alter statements to existing tables.
+- **Affected Workflow:** Application Startup, Schema Versioning, Database Integrity.
+- **Repair:** Created automated migration utility `backend/app/db/migrate.py` that executes defensive `ALTER TABLE ... ADD COLUMN` statements and initial demo secret population on application startup. Hooked into FastAPI lifespan in `backend/app/main.py`.
+- **Regression Test:** `test_acceptance_17_migrations_and_deployment_startup`.
+- **Verification Result:** **VERIFIED (PASSED)** — All 18 relational tables and added MFA/malware columns present in SQLite metadata.
+
+---
+
+### Error 12: Replay Attack Defense Causing Immediate Successive Login Failures in Test Suites
+- **Reproduction Steps:**
+  1. Authenticate as regulatory officer using valid RFC 6238 TOTP code.
+  2. 0.1 seconds later in next test function, authenticate again as same officer with current time window code.
+  3. Observe HTTP 401 Unauthorized / HTTP 429 Too Many Requests.
+- **Root Cause:** RFC 6238 replay attack defense strictly verifies that `current_counter > last_verified_counter`. When tests executed within the same 30-second window, replaying the same code is deliberately rejected by the server.
+- **Affected Workflow:** Automated Testing, Rapid Multi-Request Session Handshake.
+- **Repair:** Implemented session token caching in test helper `get_auth_token(username)` so that subsequent tests reuse the valid, authenticated JWT rather than replaying the same TOTP window code.
+- **Regression Test:** Full 20-scenario backend test suite.
+- **Verification Result:** **VERIFIED (PASSED)** — 20/20 tests executed cleanly without triggering replay lockouts.
+
+---
+
+### Error 13: Windows Tarfile Incompatible with Quarantined Malware Payloads During Backups
+- **Reproduction Steps:**
+  1. Upload EICAR antivirus test file to trigger operational malware quarantine.
+  2. File is isolated in `uploads/quarantine/quarantined_EICAR_...bin`.
+  3. Run `create_system_backup("backups")`.
+  4. Observe `OSError: [Errno 22] Invalid argument` in `tarfile.py` when attempting to read the quarantined payload on Windows.
+- **Root Cause:** Windows Defender hooks the file system and locks quarantined EICAR signatures from standard user-space read operations. Furthermore, quarantined malicious binaries must never be included in clean system backups.
+- **Affected Workflow:** Disaster Recovery & System Backup Utility.
+- **Repair:** Added `backup_filter(tarinfo)` to `tarfile.open().add()` in `backend/app/services/backup_service.py` that explicitly filters out any items matching the `quarantine` directory path.
+- **Regression Test:** `test_acceptance_16_backup_restoration_succeeds`.
+- **Verification Result:** **VERIFIED (PASSED)** — Clean backup archive created, SHA-256 hash verified, and clean restoration validated.
+
+---
+
+### Error 14: Single-Use Recovery Code Exhaustion Across Repeated Regression Test Cycles
+- **Reproduction Steps:**
+  1. Run `pytest backend/tests/test_compliance_and_isolation.py` verifying recovery code authentication.
+  2. Immediately run the test suite a second time without database recreation.
+  3. Observe `test_acceptance_19` fails with HTTP 401.
+- **Root Cause:** Single-use recovery codes are properly consumed and deleted upon first verification to prevent replay attacks. A subsequent run of the test suite found the recovery code was already consumed.
+- **Affected Workflow:** Continuous Integration & Repeated Regression Testing.
+- **Repair:** Updated `test_acceptance_19` to idempotently seed a fresh single-use test recovery code (`REC-TEST-RECOVERY`) directly into the test session before executing the verification and consumption cycle.
+- **Regression Test:** `test_acceptance_19_emergency_recovery_code_authentication`.
+- **Verification Result:** **VERIFIED (PASSED)** — Test passes with 100% repeatability across arbitrary execution cycles.

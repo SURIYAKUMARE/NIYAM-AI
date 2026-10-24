@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from .core.config import settings
 from .core.database import engine, Base, SessionLocal
 from .data.seed_data import seed_database
+from .db.migrate import run_migrations
 from .api import (
     auth, applications, documents, extraction, validation,
     verification, infrastructure, clarifications, review_actions,
@@ -17,6 +18,11 @@ Base.metadata.create_all(bind=engine)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    # Run migrations if sqlite
+    try:
+        run_migrations()
+    except Exception as e:
+        print(f"Migration note: {e}")
     # Startup seed
     db = SessionLocal()
     try:

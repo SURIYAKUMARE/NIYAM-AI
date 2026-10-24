@@ -5,13 +5,28 @@ from ..models.models import UserRole, ApplicationStatus, DocumentStatus, Finding
 
 # Auth
 class Token(BaseModel):
-    access_token: str
-    token_type: str
+    access_token: Optional[str] = None
+    token_type: str = "bearer"
+    mfa_required: bool = False
+    mfa_session_token: Optional[str] = None
     user: Dict[str, Any]
 
 class LoginRequest(BaseModel):
     username: str
     password: str
+
+class MfaVerifyRequest(BaseModel):
+    mfa_session_token: str
+    code: str
+
+class MfaEnrollResponse(BaseModel):
+    secret: str
+    otpauth_uri: str
+    recovery_codes: List[str]
+
+class MfaConfirmRequest(BaseModel):
+    secret: str
+    code: str
 
 class UserResponse(BaseModel):
     id: int
@@ -79,6 +94,8 @@ class DocumentVersionResponse(BaseModel):
     uploaded_at: datetime
     is_duplicate_detected: bool
     metadata_json: Dict[str, Any]
+    malware_scan_status: Optional[str] = "CLEAN"
+    scan_engine: Optional[str] = "NIYAM-HEURISTIC-SCANNER-v1"
     extracted_fields: List[ExtractedFieldResponse] = []
 
     model_config = ConfigDict(from_attributes=True)

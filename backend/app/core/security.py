@@ -34,16 +34,23 @@ def sanitize_untrusted_text(text: Optional[str]) -> str:
     Sanitize text extracted from OCR or uploaded files:
     - Strips control characters
     - Neutralizes potential prompt injection markers (e.g. system commands, ignore instructions)
+    - Strips script and style HTML tags
     """
     if not text:
         return ""
     # Strip non-printable ASCII except basic newlines/tabs
     sanitized = re.sub(r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]', '', text)
+    # Strip dangerous HTML/script tags
+    sanitized = re.sub(r'(?i)<\s*script[^>]*>.*?<\s*/\s*script\s*>', '[REDACTED_SCRIPT]', sanitized, flags=re.DOTALL)
+    sanitized = re.sub(r'(?i)<\s*style[^>]*>.*?<\s*/\s*style\s*>', '[REDACTED_STYLE]', sanitized, flags=re.DOTALL)
+    sanitized = re.sub(r'<\s*script[^>]*>', '[REDACTED_SCRIPT]', sanitized)
     # Neutralize dangerous prompt injections
     suspicious_patterns = [
         r'(?i)ignore\s+(all\s+)?previous\s+instructions',
+        r'(?i)disregard\s+(all\s+)?(previous\s+)?(instructions|prompt)',
         r'(?i)system\s*:\s*',
         r'(?i)you\s+are\s+now\s+in\s+developer\s+mode',
+        r'(?i)assistant\s*:\s*',
     ]
     for pattern in suspicious_patterns:
         sanitized = re.sub(pattern, '[REDACTED_PROMPT_INJECTION]', sanitized)
@@ -62,13 +69,26 @@ def get_current_user_payload(token: str = Depends(oauth2_scheme)) -> dict:
         role: str = payload.get("role")
         user_id: int = payload.get("user_id")
         institution_id: Optional[int] = payload.get("institution_id")
+        mfa_completed: bool = payload.get("mfa_completed", True)
+        scope: str = payload.get("scope", "full_access")
+
         if username is None:
             raise credentials_exception
+
+        # Server-enforce MFA completion for official regulatory roles
+        if role in ["scrutiny_officer", "supervising_authority", "admin"] and not mfa_completed:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="MFA verification challenge required for official regulatory roles. Protected session blocked."
+            )
+
         return {
             "username": username,
             "role": role,
             "user_id": user_id,
-            "institution_id": institution_id
+            "institution_id": institution_id,
+            "mfa_completed": mfa_completed,
+            "scope": scope
         }
     except JWTError:
         raise credentials_exception
