@@ -12,17 +12,17 @@
       "actual": "Loaded successfully. Title: 'Niyam (NIYAM) — Institutional Application Review & Compliance Verification'",
       "status": "PASS",
       "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\01_landing_page.png",
-      "timestamp": "2026-10-24T10:30:44.459Z"
+      "timestamp": "2026-10-24T12:48:37.931Z"
     },
     {
       "testId": "FTU-02",
       "role": "Visitor",
       "scenario": "Inspect Authentication Portal",
       "expected": "Login screen shows clear role personas and credentials",
-      "actual": "Login screen rendered with persona demonstration panel: NO",
+      "actual": "Login screen rendered with persona demonstration panel: YES",
       "status": "PASS",
       "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\02_login_page.png",
-      "timestamp": "2026-10-24T10:30:45.922Z"
+      "timestamp": "2026-10-24T12:48:39.532Z"
     },
     {
       "testId": "APP-01",
@@ -32,7 +32,7 @@
       "actual": "Redirected to: http://localhost:3000/institution/dashboard",
       "status": "PASS",
       "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\03_applicant_dashboard.png",
-      "timestamp": "2026-10-24T10:30:48.048Z"
+      "timestamp": "2026-10-24T12:48:42.885Z"
     },
     {
       "testId": "APP-02",
@@ -42,17 +42,17 @@
       "actual": "Permanent ID found count: 5",
       "status": "PASS",
       "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\04_institution_profile.png",
-      "timestamp": "2026-10-24T10:30:48.828Z"
+      "timestamp": "2026-10-24T12:48:44.003Z"
     },
     {
       "testId": "APP-03",
       "role": "Applicant",
       "scenario": "Application Creation Wizard",
       "expected": "Application created in DRAFT status and redirects to workspace",
-      "actual": "Workspace URL: http://localhost:3000/applications/51 (Created ID: 51)",
+      "actual": "Workspace URL: http://localhost:3000/applications/53 (Created ID: 53)",
       "status": "PASS",
       "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\06_draft_application_workspace.png",
-      "timestamp": "2026-10-24T10:30:52.500Z"
+      "timestamp": "2026-10-24T12:48:47.771Z"
     },
     {
       "testId": "APP-04",
@@ -62,7 +62,7 @@
       "actual": "Resumed workspace. Heading: 'Apex Institute of Technology & Science'",
       "status": "PASS",
       "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\06_draft_application_workspace.png",
-      "timestamp": "2026-10-24T10:30:53.697Z"
+      "timestamp": "2026-10-24T12:48:49.172Z"
     },
     {
       "testId": "APP-05",
@@ -72,7 +72,7 @@
       "actual": "Sample PDF successfully uploaded to active checklist slot",
       "status": "PASS",
       "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\06_draft_application_workspace.png",
-      "timestamp": "2026-10-24T10:30:55.243Z"
+      "timestamp": "2026-10-24T12:48:50.750Z"
     },
     {
       "testId": "APP-06",
@@ -82,7 +82,7 @@
       "actual": "Document checklist rendered with version controls",
       "status": "PASS",
       "evidence": "",
-      "timestamp": "2026-10-24T10:30:55.254Z"
+      "timestamp": "2026-10-24T12:48:50.760Z"
     },
     {
       "testId": "APP-07",
@@ -92,7 +92,7 @@
       "actual": "Validation rules executed; findings populated in review dossier",
       "status": "PASS",
       "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\08_validation_findings.png",
-      "timestamp": "2026-10-24T10:30:57.428Z"
+      "timestamp": "2026-10-24T12:48:53.101Z"
     },
     {
       "testId": "APP-09",
@@ -102,7 +102,7 @@
       "actual": "CSV Button: Present, Receipt Button: Present",
       "status": "PASS",
       "evidence": "",
-      "timestamp": "2026-10-24T10:30:57.440Z"
+      "timestamp": "2026-10-24T12:48:53.142Z"
     },
     {
       "testId": "OFF-01",
@@ -112,17 +112,17 @@
       "actual": "Officer authenticated with simulated TOTP code",
       "status": "PASS",
       "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\11_officer_mfa_login.png",
-      "timestamp": "2026-10-24T10:31:31.205Z"
+      "timestamp": "2026-10-24T12:49:28.029Z"
     },
     {
       "testId": "OFF-02",
       "role": "Scrutiny Officer",
       "scenario": "Assigned Review Queue with Search & Filters",
       "expected": "Scrutiny officer queue loads assigned institutional cases",
-      "actual": "Queue rendered with case records. Elements found: 29",
+      "actual": "Queue rendered with case records. Elements found: 20",
       "status": "PASS",
       "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\12_officer_queue.png",
-      "timestamp": "2026-10-24T10:31:31.989Z"
+      "timestamp": "2026-10-24T12:49:29.542Z"
     },
     {
       "testId": "OFF-03",
@@ -132,7 +132,7 @@
       "actual": "Officer observation triggers visible: YES",
       "status": "PASS",
       "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\13_officer_review_workspace.png",
-      "timestamp": "2026-10-24T10:31:33.286Z"
+      "timestamp": "2026-10-24T12:49:31.499Z"
     },
     {
       "testId": "OFF-04",
@@ -142,7 +142,7 @@
       "actual": "Manual confirmation submitted; provenance recorded into audit trail",
       "status": "PASS",
       "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\15_manual_source_confirm_modal.png",
-      "timestamp": "2026-10-24T10:31:36.749Z"
+      "timestamp": "2026-10-24T12:49:35.880Z"
     },
     {
       "testId": "OFF-05",
@@ -152,7 +152,7 @@
       "actual": "Finding disposition updated to CONFIRMED_BY_OFFICER with justification note",
       "status": "PASS",
       "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\14_finding_disposition_modal.png",
-      "timestamp": "2026-10-24T10:31:39.128Z"
+      "timestamp": "2026-10-24T12:49:38.557Z"
     },
     {
       "testId": "OFF-07",
@@ -162,7 +162,7 @@
       "actual": "Infrastructure evidence gallery loaded with geo-tag provenance",
       "status": "PASS",
       "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\18_infrastructure_review.png",
-      "timestamp": "2026-10-24T10:31:42.568Z"
+      "timestamp": "2026-10-24T12:49:42.508Z"
     },
     {
       "testId": "AUTH-01",
@@ -172,7 +172,7 @@
       "actual": "Statutory order APPROVED_WITH_DEFICIENCIES recorded into permanent dossier",
       "status": "PASS",
       "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\19_authority_statutory_decision.png",
-      "timestamp": "2026-10-24T10:31:48.874Z"
+      "timestamp": "2026-10-24T12:49:50.153Z"
     },
     {
       "testId": "AUTH-02",
@@ -182,7 +182,7 @@
       "actual": "Audit ledger rendered with verified block logs. Records count: 12",
       "status": "PASS",
       "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\20_audit_history_ledger.png",
-      "timestamp": "2026-10-24T10:31:50.076Z"
+      "timestamp": "2026-10-24T12:49:51.496Z"
     },
     {
       "testId": "UX-01",
@@ -192,7 +192,7 @@
       "actual": "Horizontal overflow detected: NO (Clean wrapping)",
       "status": "PASS",
       "evidence": "D:\\SIH (project chaos)\\New folder\\frontend\\qa_screenshots\\21_mobile_viewport_375x667.png",
-      "timestamp": "2026-10-24T10:31:51.307Z"
+      "timestamp": "2026-10-24T12:49:53.026Z"
     },
     {
       "testId": "SEC-01",
@@ -202,7 +202,7 @@
       "actual": "Access response: BLOCKED (Unauthorized access confirmed)",
       "status": "PASS",
       "evidence": "",
-      "timestamp": "2026-10-24T10:31:55.778Z"
+      "timestamp": "2026-10-24T12:49:58.058Z"
     }
   ]
 }

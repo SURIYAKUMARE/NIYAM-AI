@@ -24,22 +24,33 @@ import {
   Receipt,
   SearchCode,
   BadgeCheck,
+  KeyRound,
+  Sparkles,
+  Copy,
+  Check,
 } from "lucide-react";
 
 export default function HomePage() {
-  const { user, login, isLoading, getRoleRedirect } = useAuth();
+  const { user, login, verifyMfa, isLoading, getRoleRedirect } = useAuth();
   const router = useRouter();
 
   // Hero Sign-In States
+  const [heroMode, setHeroMode] = useState<"signin" | "mfa">("signin");
   const [identifier, setIdentifier] = useState("applicant");
   const [password, setPassword] = useState("password123");
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
+  // Hero MFA States
+  const [mfaCode, setMfaCode] = useState(["", "", "", "", "", ""]);
+  const [mfaSessionToken, setMfaSessionToken] = useState<string | undefined>(undefined);
+  const [copiedCode, setCopiedCode] = useState(false);
+
   const selectPersona = (username: string) => {
     setIdentifier(username);
     setPassword("password123");
     setErrorMsg("");
+    setHeroMode("signin");
   };
 
   const handleHeroSignIn = async (e: React.FormEvent) => {
@@ -49,7 +60,9 @@ export default function HomePage() {
     try {
       const result = await login(identifier.trim(), password);
       if (result.mfaRequired) {
-        router.push("/login");
+        setMfaSessionToken(result.sessionToken);
+        setMfaCode(["", "", "", "", "", ""]);
+        setHeroMode("mfa");
       } else {
         const dest = getRoleRedirect(result.user?.role);
         router.push(dest);
@@ -61,15 +74,79 @@ export default function HomePage() {
     }
   };
 
+  const handleHeroMfaSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMsg("");
+    const codeToVerify = mfaCode.join("");
+    if (codeToVerify.length !== 6) {
+      setErrorMsg("Please enter the complete 6-digit TOTP code.");
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      const verifiedUser = await verifyMfa(codeToVerify, mfaSessionToken);
+      const dest = getRoleRedirect((verifiedUser as any)?.role);
+      router.push(dest);
+    } catch (err: any) {
+      setErrorMsg(err.message || "Invalid verification code.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleMfaDigitChange = (index: number, val: string) => {
+    if (val.length > 1) val = val.slice(-1);
+    const updated = [...mfaCode];
+    updated[index] = val;
+    setMfaCode(updated);
+
+    if (val && index < 5) {
+      document.getElementById(`hero-mfa-${index + 1}`)?.focus();
+    }
+  };
+
+  const handleMfaKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Backspace" && !mfaCode[index] && index > 0) {
+      document.getElementById(`hero-mfa-${index - 1}`)?.focus();
+    }
+  };
+
+  const fillDemoCode = (code = "555555") => {
+    setMfaCode(code.split(""));
+    setErrorMsg("");
+  };
+
+  const copyMfaCode = (code = "555555") => {
+    navigator.clipboard.writeText(code);
+    setCopiedCode(true);
+    setTimeout(() => setCopiedCode(false), 2000);
+  };
+
+  const handlePasteMfa = (e: React.ClipboardEvent) => {
+    e.preventDefault();
+    const pastedData = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 6);
+    if (pastedData) {
+      const digits = pastedData.split("");
+      const updated = ["", "", "", "", "", ""];
+      for (let i = 0; i < digits.length; i++) {
+        updated[i] = digits[i];
+      }
+      setMfaCode(updated);
+      const targetFocusIdx = Math.min(digits.length, 5);
+      document.getElementById(`hero-mfa-${targetFocusIdx}`)?.focus();
+    }
+  };
+
   return (
     <div className="space-y-10 pb-16">
       {/* =====================================================================
           HERO BANNER: AICTE HEADQUARTERS BACKGROUND WITH AUTHENTICATION DESK
       ===================================================================== */}
       <section
-        className="relative min-h-[580px] lg:min-h-[640px] flex items-center justify-center text-white px-4 sm:px-8 lg:px-12 py-12 lg:py-16 overflow-hidden"
+        className="relative min-h-[calc(100vh-3.5rem)] flex items-center justify-center text-white px-4 sm:px-8 lg:px-12 py-10 lg:py-14 overflow-hidden"
         style={{
-          backgroundImage: `linear-gradient(135deg, rgba(7, 30, 34, 0.88) 0%, rgba(15, 107, 107, 0.80) 50%, rgba(10, 79, 79, 0.92) 100%), url('/images/aicte-hq.png')`,
+          backgroundImage: `linear-gradient(135deg, rgba(7, 24, 28, 0.84) 0%, rgba(12, 60, 60, 0.70) 50%, rgba(6, 28, 30, 0.90) 100%), url('/images/aicte-hq.png')`,
           backgroundSize: "cover",
           backgroundPosition: "center center",
           backgroundRepeat: "no-repeat",
@@ -165,131 +242,254 @@ export default function HomePage() {
               ) : (
                 /* Visitor Hero Sign-In Card */
                 <div className="space-y-5">
-                  <div className="space-y-1">
-                    <div className="flex items-center justify-between">
-                      <h2 className="text-lg font-bold text-[#14202B]">Sign in to Portal</h2>
-                      <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-teal-50 text-[#0F6B6B] border border-teal-200">
-                        Institutional Access
-                      </span>
-                    </div>
-                    <p className="text-xs text-[#5B6B7A]">
-                      Select an authorized persona or enter your institutional credentials.
-                    </p>
-                  </div>
+                  {heroMode === "signin" ? (
+                    <>
+                      <div className="space-y-1">
+                        <div className="flex items-center justify-between">
+                          <h2 className="text-lg font-bold text-[#14202B]">Sign in to Portal</h2>
+                          <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-teal-50 text-[#0F6B6B] border border-teal-200">
+                            Institutional Access
+                          </span>
+                        </div>
+                        <p className="text-xs text-[#5B6B7A]">
+                          Select an authorized persona or enter your institutional credentials.
+                        </p>
+                      </div>
 
-                  {/* 1-Click Persona Selectors */}
-                  <div className="space-y-1.5">
-                    <div className="text-[10px] font-bold text-[#5B6B7A] uppercase tracking-wider">
-                      Quick Persona Selector:
-                    </div>
-                    <div className="flex flex-wrap gap-1.5">
-                      <button
-                        type="button"
-                        onClick={() => selectPersona("applicant")}
-                        className={`px-2.5 py-1 text-xs font-bold rounded-lg border transition ${
-                          identifier === "applicant"
-                            ? "bg-[#0F6B6B] text-white border-[#0F6B6B]"
-                            : "border-[#E3E8EE] bg-white text-[#5B6B7A] hover:bg-teal-50 hover:text-[#0F6B6B]"
-                        }`}
-                      >
-                        Applicant
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => selectPersona("officer")}
-                        className={`px-2.5 py-1 text-xs font-bold rounded-lg border transition ${
-                          identifier === "officer"
-                            ? "bg-[#0F6B6B] text-white border-[#0F6B6B]"
-                            : "border-[#E3E8EE] bg-white text-[#5B6B7A] hover:bg-teal-50 hover:text-[#0F6B6B]"
-                        }`}
-                      >
-                        Scrutiny Officer
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => selectPersona("authority")}
-                        className={`px-2.5 py-1 text-xs font-bold rounded-lg border transition ${
-                          identifier === "authority"
-                            ? "bg-[#0F6B6B] text-white border-[#0F6B6B]"
-                            : "border-[#E3E8EE] bg-white text-[#5B6B7A] hover:bg-teal-50 hover:text-[#0F6B6B]"
-                        }`}
-                      >
-                        Authority
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => selectPersona("admin")}
-                        className={`px-2.5 py-1 text-xs font-bold rounded-lg border transition ${
-                          identifier === "admin"
-                            ? "bg-[#0F6B6B] text-white border-[#0F6B6B]"
-                            : "border-[#E3E8EE] bg-white text-[#5B6B7A] hover:bg-teal-50 hover:text-[#0F6B6B]"
-                        }`}
-                      >
-                        Admin
-                      </button>
-                    </div>
-                  </div>
+                      {/* 1-Click Persona Selectors */}
+                      <div className="space-y-1.5">
+                        <div className="text-[10px] font-bold text-[#5B6B7A] uppercase tracking-wider">
+                          Quick Persona Selector:
+                        </div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {[
+                            { id: "applicant", label: "Applicant" },
+                            { id: "officer", label: "Scrutiny Officer" },
+                            { id: "authority", label: "Authority" },
+                            { id: "admin", label: "Admin" },
+                          ].map((p) => (
+                            <button
+                              key={p.id}
+                              type="button"
+                              onClick={() => selectPersona(p.id)}
+                              className={`px-2.5 py-1 text-xs font-bold rounded-lg border transition ${
+                                identifier === p.id
+                                  ? "bg-[#0F6B6B] text-white border-[#0F6B6B] shadow-xs"
+                                  : "border-[#E3E8EE] bg-white text-[#5B6B7A] hover:bg-teal-50 hover:text-[#0F6B6B]"
+                              }`}
+                            >
+                              {p.label}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
 
-                  {errorMsg && (
-                    <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-start gap-2">
-                      <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
-                      <span>{errorMsg}</span>
+                      {errorMsg && (
+                        <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-start gap-2">
+                          <AlertTriangle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                          <span>{errorMsg}</span>
+                        </div>
+                      )}
+
+                      <form onSubmit={handleHeroSignIn} className="space-y-3.5">
+                        <div>
+                          <label className="text-xs font-bold text-[#14202B] block mb-1">
+                            Username / AICTE ID
+                          </label>
+                          <div className="relative">
+                            <Mail className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#5B6B7A]" />
+                            <input
+                              type="text"
+                              required
+                              value={identifier}
+                              onChange={(e) => setIdentifier(e.target.value)}
+                              placeholder="applicant"
+                              className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-[#E3E8EE] bg-[#F7F9FB] text-[#14202B] focus:ring-2 focus:ring-[#0F6B6B] outline-none"
+                            />
+                          </div>
+                        </div>
+
+                        <div>
+                          <label className="text-xs font-bold text-[#14202B] block mb-1">
+                            Password
+                          </label>
+                          <div className="relative">
+                            <Lock className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#5B6B7A]" />
+                            <input
+                              type="password"
+                              required
+                              value={password}
+                              onChange={(e) => setPassword(e.target.value)}
+                              placeholder="••••••••"
+                              className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-[#E3E8EE] bg-[#F7F9FB] text-[#14202B] focus:ring-2 focus:ring-[#0F6B6B] outline-none"
+                            />
+                          </div>
+                        </div>
+
+                        <button
+                          type="submit"
+                          disabled={submitting}
+                          className="w-full py-2.5 bg-[#0F6B6B] hover:bg-[#0a4f4f] text-white font-bold text-xs rounded-xl transition shadow-xs flex items-center justify-center gap-2 disabled:opacity-60"
+                        >
+                          <LogIn className="w-4 h-4" />
+                          <span>{submitting ? "Signing in..." : "Sign in to Workspace"}</span>
+                        </button>
+                      </form>
+
+                      <div className="pt-2 border-t border-[#E3E8EE] flex items-center justify-between text-[11px] text-[#5B6B7A]">
+                        <Link href="/login" className="text-[#0F6B6B] font-bold hover:underline">
+                          Fullscreen Login Page
+                        </Link>
+                        <Link href="/auth/register" className="hover:text-[#14202B] font-medium">
+                          Register Institution
+                        </Link>
+                      </div>
+
+                      {/* Demonstration Accounts & Login Codes (Official Evaluator Matrix) */}
+                      <div className="pt-3 border-t border-[#E3E8EE] space-y-2">
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="font-bold text-[#14202B] flex items-center gap-1.5">
+                            <Sparkles className="w-3.5 h-3.5 text-[#0F6B6B]" />
+                            <span>Demonstration Accounts &amp; Login Codes</span>
+                          </span>
+                          <span className="text-[10px] font-mono text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                            TOTP: 555555
+                          </span>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-1.5 text-[11px]">
+                          {[
+                            { role: "applicant", label: "Applicant", user: "applicant" },
+                            { role: "officer", label: "Scrutiny Officer", user: "officer" },
+                            { role: "authority", label: "Authority", user: "authority" },
+                            { role: "admin", label: "Admin", user: "admin" },
+                          ].map((acc) => (
+                            <button
+                              key={acc.role}
+                              type="button"
+                              onClick={() => selectPersona(acc.role)}
+                              className={`p-1.5 text-left rounded-lg border transition ${
+                                identifier === acc.role
+                                  ? "bg-teal-50 border-[#0F6B6B] shadow-xs"
+                                  : "bg-[#F7F9FB] border-[#E3E8EE] hover:bg-white hover:border-[#0F6B6B]"
+                              }`}
+                            >
+                              <div className="font-bold text-[#14202B] truncate">{acc.label}</div>
+                              <div className="text-[9px] text-[#5B6B7A] font-mono">
+                                {acc.user} · 555555
+                              </div>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    /* Hero Inline MFA View */
+                    <div className="space-y-4">
+                      <div className="text-center space-y-1">
+                        <div className="w-11 h-11 rounded-2xl bg-teal-50 border border-teal-200 text-[#0F6B6B] flex items-center justify-center mx-auto shadow-xs">
+                          <KeyRound className="w-5 h-5" />
+                        </div>
+                        <h2 className="text-base font-bold text-[#14202B]">
+                          Two-Factor Authentication
+                        </h2>
+                        <p className="text-xs text-[#5B6B7A] max-w-xs mx-auto">
+                          Enter 6-digit TOTP code for <span className="font-semibold text-[#14202B]">{identifier}</span>.
+                        </p>
+                      </div>
+
+                      {/* High-Visibility Login Code & 1-Click Auto-Fill */}
+                      <div className="p-3 bg-gradient-to-r from-teal-50 to-emerald-50 border border-teal-200 rounded-2xl space-y-2">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <div className="text-[9px] uppercase font-bold tracking-wider text-[#0F6B6B]">
+                              Evaluator Login Code
+                            </div>
+                            <div className="text-lg font-mono font-extrabold text-[#14202B] tracking-widest">
+                              555555
+                            </div>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => copyMfaCode("555555")}
+                            className="text-xs font-bold bg-white px-2.5 py-1 rounded-lg border border-teal-200 text-[#0F6B6B] hover:bg-teal-50 flex items-center gap-1 transition shadow-xs"
+                            title="Click to copy code"
+                          >
+                            {copiedCode ? (
+                              <>
+                                <Check className="w-3 h-3 text-emerald-600" />
+                                <span className="text-emerald-700 text-[10px]">Copied!</span>
+                              </>
+                            ) : (
+                              <>
+                                <Copy className="w-3 h-3 text-[#0F6B6B]" />
+                                <span className="text-[10px]">Copy</span>
+                              </>
+                            )}
+                          </button>
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() => fillDemoCode("555555")}
+                          className="w-full py-1.5 bg-[#0F6B6B] hover:bg-[#0a4f4f] text-white text-xs font-bold rounded-lg transition shadow-xs flex items-center justify-center gap-1.5"
+                        >
+                          <span>⚡ Click to Auto-Fill Code (555555)</span>
+                        </button>
+                      </div>
+
+                      {errorMsg && (
+                        <div className="p-2.5 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs flex items-start gap-2">
+                          <AlertTriangle className="w-3.5 h-3.5 text-rose-600 shrink-0 mt-0.5" />
+                          <span>{errorMsg}</span>
+                        </div>
+                      )}
+
+                      <form onSubmit={handleHeroMfaSubmit} className="space-y-3.5">
+                        <div className="flex justify-center gap-2" onPaste={handlePasteMfa}>
+                          {mfaCode.map((digit, idx) => (
+                            <input
+                              key={idx}
+                              id={`hero-mfa-${idx}`}
+                              type="text"
+                              inputMode="numeric"
+                              maxLength={1}
+                              value={digit}
+                              onChange={(e) => handleMfaDigitChange(idx, e.target.value)}
+                              onKeyDown={(e) => handleMfaKeyDown(idx, e)}
+                              className="w-9 h-11 text-center text-lg font-bold font-mono border border-[#E3E8EE] rounded-xl bg-[#F7F9FB] focus:border-[#0F6B6B] focus:ring-2 focus:ring-[#0F6B6B] outline-none text-[#14202B]"
+                            />
+                          ))}
+                        </div>
+
+                        <button
+                          type="submit"
+                          disabled={submitting}
+                          className="w-full py-2.5 bg-[#0F6B6B] hover:bg-[#0a4f4f] text-white font-bold text-xs rounded-xl transition shadow-xs flex items-center justify-center gap-2 disabled:opacity-60"
+                        >
+                          <span>{submitting ? "Verifying..." : "Verify & Access Workspace"}</span>
+                        </button>
+
+                        <div className="text-center pt-1 space-y-1">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setHeroMode("signin");
+                              setMfaCode(["", "", "", "", "", ""]);
+                              setErrorMsg("");
+                            }}
+                            className="text-xs text-[#5B6B7A] hover:text-[#14202B] font-semibold"
+                          >
+                            ← Back to Sign-In
+                          </button>
+                          <div className="text-[10px] text-[#5B6B7A] pt-1 border-t border-[#E3E8EE] flex items-center justify-between">
+                            <span>Alternative: <strong className="font-mono text-[#14202B]">123456</strong></span>
+                            <span>Recovery: <strong className="font-mono text-[#14202B]">REC-DEMO-2025</strong></span>
+                          </div>
+                        </div>
+                      </form>
                     </div>
                   )}
-
-                  <form onSubmit={handleHeroSignIn} className="space-y-3.5">
-                    <div>
-                      <label className="text-xs font-bold text-[#14202B] block mb-1">
-                        Username / Permanent ID
-                      </label>
-                      <div className="relative">
-                        <Mail className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#5B6B7A]" />
-                        <input
-                          type="text"
-                          required
-                          value={identifier}
-                          onChange={(e) => setIdentifier(e.target.value)}
-                          placeholder="applicant"
-                          className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-[#E3E8EE] bg-[#F7F9FB] text-[#14202B] focus:ring-2 focus:ring-[#0F6B6B] outline-none"
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="text-xs font-bold text-[#14202B] block mb-1">
-                        Password
-                      </label>
-                      <div className="relative">
-                        <Lock className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#5B6B7A]" />
-                        <input
-                          type="password"
-                          required
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                          placeholder="••••••••"
-                          className="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-[#E3E8EE] bg-[#F7F9FB] text-[#14202B] focus:ring-2 focus:ring-[#0F6B6B] outline-none"
-                        />
-                      </div>
-                    </div>
-
-                    <button
-                      type="submit"
-                      disabled={submitting}
-                      className="w-full py-2.5 bg-[#0F6B6B] hover:bg-[#0a4f4f] text-white font-bold text-xs rounded-xl transition shadow-xs flex items-center justify-center gap-2 disabled:opacity-60"
-                    >
-                      <LogIn className="w-4 h-4" />
-                      <span>{submitting ? "Signing in..." : "Sign in to Workspace"}</span>
-                    </button>
-                  </form>
-
-                  <div className="pt-2 border-t border-[#E3E8EE] flex items-center justify-between text-[11px] text-[#5B6B7A]">
-                    <Link href="/login" className="text-[#0F6B6B] font-bold hover:underline">
-                      Fullscreen Login &amp; MFA
-                    </Link>
-                    <Link href="/auth/register" className="hover:text-[#14202B] font-medium">
-                      Register Institution
-                    </Link>
-                  </div>
                 </div>
               )}
             </div>
