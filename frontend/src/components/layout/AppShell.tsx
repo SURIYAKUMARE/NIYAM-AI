@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { usePathname } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
 import { DemoScenarioBar } from "../common/DemoScenarioBar";
@@ -13,6 +14,7 @@ interface AppShellProps {
 
 export const AppShell: React.FC<AppShellProps> = ({ children }) => {
   const pathname = usePathname();
+  const { user } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Auth pages render clean full-screen layout without header or sidebar
@@ -24,6 +26,9 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
     return <main className="min-h-screen bg-[#F7F9FB]">{children}</main>;
   }
 
+  // Hide sidebar on the landing hero page when not logged in for full-bleed hero view
+  const showDesktopSidebar = !!user || pathname !== "/";
+
   return (
     <div className="min-h-screen bg-[#F7F9FB] flex flex-col antialiased text-[#14202B]">
       {/* Test Scenario Strip */}
@@ -34,9 +39,11 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
 
       <div className="flex-1 flex overflow-hidden">
         {/* Desktop Sidebar */}
-        <div className="hidden lg:block shrink-0 min-h-[calc(100vh-3.5rem)]">
-          <Sidebar />
-        </div>
+        {showDesktopSidebar && (
+          <div className="hidden lg:block shrink-0 min-h-[calc(100vh-3.5rem)]">
+            <Sidebar />
+          </div>
+        )}
 
         {/* Mobile Slide-Over Drawer */}
         {mobileMenuOpen && (
@@ -67,8 +74,12 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
         )}
 
         {/* Main Content Area */}
-        <main className="flex-1 min-w-0 overflow-y-auto bg-[#F7F9FB] p-4 sm:p-6 w-full max-w-full">
-          <div className="max-w-7xl mx-auto w-full">
+        <main
+          className={`flex-1 min-w-0 overflow-y-auto bg-[#F7F9FB] ${
+            pathname === "/" ? "p-0" : "p-4 sm:p-6"
+          } w-full max-w-full`}
+        >
+          <div className={`${pathname === "/" ? "w-full" : "max-w-7xl mx-auto w-full"}`}>
             {children}
           </div>
         </main>
