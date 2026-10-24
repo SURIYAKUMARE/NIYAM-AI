@@ -142,7 +142,7 @@ export const Sidebar: React.FC = () => {
   const allowedNav = NAV_ITEMS.filter((item) => item.roles.includes(currentRole));
 
   return (
-    <aside className="w-64 bg-navy-900 border-r border-navy-850 flex flex-col flex-shrink-0 min-h-[calc(100vh-4rem)]">
+    <aside className="hidden lg:flex w-64 bg-navy-900 border-r border-navy-850 flex-col flex-shrink-0 min-h-[calc(100vh-4rem)]">
       <div className="p-4 border-b border-navy-850">
         <div className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
           Workspace Navigation

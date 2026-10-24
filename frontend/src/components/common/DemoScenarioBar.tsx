@@ -32,20 +32,20 @@ export const DemoScenarioBar: React.FC = () => {
           <span className="text-slate-300 hidden sm:inline">
             Official Evaluation Scenarios:
           </span>
-          <span className="text-slate-100 font-medium">
+          <span className="text-slate-100 font-medium truncate max-w-[140px] sm:max-w-none">
             {currentScenarioObj ? currentScenarioObj.title : "Select Scenario (1 to 9)"}
           </span>
         </div>
 
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-2">
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="flex items-center space-x-1.5 px-3 py-1 rounded bg-navy-850 hover:bg-navy-800 text-slate-200 border border-slate-700 transition"
+            className="flex items-center space-x-1 px-2.5 py-1 rounded bg-navy-850 hover:bg-navy-800 text-slate-200 border border-slate-700 transition"
             aria-expanded={isOpen}
           >
-            <PlayCircle className="w-3.5 h-3.5 text-blue-400" />
-            <span>Scenario Walkthrough Menu ({DEMO_SCENARIOS.length})</span>
-            {isOpen ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+            <PlayCircle className="w-3.5 h-3.5 text-blue-400 flex-shrink-0" />
+            <span className="truncate">Scenarios ({DEMO_SCENARIOS.length})</span>
+            {isOpen ? <ChevronUp className="w-3.5 h-3.5 flex-shrink-0" /> : <ChevronDown className="w-3.5 h-3.5 flex-shrink-0" />}
           </button>
         </div>
       </div>

@@ -87,7 +87,7 @@ export default function InstitutionDashboardPage() {
 
       {/* Early Deficiencies Alert Banner */}
       {openDeficiencies.length > 0 && (
-        <div className="bg-rose-50 border border-rose-200 p-4 rounded-lg flex items-start justify-between gap-4">
+        <div className="bg-rose-50 border border-rose-200 p-4 rounded-lg flex flex-col sm:flex-row sm:items-start justify-between gap-4">
           <div className="flex items-start space-x-3">
             <AlertTriangle className="w-5 h-5 text-rose-600 flex-shrink-0 mt-0.5" />
             <div>

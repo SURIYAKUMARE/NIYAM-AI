@@ -85,10 +85,10 @@ export const Header: React.FC = () => {
           {/* Logo & Platform Title */}
           <div className="flex items-center space-x-3">
             <Link href="/" className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded bg-navy-850 border border-teal-500/30 flex items-center justify-center text-teal-400 font-bold tracking-wider text-lg shadow-sm">
+              <div className="w-10 h-10 rounded bg-navy-850 border border-teal-500/30 flex items-center justify-center text-teal-400 font-bold tracking-wider text-lg shadow-sm flex-shrink-0">
                 NY
               </div>
-              <div>
+              <div className="min-w-0">
                 <div className="flex items-center space-x-2">
                   <span className="font-bold text-base tracking-tight text-white">
                     Niyam
@@ -97,7 +97,7 @@ export const Header: React.FC = () => {
                     Prototype
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-400 font-normal leading-none mt-0.5">
+                <p className="text-[11px] text-slate-400 font-normal leading-none mt-0.5 hidden sm:block truncate">
                   Institutional Application Review Platform | AICTE Regulation Bureau
                 </p>
               </div>
@@ -105,12 +105,12 @@ export const Header: React.FC = () => {
           </div>
 
           {/* Right side: Role Switcher, Notification Drawer & User Profile */}
-          <div className="flex items-center space-x-3 sm:space-x-4">
+          <div className="flex items-center space-x-1.5 sm:space-x-3">
             {/* Notifications Bell */}
             <div className="relative">
               <button
                 onClick={() => setNotifOpen(!notifOpen)}
-                className="relative p-2 rounded text-slate-300 hover:text-white hover:bg-navy-850 transition"
+                className="relative p-1.5 sm:p-2 rounded text-slate-300 hover:text-white hover:bg-navy-850 transition"
                 title="Notifications"
                 aria-label="Notifications"
               >
@@ -172,14 +172,23 @@ export const Header: React.FC = () => {
             <div className="relative">
               <button
                 onClick={() => setRoleMenuOpen(!roleMenuOpen)}
-                className={`flex items-center space-x-2 px-3 py-1.5 rounded-md text-xs font-medium border transition ${getRoleBadgeStyle(
+                className={`flex items-center space-x-1.5 px-2 sm:px-3 py-1.5 rounded-md text-xs font-medium border transition ${getRoleBadgeStyle(
                   user?.role
                 )}`}
                 aria-label="Switch Demo User Role"
               >
-                <Shield className="w-3.5 h-3.5" />
-                <span>Role: {getRoleLabel(user?.role)}</span>
-                <ChevronDown className="w-3.5 h-3.5 opacity-70" />
+                <Shield className="w-3.5 h-3.5 flex-shrink-0" />
+                <span className="hidden sm:inline">Role: {getRoleLabel(user?.role)}</span>
+                <span className="sm:hidden font-semibold">
+                  {user?.role === "applicant"
+                    ? "Applicant"
+                    : user?.role === "scrutiny_officer"
+                    ? "Officer"
+                    : user?.role === "supervising_authority"
+                    ? "Authority"
+                    : "User"}
+                </span>
+                <ChevronDown className="w-3.5 h-3.5 opacity-70 flex-shrink-0" />
               </button>
 
               {roleMenuOpen && (
