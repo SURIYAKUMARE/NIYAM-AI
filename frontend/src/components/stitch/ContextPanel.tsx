@@ -24,20 +24,20 @@ export const ContextPanel: React.FC<ContextPanelProps> = ({
   children,
 }) => {
   return (
-    <div className="bg-white rounded-xl border border-[#E3E8EE] p-5 sm:p-6 shadow-xs mb-6">
+    <div className="bg-white dark:bg-[#0F172A] rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-6 shadow-xs mb-6 transition-colors">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="space-y-1.5 min-w-0">
           <div className="flex flex-wrap items-center gap-2.5">
-            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#14202B]">
+            <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
               {title}
             </h1>
             {badge && (
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-teal-50 text-[#0F6B6B] border border-teal-200 uppercase tracking-wider">
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 uppercase tracking-wider">
                 {badge}
               </span>
             )}
           </div>
-          <p className="text-xs sm:text-[13px] text-[#5B6B7A] max-w-3xl leading-relaxed">
+          <p className="text-xs sm:text-[13px] text-slate-500 dark:text-slate-400 max-w-3xl leading-relaxed">
             {subtitle}
           </p>
         </div>
@@ -49,7 +49,7 @@ export const ContextPanel: React.FC<ContextPanelProps> = ({
           {actionText && actionHref && (
             <Link
               href={actionHref}
-              className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#0F6B6B] hover:bg-[#0a4f4f] text-white text-xs font-semibold rounded-lg transition-colors shadow-xs"
+              className="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-xl transition-colors shadow-xs"
             >
               <Plus className="w-4 h-4" />
               <span>{actionText}</span>
@@ -59,7 +59,7 @@ export const ContextPanel: React.FC<ContextPanelProps> = ({
           {actionText && !actionHref && onActionClick && (
             <button
               onClick={onActionClick}
-              className="inline-flex items-center gap-1.5 px-4 py-2 bg-[#0F6B6B] hover:bg-[#0a4f4f] text-white text-xs font-semibold rounded-lg transition-colors shadow-xs"
+              className="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-xl transition-colors shadow-xs"
             >
               <span>{actionText}</span>
               <ArrowRight className="w-4 h-4" />

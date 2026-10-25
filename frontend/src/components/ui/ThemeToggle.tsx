@@ -48,7 +48,7 @@ export function ThemeToggle() {
       aria-label="Toggle visual theme"
     >
       {theme === "light" ? (
-        <Moon className="w-4 h-4 text-slate-600 hover:text-[#0F6B6B]" />
+        <Moon className="w-4 h-4 text-slate-600 hover:text-blue-600" />
       ) : (
         <Sun className="w-4 h-4 text-amber-400 hover:text-amber-300" />
       )}

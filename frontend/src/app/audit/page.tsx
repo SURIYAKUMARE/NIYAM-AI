@@ -121,14 +121,14 @@ export default function AuditHistoryPage() {
 
       {/* Cryptographic Chain Integrity Verification Banner */}
       {chainStatus && (
-        <div className="p-4 sm:p-5 rounded-xl bg-[#14202B] text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs border border-[#243447]">
+        <div className="p-4 sm:p-5 rounded-2xl bg-[#090D16] text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs border border-slate-800">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-teal-500/20 text-teal-400 border border-teal-500/30 flex items-center justify-center font-bold shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-blue-500/20 text-blue-400 border border-blue-500/30 flex items-center justify-center font-bold shrink-0">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-bold text-teal-300 text-xs">
+                <span className="font-bold text-blue-300 text-xs">
                   {chainStatus.status === "VERIFIED_TAMPER_EVIDENT"
                     ? "Cryptographic Chain Verified Intact"
                     : "Chain Integrity Anomaly"}
@@ -137,51 +137,51 @@ export default function AuditHistoryPage() {
                   {chainStatus.verified_records} Blocks Verified
                 </span>
               </div>
-              <p className="text-[#8FA2B4] text-[11px] mt-0.5">
+              <p className="text-slate-400 text-[11px] mt-0.5">
                 Every record is hashed and chained with the preceding block. Tamper-evident verification active.
               </p>
             </div>
           </div>
 
-          <div className="text-right text-[10px] font-mono text-[#8FA2B4] shrink-0">
+          <div className="text-right text-[10px] font-mono text-slate-400 shrink-0">
             <div>
               Latest Block: <span className="text-white font-bold">{chainStatus.latest_block_hash?.slice(0, 16)}...</span>
             </div>
             <div>
-              Genesis Block: <span className="text-[#8FA2B4]">GENESIS_BLOCK_2025</span>
+              Genesis Block: <span className="text-slate-400">GENESIS_BLOCK_2025</span>
             </div>
           </div>
         </div>
       )}
 
       {/* Filter and Search Bar */}
-      <div className="bg-white p-4 rounded-xl border border-[#E3E8EE] shadow-xs flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+      <div className="bg-white dark:bg-[#0F172A] p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-3 text-xs transition-colors">
         <form onSubmit={handleSearchSubmit} className="flex items-center gap-2 w-full sm:w-80">
           <div className="relative w-full">
-            <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-[#5B6B7A]" />
+            <Search className="w-3.5 h-3.5 absolute left-3 top-2.5 text-slate-400" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by action, actor, or entity..."
-              className="w-full pl-8 pr-3 py-1.5 border border-[#E3E8EE] rounded-xl bg-white text-[#14202B] focus:ring-2 focus:ring-[#0F6B6B] outline-none text-xs"
+              className="w-full pl-8 pr-3 py-1.5 border border-slate-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 outline-none text-xs"
             />
           </div>
           <button
             type="submit"
-            className="px-3 py-1.5 bg-[#F7F9FB] hover:bg-[#E3E8EE] text-[#14202B] font-semibold rounded-xl transition border border-[#E3E8EE]"
+            className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-semibold rounded-xl transition border border-slate-200 dark:border-slate-700"
           >
             Search
           </button>
         </form>
 
         <div className="flex items-center gap-2 w-full sm:w-auto">
-          <Filter className="w-3.5 h-3.5 text-[#5B6B7A]" />
-          <span className="text-[#5B6B7A] font-semibold">Event Category:</span>
+          <Filter className="w-3.5 h-3.5 text-slate-400" />
+          <span className="text-slate-500 dark:text-slate-400 font-semibold">Event Category:</span>
           <select
             value={eventTypeFilter}
             onChange={(e) => setEventTypeFilter(e.target.value)}
-            className="px-2.5 py-1.5 border border-[#E3E8EE] rounded-xl bg-white text-[#14202B] focus:ring-1 focus:ring-[#0F6B6B] outline-none text-xs"
+            className="px-2.5 py-1.5 border border-slate-200 dark:border-slate-700 rounded-xl bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-1 focus:ring-blue-500 outline-none text-xs"
           >
             <option value="">All Event Categories ({logs.length})</option>
             <option value="APPLICATION_SUBMISSION">Application Submissions</option>
@@ -244,8 +244,8 @@ export default function AuditHistoryPage() {
                         Target: {log.entity_type} ({log.entity_id}) · IP: {log.ip_address}
                       </div>
                     </td>
-                    <td className="px-5 py-3.5 text-right font-mono text-[10px] text-[#5B6B7A] whitespace-nowrap">
-                      <span className="bg-[#F7F9FB] px-2 py-0.5 rounded border border-[#E3E8EE] font-bold text-[#0F6B6B]">
+                    <td className="px-5 py-3.5 text-right font-mono text-[10px] text-slate-500 whitespace-nowrap">
+                      <span className="bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700 font-bold text-blue-600 dark:text-blue-400">
                         {log.record_hash?.slice(0, 16)}...
                       </span>
                     </td>

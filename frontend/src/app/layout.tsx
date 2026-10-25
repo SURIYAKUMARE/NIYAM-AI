@@ -4,8 +4,8 @@ import { AuthProvider } from "@/context/AuthContext";
 import { AppShell } from "@/components/layout/AppShell";
 
 export const metadata: Metadata = {
-  title: "Niyam (NIYAM) — Institutional Application Review & Compliance Verification",
-  description: "Administrative workspace for institutional application validation, document authentication, APH regulatory checking, and evidence-based review | AICTE Regulation Bureau.",
+  title: "NIYAM — AI-Powered Regulatory Validation & Document Authentication",
+  description: "AICTE Problem Statement 26261: AI-powered decision support platform for institutional application review, cryptographic document authentication, and statutory compliance verification.",
 };
 
 export default function RootLayout({
@@ -15,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="min-h-screen bg-[#F7F9FB] dark:bg-[#0B111A] text-[#14202B] dark:text-slate-100 flex flex-col antialiased transition-colors">
+      <body className="min-h-screen bg-[#F8FAFC] dark:bg-[#090D16] text-[#0F172A] dark:text-slate-100 flex flex-col antialiased transition-colors">
         <AuthProvider>
           <AppShell>
             {children}

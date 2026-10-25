@@ -64,17 +64,17 @@ export default function InstitutionDashboardPage() {
       cell: (app) => (
         <Link
           href={`/applications/${app.id}`}
-          className="font-bold text-[#14202B] hover:text-[#0F6B6B] flex items-center gap-1.5 transition-colors"
+          className="font-bold text-slate-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 flex items-center gap-1.5 transition-colors"
         >
           <span className="font-mono">{app.application_number}</span>
-          <ExternalLink className="w-3 h-3 text-[#5B6B7A]" />
+          <ExternalLink className="w-3 h-3 text-slate-400" />
         </Link>
       ),
     },
     {
       header: "Approval Category",
       cell: (app) => (
-        <span className="capitalize text-[#14202B]">
+        <span className="capitalize text-slate-800 dark:text-slate-200">
           {app.category_code?.replace(/_/g, " ") || "Extension of Approval"}
         </span>
       ),
@@ -82,7 +82,7 @@ export default function InstitutionDashboardPage() {
     {
       header: "Academic Session",
       cell: (app) => (
-        <span className="font-mono text-[#5B6B7A]">
+        <span className="font-mono text-slate-500 dark:text-slate-400">
           {app.academic_year || "2025-2026"}
         </span>
       ),
@@ -97,7 +97,7 @@ export default function InstitutionDashboardPage() {
         const score = Number(app.overall_risk_score || 0);
         return (
           <div className="flex items-center gap-2">
-            <div className="w-16 bg-[#E3E8EE] rounded-full h-1.5 overflow-hidden">
+            <div className="w-16 bg-slate-200 dark:bg-slate-700 rounded-full h-1.5 overflow-hidden">
               <div
                 className={`h-full ${
                   score > 50
@@ -109,7 +109,7 @@ export default function InstitutionDashboardPage() {
                 style={{ width: `${Math.min(100, Math.max(5, score))}%` }}
               />
             </div>
-            <span className="text-[11px] font-mono text-[#5B6B7A]">
+            <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400">
               {score.toFixed(0)}%
             </span>
           </div>
@@ -122,7 +122,7 @@ export default function InstitutionDashboardPage() {
       cell: (app) => (
         <Link
           href={`/applications/${app.id}`}
-          className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-[#0F6B6B] bg-teal-50 hover:bg-teal-100 border border-teal-200 rounded-lg transition-colors"
+          className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-100 dark:hover:bg-blue-900/60 border border-blue-200 dark:border-blue-800 rounded-lg transition-colors"
         >
           <span>Open Workspace</span>
           <ArrowRight className="w-3 h-3" />
@@ -143,19 +143,19 @@ export default function InstitutionDashboardPage() {
       >
         <Link
           href="/applications"
-          className="px-3 py-1.5 text-xs font-semibold text-[#14202B] bg-white hover:bg-[#F7F9FB] border border-[#E3E8EE] rounded-lg transition-colors"
+          className="px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-lg transition-colors"
         >
           My Applications
         </Link>
         <Link
           href="/clarifications"
-          className="px-3 py-1.5 text-xs font-semibold text-[#14202B] bg-white hover:bg-[#F7F9FB] border border-[#E3E8EE] rounded-lg transition-colors"
+          className="px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-lg transition-colors"
         >
           Clarifications
         </Link>
         <button
           onClick={loadData}
-          className="p-2 text-[#5B6B7A] hover:text-[#14202B] hover:bg-[#F7F9FB] rounded-lg border border-[#E3E8EE] transition-colors"
+          className="p-2 text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 transition-colors"
           title="Refresh Dossier Data"
         >
           <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
@@ -164,16 +164,16 @@ export default function InstitutionDashboardPage() {
 
       {/* Early Deficiencies Alert Banner */}
       {openDeficiencies.length > 0 && (
-        <div className="bg-rose-50 border border-rose-200 p-4 rounded-xl flex flex-col sm:flex-row sm:items-start justify-between gap-4 shadow-xs">
+        <div className="bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 p-4 rounded-2xl flex flex-col sm:flex-row sm:items-start justify-between gap-4 shadow-xs">
           <div className="flex items-start gap-3">
-            <div className="w-8 h-8 rounded-lg bg-rose-100 flex items-center justify-center shrink-0 text-rose-700">
+            <div className="w-8 h-8 rounded-lg bg-rose-100 dark:bg-rose-900/50 flex items-center justify-center shrink-0 text-rose-700 dark:text-rose-300">
               <AlertTriangle className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-xs font-bold text-rose-900">
+              <h3 className="text-xs font-bold text-rose-900 dark:text-rose-200">
                 Action Required: {openDeficiencies.length} Critical Deficiencies Flagged
               </h3>
-              <p className="text-xs text-rose-700 mt-0.5 leading-relaxed">
+              <p className="text-xs text-rose-700 dark:text-rose-300 mt-0.5 leading-relaxed">
                 Deterministic validation detected checklist deficiencies or expired statutory certificates.
                 Rectify flagged documents prior to official scrutiny lock.
               </p>
@@ -183,19 +183,19 @@ export default function InstitutionDashboardPage() {
             href={applications.length > 0 ? `/applications/${applications[0].id}` : "#"}
             className="px-3.5 py-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs font-semibold shrink-0 transition shadow-xs self-start sm:self-center"
           >
-            Review & Rectify
+            Review &amp; Rectify
           </Link>
         </div>
       )}
 
-      {/* Summary Band: Measured StockWatch Metrics */}
+      {/* Summary Band */}
       <SummaryBand
         metrics={[
           {
             label: "Total Applications",
             value: applications.length,
             subtext: "Academic Session 2025-26",
-            tone: "teal",
+            tone: "blue",
             icon: FileText,
           },
           {
@@ -209,7 +209,7 @@ export default function InstitutionDashboardPage() {
             label: "Under Scrutiny",
             value: pendingScrutiny.length,
             subtext: "Assigned to scrutiny officers",
-            tone: "teal",
+            tone: "blue",
             icon: Layers,
           },
           {
@@ -226,14 +226,14 @@ export default function InstitutionDashboardPage() {
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-base font-bold text-[#14202B]">
-              Institutional Filings & Applications
+            <h2 className="text-base font-bold text-slate-900 dark:text-white">
+              Institutional Filings &amp; Applications
             </h2>
-            <p className="text-xs text-[#5B6B7A]">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
               Live records persisted in Supabase PostgreSQL with Row Level Security.
             </p>
           </div>
-          <span className="text-[11px] font-mono text-[#5B6B7A] bg-white px-2 py-1 rounded-lg border border-[#E3E8EE]">
+          <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-800 px-2 py-1 rounded-lg border border-slate-200 dark:border-slate-700">
             Rule Engine: v2025.1
           </span>
         </div>

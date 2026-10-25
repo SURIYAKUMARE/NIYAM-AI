@@ -109,20 +109,20 @@ export default function UserManagementPage() {
   return (
     <div className="space-y-6">
       {/* Page Header */}
-      <div className="bg-white p-6 rounded-xl border border-[#E3E8EE] shadow-xs flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div className="bg-white dark:bg-[#0F172A] p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs flex flex-col md:flex-row md:items-center md:justify-between gap-4 transition-colors">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-teal-50 text-[#0F6B6B] border border-teal-200 uppercase tracking-wider">
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 uppercase tracking-wider">
               Administration Workspace
             </span>
-            <span className="text-xs text-[#5B6B7A]">
-              Welcome, <strong className="text-[#14202B]">{user?.full_name || "Administrator"}</strong> ({user?.role || "admin"})
+            <span className="text-xs text-slate-500 dark:text-slate-400">
+              Welcome, <strong className="text-slate-900 dark:text-white">{user?.full_name || "Administrator"}</strong> ({user?.role || "admin"})
             </span>
           </div>
-          <h1 className="text-xl sm:text-2xl font-bold text-[#14202B] tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
             National Informatics &amp; Infrastructure Administration
           </h1>
-          <p className="text-xs text-[#5B6B7A] mt-1 max-w-3xl leading-relaxed">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-3xl leading-relaxed">
             Manage institutional user accounts, APH compliance rule engines, system parameters, and scrutiny officer distribution.
           </p>
         </div>

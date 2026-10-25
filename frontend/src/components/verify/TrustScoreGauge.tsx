@@ -93,12 +93,12 @@ export function TrustScoreGauge({
   const strokeDashoffset = circumference - (score / 100) * circumference;
 
   return (
-    <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-xs space-y-6">
+    <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0F172A] p-6 shadow-xs space-y-6 transition-colors">
       {/* Header with Title and Overall Status */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-4 border-b border-slate-100 dark:border-slate-800">
         <div>
           <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-            <Award className="w-5 h-5 text-[#0F6B6B] dark:text-teal-400" />
+            <Award className="w-5 h-5 text-blue-600 dark:text-blue-400" />
             <span>AICTE Statutory Trust Score</span>
           </h3>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
@@ -117,7 +117,7 @@ export function TrustScoreGauge({
       {/* Main Circular Gauge & Summary */}
       <div className="flex flex-col md:flex-row items-center gap-6 justify-around">
         <div className="relative flex items-center justify-center">
-          <svg className="w-36 h-36 transform -rotate-90" viewBox="0 0 140 140">
+          <svg className="w-36 h-36 transform -rotate-90 drop-shadow-xs" viewBox="0 0 140 140">
             {/* Background Track */}
             <circle
               cx="70"

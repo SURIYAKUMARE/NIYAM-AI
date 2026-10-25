@@ -82,7 +82,7 @@ export function CollegeCard({ college }: CollegeCardProps) {
   };
 
   return (
-    <div className="group rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs hover:shadow-md hover:border-teal-500/50 dark:hover:border-teal-500/50 transition-all duration-200 flex flex-col justify-between overflow-hidden">
+    <div className="group rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0F172A] shadow-xs hover:shadow-md hover:border-blue-500/50 dark:hover:border-blue-500/50 transition-all duration-200 flex flex-col justify-between overflow-hidden">
       {/* Top Banner & Header */}
       <div>
         <div className="p-5 pb-3">
@@ -104,7 +104,7 @@ export function CollegeCard({ college }: CollegeCardProps) {
                 </span>
                 <Link
                   href={`/colleges/${college.id}`}
-                  className="font-bold text-slate-900 dark:text-white text-base leading-snug hover:text-[#0F6B6B] dark:hover:text-teal-400 transition-colors line-clamp-1 block"
+                  className="font-bold text-slate-900 dark:text-white text-base leading-snug hover:text-blue-600 dark:hover:text-blue-400 transition-colors line-clamp-1 block"
                 >
                   {college.name}
                 </Link>
@@ -176,10 +176,10 @@ export function CollegeCard({ college }: CollegeCardProps) {
       </div>
 
       {/* Action Footer */}
-      <div className="p-4 bg-white dark:bg-slate-900 flex items-center justify-between gap-2">
+      <div className="p-4 bg-white dark:bg-[#0F172A] flex items-center justify-between gap-2">
         <Link
           href={`/colleges/${college.id}`}
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-slate-700 dark:text-slate-200 hover:text-[#0F6B6B] dark:hover:text-teal-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-slate-700 dark:text-slate-200 hover:text-blue-600 dark:hover:text-blue-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
         >
           <span>Examine Dossier</span>
           <ChevronRight className="w-3.5 h-3.5" />
@@ -187,7 +187,7 @@ export function CollegeCard({ college }: CollegeCardProps) {
 
         <Link
           href={`/verify?collegeId=${college.id}`}
-          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold text-white bg-[#0F6B6B] hover:bg-[#0a4f4f] rounded-lg transition-colors shadow-2xs"
+          className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors shadow-2xs"
         >
           <FileCheck2 className="w-3.5 h-3.5" />
           <span>Quick Verify</span>

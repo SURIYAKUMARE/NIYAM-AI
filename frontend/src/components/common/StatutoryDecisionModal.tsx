@@ -67,7 +67,7 @@ export const StatutoryDecisionModal: React.FC<StatutoryDecisionModalProps> = ({
         {/* Header */}
         <div className="bg-[#14202B] text-white px-6 py-4 flex items-center justify-between border-b border-[#243447]">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-teal-500/20 text-teal-400 border border-teal-500/30 flex items-center justify-center font-bold">
+            <div className="w-9 h-9 rounded-xl bg-blue-500/20 text-blue-400 border border-blue-500/30 flex items-center justify-center font-bold">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
@@ -104,7 +104,7 @@ export const StatutoryDecisionModal: React.FC<StatutoryDecisionModalProps> = ({
               <select
                 value={actionType}
                 onChange={(e) => setActionType(e.target.value)}
-                className="w-full text-xs p-2.5 border border-[#E3E8EE] rounded-xl bg-[#F7F9FB] text-[#14202B] focus:ring-2 focus:ring-[#0F6B6B] outline-none"
+                className="w-full text-xs p-2.5 border border-[#E3E8EE] rounded-xl bg-[#F7F9FB] text-[#14202B] focus:ring-2 focus:ring-[#2563EB] outline-none"
               >
                 <option value="RECOMMENDED_FOR_APPROVAL">Recommend for Formal Approval</option>
                 <option value="DEFICIENCIES_COMMUNICATED">Communicate Deficiencies to Institution</option>
@@ -128,7 +128,7 @@ export const StatutoryDecisionModal: React.FC<StatutoryDecisionModalProps> = ({
                     onClick={() => setStatutoryDecision(opt.id)}
                     className={`py-2 px-3 text-xs font-bold rounded-xl border transition-all ${
                       statutoryDecision === opt.id
-                        ? `${opt.color} ring-2 ring-[#0F6B6B]`
+                        ? `${opt.color} ring-2 ring-[#2563EB]`
                         : "border-[#E3E8EE] bg-white text-[#5B6B7A] hover:bg-[#F7F9FB]"
                     }`}
                   >
@@ -149,7 +149,7 @@ export const StatutoryDecisionModal: React.FC<StatutoryDecisionModalProps> = ({
               value={comments}
               onChange={(e) => setComments(e.target.value)}
               placeholder="Record detailed statutory justification, handbook clause references, and specific committee notes..."
-              className="w-full text-xs p-3 border border-[#E3E8EE] rounded-xl bg-[#F7F9FB] text-[#14202B] focus:ring-2 focus:ring-[#0F6B6B] outline-none placeholder-[#5B6B7A]/60"
+              className="w-full text-xs p-3 border border-[#E3E8EE] rounded-xl bg-[#F7F9FB] text-[#14202B] focus:ring-2 focus:ring-[#2563EB] outline-none placeholder-[#5B6B7A]/60"
             />
           </div>
 
@@ -164,7 +164,7 @@ export const StatutoryDecisionModal: React.FC<StatutoryDecisionModalProps> = ({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-5 py-2 text-xs font-semibold bg-[#0F6B6B] hover:bg-[#0a4f4f] text-white rounded-xl shadow-xs transition disabled:opacity-60"
+              className="px-5 py-2 text-xs font-semibold bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded-xl shadow-xs transition disabled:opacity-60"
             >
               {isSubmitting ? "Submitting..." : "Sign & Record Official Outcome"}
             </button>

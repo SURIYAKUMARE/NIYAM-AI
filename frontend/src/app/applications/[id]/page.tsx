@@ -399,7 +399,7 @@ export default function ApplicationWorkspacePage() {
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 pb-5 border-b border-[#E3E8EE]">
           <div>
             <div className="flex flex-wrap items-center gap-2">
-              <span className="font-mono text-xs font-bold text-[#0F6B6B] bg-teal-50 px-2.5 py-0.5 rounded-full border border-teal-200">
+              <span className="font-mono text-xs font-bold text-[#2563EB] bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-200">
                 {application.application_number}
               </span>
               <StatusBadge status={application.status} type="application" />
@@ -421,7 +421,7 @@ export default function ApplicationWorkspacePage() {
               <button
                 onClick={handleRunValidation}
                 disabled={isValidating}
-                className="px-3.5 py-2 bg-[#0F6B6B] hover:bg-[#0a4f4f] text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition shadow-xs disabled:opacity-60"
+                className="px-3.5 py-2 bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition shadow-xs disabled:opacity-60"
               >
                 <Play className={`w-3.5 h-3.5 ${isValidating ? "animate-spin" : ""}`} />
                 <span>{isValidating ? "Evaluating Rules..." : "Run AI Advisory Validation"}</span>
@@ -449,7 +449,7 @@ export default function ApplicationWorkspacePage() {
             {isApplicant && application.status === "DRAFT" && (
               <button
                 onClick={handleOpenSubmitModal}
-                className="px-4 py-2 bg-[#0F6B6B] hover:bg-[#0a4f4f] text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition shadow-xs"
+                className="px-4 py-2 bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition shadow-xs"
               >
                 <CheckCircle className="w-3.5 h-3.5 text-emerald-300" />
                 <span>Submit for Scrutiny</span>
@@ -459,7 +459,7 @@ export default function ApplicationWorkspacePage() {
             {isAuthority && (
               <button
                 onClick={() => setStatutoryModalOpen(true)}
-                className="px-4 py-2 bg-[#0F6B6B] hover:bg-[#0a4f4f] text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition shadow-xs"
+                className="px-4 py-2 bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition shadow-xs"
               >
                 <ShieldCheck className="w-3.5 h-3.5 text-amber-300" />
                 <span>Record Statutory Decision</span>
@@ -469,9 +469,9 @@ export default function ApplicationWorkspacePage() {
             {isOfficer && (
               <button
                 onClick={() => setStatutoryModalOpen(true)}
-                className="px-4 py-2 bg-[#0F6B6B] hover:bg-[#0a4f4f] text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition shadow-xs"
+                className="px-4 py-2 bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition shadow-xs"
               >
-                <ShieldCheck className="w-3.5 h-3.5 text-teal-200" />
+                <ShieldCheck className="w-3.5 h-3.5 text-blue-200" />
                 <span>Record Scrutiny Observation</span>
               </button>
             )}
@@ -485,7 +485,7 @@ export default function ApplicationWorkspacePage() {
               AI Advisory Risk Score
             </span>
             <div className="flex items-baseline gap-2 mt-1">
-              <span className={`text-2xl font-extrabold font-mono ${application.overall_risk_score > 50 ? "text-rose-600" : application.overall_risk_score > 20 ? "text-amber-600" : "text-[#0F6B6B]"}`}>
+              <span className={`text-2xl font-extrabold font-mono ${application.overall_risk_score > 50 ? "text-rose-600" : application.overall_risk_score > 20 ? "text-amber-600" : "text-[#2563EB]"}`}>
                 {application.overall_risk_score?.toFixed(0) || 0}%
               </span>
               <span className="text-[11px] text-[#5B6B7A]">
@@ -530,14 +530,14 @@ export default function ApplicationWorkspacePage() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-3 mb-4 border-b border-[#E3E8EE]">
           <div>
             <h3 className="text-xs font-bold text-[#14202B] uppercase tracking-wider flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-[#0F6B6B]" />
+              <ShieldCheck className="w-4 h-4 text-[#2563EB]" />
               <span>5-Pillar APH 2025-26 Compliance Health Index</span>
             </h3>
             <p className="text-[11px] text-[#5B6B7A] mt-0.5">
               Deterministic verification against statutory Approval Process Handbook clauses and physical norms
             </p>
           </div>
-          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono bg-teal-50 text-[#0F6B6B] border border-teal-200">
+          <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold font-mono bg-blue-50 text-[#2563EB] border border-blue-200">
             Handbook Ver. 2025-26
           </span>
         </div>
@@ -555,7 +555,7 @@ export default function ApplicationWorkspacePage() {
                   isDeficient
                     ? "bg-rose-50/40 border-rose-200 hover:border-rose-400"
                     : isCompliant
-                    ? "bg-[#F7F9FB]/60 border-[#E3E8EE] hover:border-[#0F6B6B]/40"
+                    ? "bg-[#F7F9FB]/60 border-[#E3E8EE] hover:border-[#2563EB]/40"
                     : "bg-amber-50/40 border-amber-200 hover:border-amber-400"
                 }`}
               >
@@ -583,7 +583,7 @@ export default function ApplicationWorkspacePage() {
                         isDeficient
                           ? "bg-rose-100 text-rose-700 border-rose-200"
                           : isCompliant
-                          ? "bg-white text-[#0F6B6B] border-[#E3E8EE]"
+                          ? "bg-white text-[#2563EB] border-[#E3E8EE]"
                           : "bg-amber-100 text-amber-700 border-amber-200"
                       }`}
                     >
@@ -627,7 +627,7 @@ export default function ApplicationWorkspacePage() {
           onClick={() => setActiveTab("checklist")}
           className={`px-4 py-2.5 flex items-center gap-2 border-b-2 transition whitespace-nowrap -mb-px ${
             activeTab === "checklist"
-              ? "border-[#0F6B6B] text-[#0F6B6B] font-bold"
+              ? "border-[#2563EB] text-[#2563EB] font-bold"
               : "border-transparent text-[#5B6B7A] hover:text-[#14202B] hover:border-[#E3E8EE]"
           }`}
         >
@@ -639,7 +639,7 @@ export default function ApplicationWorkspacePage() {
           onClick={() => setActiveTab("findings")}
           className={`px-4 py-2.5 flex items-center gap-2 border-b-2 transition whitespace-nowrap -mb-px ${
             activeTab === "findings"
-              ? "border-[#0F6B6B] text-[#0F6B6B] font-bold"
+              ? "border-[#2563EB] text-[#2563EB] font-bold"
               : "border-transparent text-[#5B6B7A] hover:text-[#14202B] hover:border-[#E3E8EE]"
           }`}
         >
@@ -651,7 +651,7 @@ export default function ApplicationWorkspacePage() {
           onClick={() => setActiveTab("verification")}
           className={`px-4 py-2.5 flex items-center gap-2 border-b-2 transition whitespace-nowrap -mb-px ${
             activeTab === "verification"
-              ? "border-[#0F6B6B] text-[#0F6B6B] font-bold"
+              ? "border-[#2563EB] text-[#2563EB] font-bold"
               : "border-transparent text-[#5B6B7A] hover:text-[#14202B] hover:border-[#E3E8EE]"
           }`}
         >
@@ -663,7 +663,7 @@ export default function ApplicationWorkspacePage() {
           onClick={() => setActiveTab("clarifications")}
           className={`px-4 py-2.5 flex items-center gap-2 border-b-2 transition whitespace-nowrap -mb-px ${
             activeTab === "clarifications"
-              ? "border-[#0F6B6B] text-[#0F6B6B] font-bold"
+              ? "border-[#2563EB] text-[#2563EB] font-bold"
               : "border-transparent text-[#5B6B7A] hover:text-[#14202B] hover:border-[#E3E8EE]"
           }`}
         >
@@ -675,7 +675,7 @@ export default function ApplicationWorkspacePage() {
           onClick={() => setActiveTab("timeline")}
           className={`px-4 py-2.5 flex items-center gap-2 border-b-2 transition whitespace-nowrap -mb-px ${
             activeTab === "timeline"
-              ? "border-[#0F6B6B] text-[#0F6B6B] font-bold"
+              ? "border-[#2563EB] text-[#2563EB] font-bold"
               : "border-transparent text-[#5B6B7A] hover:text-[#14202B] hover:border-[#E3E8EE]"
           }`}
         >
@@ -743,7 +743,7 @@ export default function ApplicationWorkspacePage() {
                             fields: latestVersion.extracted_fields || [],
                           });
                         }}
-                        className="px-3.5 py-1.5 bg-teal-50 hover:bg-teal-100 text-[#0F6B6B] rounded-lg text-xs font-semibold flex items-center gap-1.5 transition border border-teal-200"
+                        className="px-3.5 py-1.5 bg-blue-50 hover:bg-blue-100 text-[#2563EB] rounded-lg text-xs font-semibold flex items-center gap-1.5 transition border border-blue-200"
                       >
                         <SearchCode className="w-3.5 h-3.5" />
                         <span>View &amp; Verify ({latestVersion.extracted_fields?.length || 0} fields)</span>
@@ -782,7 +782,7 @@ export default function ApplicationWorkspacePage() {
             {!isAuditor && !isApplicant && (
               <button
                 onClick={handleRunValidation}
-                className="px-3.5 py-1.5 bg-[#0F6B6B] text-white rounded-lg text-xs font-semibold hover:bg-[#0a4f4f] transition flex items-center gap-1.5 shadow-xs"
+                className="px-3.5 py-1.5 bg-[#2563EB] text-white rounded-lg text-xs font-semibold hover:bg-[#1D4ED8] transition flex items-center gap-1.5 shadow-xs"
               >
                 <RefreshCw className="w-3.5 h-3.5" />
                 <span>Re-Evaluate Rules</span>
@@ -839,8 +839,8 @@ export default function ApplicationWorkspacePage() {
                   </div>
 
                   {f.excerpt && (
-                    <div className="text-[11px] text-[#14202B] font-mono bg-teal-50/50 p-2.5 rounded-lg border border-teal-200">
-                      <strong className="text-[#0F6B6B]">Evidence Excerpt:</strong> &quot;{f.excerpt}&quot;
+                    <div className="text-[11px] text-[#14202B] font-mono bg-blue-50/50 p-2.5 rounded-lg border border-blue-200">
+                      <strong className="text-[#2563EB]">Evidence Excerpt:</strong> &quot;{f.excerpt}&quot;
                     </div>
                   )}
 
@@ -874,7 +874,7 @@ export default function ApplicationWorkspacePage() {
                           onClick={() => {
                             setClarificationModalOpen(true);
                           }}
-                          className="px-3 py-1 text-[11px] bg-teal-50 text-[#0F6B6B] hover:bg-teal-100 rounded-lg font-semibold border border-teal-200 transition"
+                          className="px-3 py-1 text-[11px] bg-blue-50 text-[#2563EB] hover:bg-blue-100 rounded-lg font-semibold border border-blue-200 transition"
                         >
                           Raise Clarification
                         </button>
@@ -916,7 +916,7 @@ export default function ApplicationWorkspacePage() {
                   <div className="flex gap-3">
                     <button
                       onClick={() => handleTriggerVerification(1, "DIGILOCKER", "NORMAL")}
-                      className="text-[#0F6B6B] font-semibold hover:underline"
+                      className="text-[#2563EB] font-semibold hover:underline"
                     >
                       Test Pull (Success)
                     </button>
@@ -945,7 +945,7 @@ export default function ApplicationWorkspacePage() {
                 {!isAuditor && !isApplicant && (
                   <button
                     onClick={() => handleTriggerVerification(1, "UNIVERSITY_AFFILIATION", "NORMAL")}
-                    className="text-[#0F6B6B] font-semibold hover:underline"
+                    className="text-[#2563EB] font-semibold hover:underline"
                   >
                     Re-Verify
                   </button>
@@ -967,7 +967,7 @@ export default function ApplicationWorkspacePage() {
                 {!isAuditor && !isApplicant && (
                   <button
                     onClick={() => handleTriggerVerification(1, "LAND_REVENUE_PORTAL", "NORMAL")}
-                    className="text-[#0F6B6B] font-semibold hover:underline"
+                    className="text-[#2563EB] font-semibold hover:underline"
                   >
                     Re-Verify
                   </button>
@@ -991,22 +991,22 @@ export default function ApplicationWorkspacePage() {
             </div>
 
             {/* Manual Official Confirmation Card */}
-            <div className="p-4 bg-teal-50/50 rounded-xl border border-teal-200 space-y-3 md:col-span-2">
+            <div className="p-4 bg-blue-50/50 rounded-xl border border-blue-200 space-y-3 md:col-span-2">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-[#0F6B6B]">Manual Official Confirmation</span>
-                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-teal-100 text-[#0F6B6B] border border-teal-300">
+                <span className="text-xs font-bold text-[#2563EB]">Manual Official Confirmation</span>
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-[#2563EB] border border-blue-300">
                   Officer Workflow
                 </span>
               </div>
               <p className="text-xs text-[#14202B] leading-relaxed">
                 Section 5E &amp; Acceptance Test 12 mandate: Authorized reviewers can record manual confirmation backed by supporting document references.
               </p>
-              <div className="pt-2 border-t border-teal-200 flex justify-between items-center text-[11px]">
+              <div className="pt-2 border-t border-blue-200 flex justify-between items-center text-[11px]">
                 <span className="text-[#5B6B7A] font-medium">Requires Reviewer Provenance</span>
                 {isOfficer && (
                   <button
                     onClick={() => handleOpenManualConfirm(1)}
-                    className="px-3.5 py-1.5 bg-[#0F6B6B] hover:bg-[#0a4f4f] text-white rounded-lg font-semibold shadow-xs transition"
+                    className="px-3.5 py-1.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded-lg font-semibold shadow-xs transition"
                   >
                     Record Manual Confirmation
                   </button>
@@ -1032,7 +1032,7 @@ export default function ApplicationWorkspacePage() {
             {(isOfficer || isAuthority) && (
               <button
                 onClick={() => setClarificationModalOpen(true)}
-                className="px-3.5 py-1.5 bg-[#0F6B6B] hover:bg-[#0a4f4f] text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition shadow-xs"
+                className="px-3.5 py-1.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition shadow-xs"
               >
                 <MessageSquare className="w-3.5 h-3.5" />
                 <span>Issue Clarification Query</span>
@@ -1074,7 +1074,7 @@ export default function ApplicationWorkspacePage() {
                           onClick={() => {
                             setClarificationToRespond(c);
                           }}
-                          className="px-3.5 py-1.5 bg-[#0F6B6B] text-white rounded-lg text-xs font-semibold hover:bg-[#0a4f4f] transition shadow-xs"
+                          className="px-3.5 py-1.5 bg-[#2563EB] text-white rounded-lg text-xs font-semibold hover:bg-[#1D4ED8] transition shadow-xs"
                         >
                           Submit Institutional Response
                         </button>
@@ -1108,14 +1108,14 @@ export default function ApplicationWorkspacePage() {
             ) : (
               application.review_actions.map((act: any) => (
                 <div key={act.id} className="p-4 rounded-xl border border-[#E3E8EE] bg-[#F7F9FB] flex items-start gap-3">
-                  <ShieldCheck className="w-5 h-5 text-[#0F6B6B] shrink-0 mt-0.5" />
+                  <ShieldCheck className="w-5 h-5 text-[#2563EB] shrink-0 mt-0.5" />
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-bold text-[#14202B]">
                         {act.action_type.replace(/_/g, " ")}
                       </span>
                       {act.statutory_decision && (
-                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-teal-50 text-[#0F6B6B] border border-teal-200">
+                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-50 text-[#2563EB] border border-blue-200">
                           Decision: {act.statutory_decision}
                         </span>
                       )}
@@ -1219,7 +1219,7 @@ export default function ApplicationWorkspacePage() {
                 type="button"
                 onClick={handleExecuteSubmitForScrutiny}
                 disabled={submittingScrutiny}
-                className="px-4 py-1.5 bg-[#0F6B6B] hover:bg-[#0a4f4f] text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-xs transition disabled:opacity-50"
+                className="px-4 py-1.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-xs transition disabled:opacity-50"
               >
                 {submittingScrutiny ? (
                   <>
@@ -1247,7 +1247,7 @@ export default function ApplicationWorkspacePage() {
           >
             <div className="flex items-center justify-between pb-3 border-b border-[#E3E8EE]">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-5 h-5 text-[#0F6B6B]" />
+                <ShieldCheck className="w-5 h-5 text-[#2563EB]" />
                 <h3 className="text-sm font-bold text-[#14202B]">Record Manual Source Confirmation</h3>
               </div>
               <button
@@ -1274,7 +1274,7 @@ export default function ApplicationWorkspacePage() {
                   value={manualEvidenceRef}
                   onChange={(e) => setManualEvidenceRef(e.target.value)}
                   placeholder="e.g. DOTE-CONFIRM-REG-2025/892 or DOTE/DISP/4501"
-                  className="w-full text-xs p-2.5 border border-[#E3E8EE] rounded-xl font-mono text-[#14202B] focus:outline-none focus:ring-2 focus:ring-[#0F6B6B]"
+                  className="w-full text-xs p-2.5 border border-[#E3E8EE] rounded-xl font-mono text-[#14202B] focus:outline-none focus:ring-2 focus:ring-[#2563EB]"
                 />
               </div>
 
@@ -1287,11 +1287,11 @@ export default function ApplicationWorkspacePage() {
                   value={manualObservations}
                   onChange={(e) => setManualObservations(e.target.value)}
                   placeholder="Observations from direct inspection, physical verification, or department record check..."
-                  className="w-full text-xs p-2.5 border border-[#E3E8EE] rounded-xl text-[#14202B] focus:outline-none focus:ring-2 focus:ring-[#0F6B6B]"
+                  className="w-full text-xs p-2.5 border border-[#E3E8EE] rounded-xl text-[#14202B] focus:outline-none focus:ring-2 focus:ring-[#2563EB]"
                 />
               </div>
 
-              <div className="p-3 bg-teal-50/60 rounded-xl border border-teal-200 text-[11px] text-[#0F6B6B]">
+              <div className="p-3 bg-blue-50/60 rounded-xl border border-blue-200 text-[11px] text-[#2563EB]">
                 <strong>Provenance Notice:</strong> This action will record your user identity, timestamp, and audit trail entry as statutory officer verification.
               </div>
             </div>
@@ -1307,7 +1307,7 @@ export default function ApplicationWorkspacePage() {
               <button
                 type="submit"
                 disabled={submittingManual}
-                className="px-4 py-1.5 bg-[#0F6B6B] hover:bg-[#0a4f4f] text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-xs transition disabled:opacity-50"
+                className="px-4 py-1.5 bg-[#2563EB] hover:bg-[#1D4ED8] text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-xs transition disabled:opacity-50"
               >
                 {submittingManual ? "Saving..." : "Record Official Confirmation"}
               </button>
@@ -1359,7 +1359,7 @@ export default function ApplicationWorkspacePage() {
                   value={findingDispositionNote}
                   onChange={(e) => setFindingDispositionNote(e.target.value)}
                   placeholder="Provide statutory justification referencing Approval Process Handbook norms or institutional evidence..."
-                  className="w-full text-xs p-2.5 border border-[#E3E8EE] rounded-xl text-[#14202B] focus:outline-none focus:ring-2 focus:ring-[#0F6B6B]"
+                  className="w-full text-xs p-2.5 border border-[#E3E8EE] rounded-xl text-[#14202B] focus:outline-none focus:ring-2 focus:ring-[#2563EB]"
                 />
               </div>
 
@@ -1382,7 +1382,7 @@ export default function ApplicationWorkspacePage() {
                 className={`px-4 py-1.5 text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-xs transition disabled:opacity-50 ${
                   findingDispositionModal.action === "CONFIRMED_BY_OFFICER"
                     ? "bg-rose-600 hover:bg-rose-700"
-                    : "bg-[#14202B] hover:bg-[#0a4f4f]"
+                    : "bg-[#14202B] hover:bg-[#1D4ED8]"
                 }`}
               >
                 {submittingFindingDisposition ? "Updating..." : (

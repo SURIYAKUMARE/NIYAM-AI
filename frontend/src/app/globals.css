@@ -3,35 +3,45 @@
 @tailwind utilities;
 
 :root {
-  --background: #F7F9FB;
+  --background: #F8FAFC;
   --surface: #FFFFFF;
-  --text-primary: #14202B;
-  --text-secondary: #5B6B7A;
-  --border: #E3E8EE;
+  --surface-muted: #F1F5F9;
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-tertiary: #94A3B8;
+  --border: #E2E8F0;
   --border-strong: #CBD5E1;
-  --accent: #0F6B6B;
-  --accent-hover: #0a4f4f;
-  --accent-active: #083e3e;
-  --accent-light: #E6F2F2;
-  --success: #047857;
-  --warning: #C2410C;
-  --error: #B91C1C;
-  --info: #1D4ED8;
+  --accent: #2563EB;
+  --accent-hover: #1D4ED8;
+  --accent-active: #1E40AF;
+  --accent-light: #EFF6FF;
+  --accent-muted: #DBEAFE;
+  --gold: #F59E0B;
+  --gold-light: #FEF3C7;
+  --success: #059669;
+  --warning: #D97706;
+  --error: #DC2626;
+  --info: #2563EB;
 }
 
 .dark {
-  --background: #0B111A;
-  --surface: #111A24;
-  --text-primary: #F1F5F9;
-  --text-secondary: #94A3B8;
+  --background: #090D16;
+  --surface: #0F172A;
+  --surface-muted: #162036;
+  --text-primary: #F8FAFC;
+  --text-secondary: #CBD5E1;
+  --text-tertiary: #64748B;
   --border: #1E293B;
   --border-strong: #334155;
-  --accent: #14B8A6;
-  --accent-hover: #0D9488;
-  --accent-active: #0F766E;
-  --accent-light: #132E35;
+  --accent: #3B82F6;
+  --accent-hover: #2563EB;
+  --accent-active: #1D4ED8;
+  --accent-light: #172554;
+  --accent-muted: #1E3A8A;
+  --gold: #F59E0B;
+  --gold-light: #451A03;
   --success: #10B981;
-  --warning: #F97316;
+  --warning: #F59E0B;
   --error: #EF4444;
   --info: #3B82F6;
 }
@@ -39,22 +49,12 @@
 body {
   color: var(--text-primary);
   background-color: var(--background);
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition: background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1), color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   font-family: Geist, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-.dark ::-webkit-scrollbar-track {
-  background: #0B111A;
-}
-.dark ::-webkit-scrollbar-thumb {
-  background: #334155;
-}
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: #475569;
 }
 
 /* Accessible focus ring standards */
@@ -73,7 +73,7 @@ body {
   }
 }
 
-/* Custom scrollbars for data tables and document split view */
+/* Custom crisp scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -83,10 +83,21 @@ body {
 }
 ::-webkit-scrollbar-thumb {
   background: #CBD5E1;
-  border-radius: 3px;
+  border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #94A3B8;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #090D16;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 4px;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
 }
 
 /* Interactive touch target baseline */

@@ -23,7 +23,7 @@ export const WorkspaceTabs: React.FC<WorkspaceTabsProps> = ({
   className = "",
 }) => {
   return (
-    <div className={`bg-white rounded-t-xl border border-b-0 border-[#E3E8EE] px-4 pt-1 flex items-center gap-1 overflow-x-auto ${className}`}>
+    <div className={`bg-white dark:bg-[#0F172A] rounded-t-2xl border border-b-0 border-slate-200 dark:border-slate-800 px-4 pt-1 flex items-center gap-1 overflow-x-auto transition-colors ${className}`}>
       {tabs.map((tab) => {
         const isActive = activeTab === tab.id;
         const Icon = tab.icon;
@@ -36,18 +36,18 @@ export const WorkspaceTabs: React.FC<WorkspaceTabsProps> = ({
             aria-selected={isActive}
             className={`px-3.5 py-2.5 text-xs font-semibold flex items-center gap-2 border-b-2 transition-colors whitespace-nowrap -mb-px ${
               isActive
-                ? "border-[#0F6B6B] text-[#0F6B6B]"
-                : "border-transparent text-[#5B6B7A] hover:text-[#14202B] hover:border-[#E3E8EE]"
+                ? "border-blue-600 dark:border-blue-500 text-blue-600 dark:text-blue-400 font-bold"
+                : "border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:border-slate-300 dark:hover:border-slate-700"
             }`}
           >
-            {Icon && <Icon className={`w-3.5 h-3.5 ${isActive ? "text-[#0F6B6B]" : "text-[#5B6B7A]"}`} />}
+            {Icon && <Icon className={`w-3.5 h-3.5 ${isActive ? "text-blue-600 dark:text-blue-400" : "text-slate-400 dark:text-slate-500"}`} />}
             <span>{tab.label}</span>
             {typeof tab.count === "number" && (
               <span
                 className={`px-1.5 py-0.2 rounded-full text-[10px] font-bold ${
                   isActive
-                    ? "bg-teal-50 text-[#0F6B6B] border border-teal-200"
-                    : "bg-[#F7F9FB] text-[#5B6B7A] border border-[#E3E8EE]"
+                    ? "bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
+                    : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700"
                 }`}
               >
                 {tab.count}

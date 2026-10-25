@@ -98,12 +98,12 @@ export function MismatchHighlighter({ items }: MismatchHighlighterProps) {
   const anomaliesCount = items.filter((i) => i.status !== "MATCH").length;
 
   return (
-    <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs overflow-hidden">
+    <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0F172A] shadow-xs overflow-hidden transition-colors">
       {/* Header */}
       <div className="p-5 border-b border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50/50 dark:bg-slate-800/30">
         <div>
           <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-            <BookOpen className="w-5 h-5 text-[#0F6B6B] dark:text-teal-400" />
+            <BookOpen className="w-5 h-5 text-blue-600 dark:text-blue-400" />
             <span>AICTE Cross-Check &amp; Mismatch Highlighter</span>
           </h3>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">

@@ -70,10 +70,10 @@ export default function OfficerReviewQueuePage() {
       cell: (app) => (
         <Link
           href={`/applications/${app.id}`}
-          className="font-bold text-[#14202B] hover:text-[#0F6B6B] flex items-center gap-1.5 transition-colors"
+          className="font-bold text-slate-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 flex items-center gap-1.5 transition-colors"
         >
           <span className="font-mono">{app.application_number}</span>
-          <ExternalLink className="w-3 h-3 text-[#5B6B7A]" />
+          <ExternalLink className="w-3 h-3 text-slate-400" />
         </Link>
       ),
     },
@@ -81,10 +81,10 @@ export default function OfficerReviewQueuePage() {
       header: "Institution & AICTE ID",
       cell: (app) => (
         <div>
-          <div className="font-semibold text-[#14202B]">
+          <div className="font-semibold text-slate-900 dark:text-white">
             {app.institution?.name || "Apex Institute of Technology"}
           </div>
-          <div className="text-[11px] text-[#5B6B7A]">
+          <div className="text-[11px] text-slate-500 dark:text-slate-400">
             AICTE ID: {app.institution?.aicte_permanent_id || "1-492048123"} · {app.institution?.state || "Maharashtra"}
           </div>
         </div>
@@ -93,7 +93,7 @@ export default function OfficerReviewQueuePage() {
     {
       header: "Category",
       cell: (app) => (
-        <span className="capitalize text-[#14202B]">
+        <span className="capitalize text-slate-800 dark:text-slate-200">
           {app.category_code?.replace(/_/g, " ") || "Extension of Approval"}
         </span>
       ),
@@ -108,7 +108,7 @@ export default function OfficerReviewQueuePage() {
         const score = Number(app.overall_risk_score || 0);
         return (
           <div className="flex items-center gap-2">
-            <div className="w-16 bg-[#E3E8EE] rounded-full h-1.5 overflow-hidden">
+            <div className="w-16 bg-slate-200 dark:bg-slate-700 rounded-full h-1.5 overflow-hidden">
               <div
                 className={`h-full ${
                   score > 50
@@ -120,7 +120,7 @@ export default function OfficerReviewQueuePage() {
                 style={{ width: `${Math.min(100, Math.max(5, score))}%` }}
               />
             </div>
-            <span className="font-mono text-[#14202B] font-semibold text-[11px]">
+            <span className="font-mono text-slate-800 dark:text-slate-200 font-semibold text-[11px]">
               {score.toFixed(0)}%
             </span>
           </div>
@@ -133,9 +133,9 @@ export default function OfficerReviewQueuePage() {
       cell: (app) => (
         <Link
           href={`/applications/${app.id}`}
-          className="inline-flex items-center gap-1 px-3 py-1.5 bg-[#0F6B6B] hover:bg-[#0a4f4f] text-white rounded-lg text-xs font-semibold transition-colors shadow-xs"
+          className="inline-flex items-center gap-1 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold transition-colors shadow-xs"
         >
-          <span>Inspect & Scrutinize</span>
+          <span>Inspect &amp; Scrutinize</span>
           <ArrowRight className="w-3 h-3" />
         </Link>
       ),
@@ -152,33 +152,33 @@ export default function OfficerReviewQueuePage() {
       >
         <Link
           href="/review"
-          className="px-3 py-1.5 text-xs font-semibold text-[#14202B] bg-white hover:bg-[#F7F9FB] border border-[#E3E8EE] rounded-lg transition-colors"
+          className="px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-lg transition-colors"
         >
           Review Workspace
         </Link>
         <Link
           href="/findings"
-          className="px-3 py-1.5 text-xs font-semibold text-[#14202B] bg-white hover:bg-[#F7F9FB] border border-[#E3E8EE] rounded-lg transition-colors"
+          className="px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-lg transition-colors"
         >
           Findings &amp; Dispositions
         </Link>
         <button
           onClick={loadQueue}
-          className="p-2 text-[#5B6B7A] hover:text-[#14202B] hover:bg-[#F7F9FB] rounded-lg border border-[#E3E8EE] transition-colors"
+          className="p-2 text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 transition-colors"
           title="Refresh Queue"
         >
           <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
         </button>
       </ContextPanel>
 
-      {/* Summary Band: Reference Measured Treatment */}
+      {/* Summary Band */}
       <SummaryBand
         metrics={[
           {
             label: "Total Assigned Cases",
             value: applications.length,
             subtext: "Assigned across Western Region",
-            tone: "teal",
+            tone: "blue",
             icon: Layers,
           },
           {
@@ -209,14 +209,14 @@ export default function OfficerReviewQueuePage() {
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-base font-bold text-[#14202B]">
+            <h2 className="text-base font-bold text-slate-900 dark:text-white">
               Active Institutional Review Queue
             </h2>
-            <p className="text-xs text-[#5B6B7A]">
+            <p className="text-xs text-slate-500 dark:text-slate-400">
               Deterministic rule evaluation populated from APH 2025-26 compliance engine.
             </p>
           </div>
-          <span className="text-[11px] font-mono text-[#5B6B7A] bg-white px-2 py-1 rounded-lg border border-[#E3E8EE]">
+          <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-800 px-2 py-1 rounded-lg border border-slate-200 dark:border-slate-700">
             Active Rule Set: v2025.1
           </span>
         </div>
@@ -231,12 +231,12 @@ export default function OfficerReviewQueuePage() {
             item.institution?.aicte_permanent_id?.toLowerCase().includes(q)
           }
           filterComponent={
-            <div className="flex items-center gap-1.5 text-xs text-[#5B6B7A]">
+            <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400">
               <Filter className="w-3.5 h-3.5" />
               <select
                 value={filterCategory}
                 onChange={(e) => setFilterCategory(e.target.value)}
-                className="px-2.5 py-1.5 bg-white border border-[#E3E8EE] rounded-xl text-xs text-[#14202B] focus:outline-none focus:ring-1 focus:ring-[#0F6B6B]"
+                className="px-2.5 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-blue-500"
               >
                 <option value="">All Approval Categories</option>
                 <option value="EXTENSION_OF_APPROVAL">Extension of Approval (EoA)</option>

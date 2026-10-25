@@ -89,13 +89,13 @@ export default function CollegesDirectoryPage() {
   return (
     <div className="space-y-6">
       {/* Official Disclaimer & Benchmark Banner */}
-      <div className="p-4 rounded-2xl bg-teal-50/70 dark:bg-teal-950/30 border border-teal-200 dark:border-teal-800 flex items-start gap-3">
-        <Info className="w-5 h-5 text-[#0F6B6B] dark:text-teal-400 shrink-0 mt-0.5" />
-        <div className="text-xs text-teal-950 dark:text-teal-200 leading-relaxed">
+      <div className="p-4 rounded-2xl bg-blue-50/70 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800/60 flex items-start gap-3 transition-colors">
+        <Info className="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
+        <div className="text-xs text-blue-950 dark:text-blue-200 leading-relaxed">
           <p className="font-bold text-sm">
             AICTE Problem Statement 26261: Synthetic Institutions Benchmark Dataset
           </p>
-          <p className="mt-0.5 text-teal-800 dark:text-teal-300">
+          <p className="mt-0.5 text-blue-800 dark:text-blue-300">
             This repository contains 12 completely fictional engineering colleges, original SVG emblems, 36 campus photos, and 36 A4 PDF regulatory dossiers. Created exclusively for testing and evaluating automated verification pipelines without using real institutional names or government seals.
           </p>
         </div>
@@ -105,7 +105,7 @@ export default function CollegesDirectoryPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="px-2.5 py-0.5 rounded text-[11px] font-semibold bg-[#E6F2F2] dark:bg-teal-950 text-[#0F6B6B] dark:text-teal-300 border border-[#C6E4E8] dark:border-teal-800">
+            <span className="px-2.5 py-0.5 rounded text-[11px] font-semibold bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
               Module 01 • Institutional Registry
             </span>
             <span className="text-xs text-slate-500 dark:text-slate-400 font-mono">
@@ -113,7 +113,7 @@ export default function CollegesDirectoryPage() {
             </span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center gap-2.5">
-            <GraduationCap className="w-7 h-7 text-[#0F6B6B] dark:text-teal-400" />
+            <GraduationCap className="w-7 h-7 text-blue-600 dark:text-blue-400" />
             <span>Technical Institutions Directory</span>
           </h1>
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
@@ -123,7 +123,7 @@ export default function CollegesDirectoryPage() {
 
         <Link
           href="/verify"
-          className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-bold text-white bg-[#0F6B6B] hover:bg-[#0a4f4f] rounded-xl transition-all shadow-xs shrink-0 self-start md:self-auto"
+          className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition-all shadow-xs shrink-0 self-start md:self-auto"
         >
           <FileCheck2 className="w-4 h-4" />
           <span>Launch AI Verification Studio</span>
@@ -132,7 +132,7 @@ export default function CollegesDirectoryPage() {
 
       {/* Summary KPI Strip */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
-        <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xs">
+        <div className="p-4 rounded-2xl bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-800 shadow-2xs">
           <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
             Total Colleges
           </span>
@@ -142,7 +142,7 @@ export default function CollegesDirectoryPage() {
           <span className="text-[10px] text-slate-500">Benchmark Pool</span>
         </div>
 
-        <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xs">
+        <div className="p-4 rounded-2xl bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-800 shadow-2xs">
           <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 block">
             Compliant (Valid)
           </span>
@@ -152,7 +152,7 @@ export default function CollegesDirectoryPage() {
           <span className="text-[10px] text-emerald-600/80">100% APH Conformance</span>
         </div>
 
-        <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xs">
+        <div className="p-4 rounded-2xl bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-800 shadow-2xs">
           <span className="text-[10px] font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 block">
             Tampered Detections
           </span>
@@ -162,7 +162,7 @@ export default function CollegesDirectoryPage() {
           <span className="text-[10px] text-rose-600/80">Intake &amp; Seal Altered</span>
         </div>
 
-        <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xs">
+        <div className="p-4 rounded-2xl bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-800 shadow-2xs">
           <span className="text-[10px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 block">
             Affiliation Expired
           </span>
@@ -172,7 +172,7 @@ export default function CollegesDirectoryPage() {
           <span className="text-[10px] text-amber-600/80">Pending University Board</span>
         </div>
 
-        <div className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xs col-span-2 sm:col-span-1">
+        <div className="p-4 rounded-2xl bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-800 shadow-2xs col-span-2 sm:col-span-1">
           <span className="text-[10px] font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400 block">
             Missing Disclosures
           </span>
@@ -184,7 +184,7 @@ export default function CollegesDirectoryPage() {
       </div>
 
       {/* Filter and Search Controls */}
-      <div className="p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-3">
+      <div className="p-4 rounded-2xl bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-800 shadow-xs space-y-3 transition-colors">
         <div className="flex flex-col md:flex-row gap-3">
           {/* Search Box */}
           <div className="relative flex-1">
@@ -194,7 +194,7 @@ export default function CollegesDirectoryPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search by college name, code (e.g. NIT), city, or permanent ID..."
-              className="w-full pl-9 pr-4 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-400 focus:bg-white dark:focus:bg-slate-900 focus:border-[#0F6B6B] transition-colors"
+              className="w-full pl-9 pr-4 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white placeholder-slate-400 focus:bg-white dark:focus:bg-slate-900 focus:border-blue-600 dark:focus:border-blue-500 transition-colors"
             />
           </div>
 
@@ -203,7 +203,7 @@ export default function CollegesDirectoryPage() {
             <select
               value={selectedState}
               onChange={(e) => setSelectedState(e.target.value)}
-              className="px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-medium focus:border-[#0F6B6B]"
+              className="px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-medium focus:border-blue-600"
             >
               <option value="ALL">All States ({states.length})</option>
               {states.map((st) => (
@@ -217,7 +217,7 @@ export default function CollegesDirectoryPage() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
-              className="px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-medium focus:border-[#0F6B6B]"
+              className="px-3 py-2 rounded-xl text-xs bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-medium focus:border-blue-600"
             >
               <option value="trustScore">Sort: Trust Score (High to Low)</option>
               <option value="name">Sort: College Name (A-Z)</option>
@@ -245,7 +245,7 @@ export default function CollegesDirectoryPage() {
               onClick={() => setSelectedStatus(tab.id)}
               className={`px-3 py-1 rounded-full text-xs font-semibold transition-all ${
                 selectedStatus === tab.id
-                  ? "bg-[#0F6B6B] text-white shadow-2xs"
+                  ? "bg-blue-600 text-white shadow-2xs"
                   : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
               }`}
             >
@@ -263,7 +263,7 @@ export default function CollegesDirectoryPage() {
           ))}
         </div>
       ) : filteredColleges.length === 0 ? (
-        <div className="p-12 text-center rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xs space-y-3">
+        <div className="p-12 text-center rounded-2xl bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-800 shadow-xs space-y-3">
           <GraduationCap className="w-12 h-12 mx-auto text-slate-300 dark:text-slate-700" />
           <h3 className="text-base font-bold text-slate-900 dark:text-white">
             No institutions match your search criteria
@@ -277,7 +277,7 @@ export default function CollegesDirectoryPage() {
               setSelectedStatus("ALL");
               setSelectedState("ALL");
             }}
-            className="px-4 py-1.5 text-xs font-bold text-[#0F6B6B] bg-teal-50 dark:bg-teal-950/50 rounded-lg hover:underline"
+            className="px-4 py-1.5 text-xs font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/50 rounded-lg hover:underline"
           >
             Reset Filters
           </button>

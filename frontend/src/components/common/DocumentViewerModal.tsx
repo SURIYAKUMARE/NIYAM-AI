@@ -97,7 +97,7 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
         {/* Header */}
         <div className="bg-[#14202B] text-white px-6 py-4 flex items-center justify-between border-b border-[#243447]">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-teal-500/20 text-teal-400 border border-teal-500/30 flex items-center justify-center font-bold">
+            <div className="w-9 h-9 rounded-xl bg-blue-500/20 text-blue-400 border border-blue-500/30 flex items-center justify-center font-bold">
               <FileText className="w-5 h-5" />
             </div>
             <div>
@@ -105,7 +105,7 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
                 <h3 className="text-sm font-bold text-white tracking-wide">
                   {documentTitle}
                 </h3>
-                <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded bg-teal-900/60 text-teal-300 border border-teal-700/50">
+                <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded bg-blue-900/60 text-blue-300 border border-blue-700/50">
                   {checklistCode}
                 </span>
               </div>
@@ -133,7 +133,7 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
                 <span className="font-semibold text-[#14202B]">
                   Visual Evidence Scan (Page {selectedField?.page_number || 1})
                 </span>
-                <span className="text-[10px] font-mono bg-white px-2 py-0.5 rounded border border-[#E3E8EE] text-[#0F6B6B] font-bold">
+                <span className="text-[10px] font-mono bg-white px-2 py-0.5 rounded border border-[#E3E8EE] text-[#2563EB] font-bold">
                   Scale: 100% · Overlay Active
                 </span>
               </div>
@@ -163,15 +163,15 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
 
                   {/* Highlighted Bounding Box Target */}
                   {selectedField && (
-                    <div className="relative p-3 rounded-lg bg-teal-50/80 border-2 border-[#0F6B6B] shadow-xs transition-all">
-                      <div className="absolute -top-2.5 left-2 px-2 py-0.5 rounded bg-[#0F6B6B] text-white font-sans text-[9px] font-bold tracking-wider uppercase">
+                    <div className="relative p-3 rounded-lg bg-blue-50/80 border-2 border-[#2563EB] shadow-xs transition-all">
+                      <div className="absolute -top-2.5 left-2 px-2 py-0.5 rounded bg-[#2563EB] text-white font-sans text-[9px] font-bold tracking-wider uppercase">
                         FIELD: {selectedField.field_name.replace(/_/g, " ")}
                       </div>
                       <p className="font-mono text-xs text-[#14202B] font-bold mt-1">
                         &quot;{selectedField.raw_text_excerpt || selectedField.original_value}&quot;
                       </p>
-                      <div className="text-[10px] font-sans text-[#5B6B7A] mt-2 flex items-center justify-between border-t border-teal-200/60 pt-1">
-                        <span className="font-semibold text-[#0F6B6B]">
+                      <div className="text-[10px] font-sans text-[#5B6B7A] mt-2 flex items-center justify-between border-t border-blue-200/60 pt-1">
+                        <span className="font-semibold text-[#2563EB]">
                           Confidence: {(selectedField.confidence_score * 100).toFixed(0)}%
                         </span>
                         <span className="font-mono text-[9px]">
@@ -201,7 +201,7 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
             </div>
 
             <div className="mt-4 p-3 bg-white rounded-xl border border-[#E3E8EE] text-[11px] text-[#5B6B7A] flex items-center gap-2.5">
-              <Shield className="w-4 h-4 text-[#0F6B6B] shrink-0" />
+              <Shield className="w-4 h-4 text-[#2563EB] shrink-0" />
               <span>
                 Bounding box coordinates provide traceable spatial provenance directly from the uploaded artifact.
               </span>
@@ -237,8 +237,8 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
                     onClick={() => setSelectedField(f)}
                     className={`p-3.5 rounded-xl border transition-all cursor-pointer ${
                       isSelected
-                        ? "border-[#0F6B6B] bg-teal-50/30 ring-1 ring-[#0F6B6B]"
-                        : "border-[#E3E8EE] hover:border-[#0F6B6B]/40 bg-white"
+                        ? "border-[#2563EB] bg-blue-50/30 ring-1 ring-[#2563EB]"
+                        : "border-[#E3E8EE] hover:border-[#2563EB]/40 bg-white"
                     }`}
                   >
                     <div className="flex items-start justify-between gap-2">
@@ -265,7 +265,7 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
                             e.stopPropagation();
                             handleStartCorrection(f);
                           }}
-                          className="flex items-center gap-1 text-[11px] text-[#0F6B6B] hover:text-[#0a4f4f] font-semibold px-2 py-0.5 rounded-lg hover:bg-teal-50 transition"
+                          className="flex items-center gap-1 text-[11px] text-[#2563EB] hover:text-[#1D4ED8] font-semibold px-2 py-0.5 rounded-lg hover:bg-blue-50 transition"
                         >
                           <Edit2 className="w-3 h-3" />
                           <span>Correct</span>
@@ -286,7 +286,7 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
                         )}
                       </div>
                     ) : (
-                      <div className="mt-3 p-3.5 bg-[#F7F9FB] border border-[#0F6B6B]/40 rounded-xl space-y-2.5">
+                      <div className="mt-3 p-3.5 bg-[#F7F9FB] border border-[#2563EB]/40 rounded-xl space-y-2.5">
                         <div className="text-[11px] font-bold text-[#14202B]">
                           Authorize Field Value Correction
                         </div>
@@ -298,7 +298,7 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
                             type="text"
                             value={correctionValue}
                             onChange={(e) => setCorrectionValue(e.target.value)}
-                            className="w-full text-xs px-3 py-1.5 border border-[#E3E8EE] rounded-lg bg-white text-[#14202B] focus:ring-2 focus:ring-[#0F6B6B] outline-none"
+                            className="w-full text-xs px-3 py-1.5 border border-[#E3E8EE] rounded-lg bg-white text-[#14202B] focus:ring-2 focus:ring-[#2563EB] outline-none"
                             placeholder="Enter corrected value"
                           />
                         </div>
@@ -310,7 +310,7 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
                             type="text"
                             value={correctionReason}
                             onChange={(e) => setCorrectionReason(e.target.value)}
-                            className="w-full text-xs px-3 py-1.5 border border-[#E3E8EE] rounded-lg bg-white text-[#14202B] focus:ring-2 focus:ring-[#0F6B6B] outline-none"
+                            className="w-full text-xs px-3 py-1.5 border border-[#E3E8EE] rounded-lg bg-white text-[#14202B] focus:ring-2 focus:ring-[#2563EB] outline-none"
                             placeholder="e.g., OCR misread blurred character 'I' as '1' in institute name"
                           />
                         </div>
@@ -326,7 +326,7 @@ export const DocumentViewerModal: React.FC<DocumentViewerModalProps> = ({
                             type="button"
                             disabled={isSubmitting}
                             onClick={() => handleSaveCorrection(f.id)}
-                            className="px-3.5 py-1 text-xs bg-[#0F6B6B] hover:bg-[#0a4f4f] text-white font-semibold rounded-lg transition shadow-xs disabled:opacity-60"
+                            className="px-3.5 py-1 text-xs bg-[#2563EB] hover:bg-[#1D4ED8] text-white font-semibold rounded-lg transition shadow-xs disabled:opacity-60"
                           >
                             {isSubmitting ? "Saving..." : "Save & Record Audit"}
                           </button>

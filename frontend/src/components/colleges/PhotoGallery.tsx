@@ -69,11 +69,11 @@ export function PhotoGallery({ photos, collegeName }: PhotoGalleryProps) {
   const getBadgeColor = (type: string) => {
     switch (type) {
       case "campus":
-        return "bg-teal-500/90 text-white";
+        return "bg-blue-600/90 text-white";
       case "classroom":
-        return "bg-blue-500/90 text-white";
+        return "bg-indigo-600/90 text-white";
       case "lab":
-        return "bg-purple-500/90 text-white";
+        return "bg-purple-600/90 text-white";
       default:
         return "bg-slate-700/90 text-white";
     }
@@ -96,9 +96,9 @@ export function PhotoGallery({ photos, collegeName }: PhotoGalleryProps) {
     <div className="space-y-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <ImageIcon className="w-4 h-4 text-[#0F6B6B] dark:text-teal-400" />
+          <ImageIcon className="w-4 h-4 text-blue-600 dark:text-blue-400" />
           <h3 className="text-sm font-bold text-slate-900 dark:text-white">
-            Infrastructure & Campus Verification Gallery
+            Infrastructure &amp; Campus Verification Gallery
           </h3>
           <span className="text-xs px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-mono">
             {photos.length} Verified Photos
@@ -140,7 +140,7 @@ export function PhotoGallery({ photos, collegeName }: PhotoGalleryProps) {
             </div>
 
             <div className="absolute top-2.5 right-2.5">
-              <span className="p-1 rounded-full bg-black/50 text-white/90 group-hover:bg-[#0F6B6B] group-hover:text-white transition-colors flex items-center justify-center">
+              <span className="p-1 rounded-full bg-black/50 text-white/90 group-hover:bg-blue-600 group-hover:text-white transition-colors flex items-center justify-center">
                 <Maximize2 className="w-3.5 h-3.5" />
               </span>
             </div>
@@ -171,7 +171,7 @@ export function PhotoGallery({ photos, collegeName }: PhotoGalleryProps) {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-teal-600/60 flex items-center justify-center text-teal-200 font-bold text-xs">
+              <div className="w-8 h-8 rounded-lg bg-blue-600/70 flex items-center justify-center text-blue-200 font-bold text-xs">
                 {selectedIndex + 1}/{photos.length}
               </div>
               <div>
@@ -232,7 +232,7 @@ export function PhotoGallery({ photos, collegeName }: PhotoGalleryProps) {
             onClick={(e) => e.stopPropagation()}
           >
             <p className="text-xs text-slate-300 text-center max-w-2xl px-4 line-clamp-2">
-              <span className="font-semibold text-teal-400">Alt description:</span>{" "}
+              <span className="font-semibold text-blue-400">Alt description:</span>{" "}
               {photos[selectedIndex].alt}
             </p>
 
@@ -244,14 +244,14 @@ export function PhotoGallery({ photos, collegeName }: PhotoGalleryProps) {
                   onClick={() => setSelectedIndex(idx)}
                   className={`relative w-14 h-10 rounded-lg overflow-hidden border-2 transition-all ${
                     idx === selectedIndex
-                      ? "border-teal-400 scale-105 shadow-md"
+                      ? "border-blue-400 scale-105 shadow-md"
                       : "border-transparent opacity-60 hover:opacity-100"
                   }`}
                   aria-label={`View photo ${idx + 1}`}
                 >
                   <img src={p.path} alt={p.alt} className="w-full h-full object-cover" />
                   {idx === selectedIndex && (
-                    <div className="absolute inset-0 bg-teal-500/20" />
+                    <div className="absolute inset-0 bg-blue-500/20" />
                   )}
                 </button>
               ))}

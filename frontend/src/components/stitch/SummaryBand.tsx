@@ -10,7 +10,7 @@ export interface MetricCard {
   trend?: string;
   trendDirection?: "up" | "down" | "neutral";
   icon?: React.ElementType;
-  tone?: "teal" | "amber" | "rose" | "emerald" | "slate";
+  tone?: "blue" | "teal" | "amber" | "rose" | "emerald" | "slate";
 }
 
 interface SummaryBandProps {
@@ -26,28 +26,29 @@ export const SummaryBand: React.FC<SummaryBandProps> = ({
     switch (tone) {
       case "amber":
         return {
-          dot: "bg-amber-500 ring-amber-200",
-          val: "text-[#14202B]",
-          badge: "bg-amber-50 text-amber-800 border-amber-200",
+          dot: "bg-amber-500 ring-amber-200 dark:ring-amber-900",
+          val: "text-slate-900 dark:text-white",
+          badge: "bg-amber-50 dark:bg-amber-950/50 text-amber-800 dark:text-amber-300 border-amber-200 dark:border-amber-800",
         };
       case "rose":
         return {
-          dot: "bg-rose-500 ring-rose-200",
-          val: "text-rose-700",
-          badge: "bg-rose-50 text-rose-700 border-rose-200",
+          dot: "bg-rose-500 ring-rose-200 dark:ring-rose-900",
+          val: "text-rose-600 dark:text-rose-400",
+          badge: "bg-rose-50 dark:bg-rose-950/50 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-800",
         };
       case "emerald":
         return {
-          dot: "bg-emerald-500 ring-emerald-200",
-          val: "text-[#14202B]",
-          badge: "bg-emerald-50 text-emerald-800 border-emerald-200",
+          dot: "bg-emerald-500 ring-emerald-200 dark:ring-emerald-900",
+          val: "text-slate-900 dark:text-white",
+          badge: "bg-emerald-50 dark:bg-emerald-950/50 text-emerald-800 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800",
         };
+      case "blue":
       case "teal":
       default:
         return {
-          dot: "bg-[#0F6B6B] ring-teal-200",
-          val: "text-[#14202B]",
-          badge: "bg-teal-50 text-[#0F6B6B] border-teal-200",
+          dot: "bg-blue-600 ring-blue-200 dark:ring-blue-900",
+          val: "text-slate-900 dark:text-white",
+          badge: "bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-800",
         };
     }
   };
@@ -60,11 +61,11 @@ export const SummaryBand: React.FC<SummaryBandProps> = ({
         return (
           <div
             key={idx}
-            className="bg-white p-5 rounded-xl border border-[#E3E8EE] shadow-xs hover:border-[#0F6B6B]/50 transition-all flex flex-col justify-between group"
+            className="bg-white dark:bg-[#0F172A] p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs hover:border-blue-500/50 dark:hover:border-blue-500/50 transition-all flex flex-col justify-between group"
           >
             {/* Header: Label + Status Dot */}
             <div className="flex items-center justify-between gap-2 mb-3">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#5B6B7A] truncate">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 truncate">
                 {m.label}
               </span>
               <div className="flex items-center gap-1.5 shrink-0">
@@ -96,7 +97,7 @@ export const SummaryBand: React.FC<SummaryBandProps> = ({
 
               {/* Context Footer */}
               {m.subtext && (
-                <div className="text-[11px] text-[#5B6B7A] flex items-center gap-1 truncate pt-1 border-t border-[#E3E8EE]/50">
+                <div className="text-[11px] text-slate-400 dark:text-slate-500 flex items-center gap-1 truncate pt-2 border-t border-slate-100 dark:border-slate-800/80">
                   <span className="truncate">{m.subtext}</span>
                 </div>
               )}

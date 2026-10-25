@@ -38,7 +38,7 @@ export default function CollegeDetailPage() {
 
   if (!college) {
     return (
-      <div className="p-12 text-center rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-4">
+      <div className="p-12 text-center rounded-2xl bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-800 space-y-4">
         <GraduationCap className="w-12 h-12 mx-auto text-slate-400" />
         <h2 className="text-xl font-bold text-slate-900 dark:text-white">Institution Not Found</h2>
         <p className="text-sm text-slate-500">
@@ -46,7 +46,7 @@ export default function CollegeDetailPage() {
         </p>
         <Link
           href="/colleges"
-          className="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-[#0F6B6B] rounded-lg"
+          className="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-lg"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Return to Institutions Directory</span>
@@ -98,7 +98,7 @@ export default function CollegeDetailPage() {
       <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
         <Link
           href="/colleges"
-          className="hover:text-[#0F6B6B] dark:hover:text-teal-400 flex items-center gap-1 transition-colors"
+          className="hover:text-blue-600 dark:hover:text-blue-400 flex items-center gap-1 transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Institutions Directory</span>
@@ -110,7 +110,7 @@ export default function CollegeDetailPage() {
       </div>
 
       {/* Hero Card */}
-      <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-xs space-y-6">
+      <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0F172A] p-6 shadow-xs space-y-6 transition-colors">
         <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
           {/* Logo and Core Details */}
           <div className="flex items-start gap-5">
@@ -155,7 +155,7 @@ export default function CollegeDetailPage() {
           <div className="flex flex-row md:flex-col items-center md:items-end gap-2.5 shrink-0">
             <Link
               href={`/verify?collegeId=${college.id}`}
-              className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-bold text-white bg-[#0F6B6B] hover:bg-[#0a4f4f] rounded-xl transition-all shadow-xs"
+              className="inline-flex items-center gap-2 px-4 py-2.5 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition-all shadow-xs"
             >
               <FileCheck2 className="w-4 h-4" />
               <span>Verify Institutional Dossier</span>
@@ -170,15 +170,15 @@ export default function CollegeDetailPage() {
         {/* Quick Contacts & Website Bar */}
         <div className="pt-4 border-t border-slate-100 dark:border-slate-800 grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
           <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-            <Mail className="w-4 h-4 text-[#0F6B6B] dark:text-teal-400 shrink-0" />
+            <Mail className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
             <span className="truncate">{college.contactEmail}</span>
           </div>
           <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-            <Phone className="w-4 h-4 text-[#0F6B6B] dark:text-teal-400 shrink-0" />
+            <Phone className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
             <span className="truncate">{college.contactPhone}</span>
           </div>
           <div className="flex items-center gap-2 text-slate-600 dark:text-slate-400">
-            <Globe className="w-4 h-4 text-[#0F6B6B] dark:text-teal-400 shrink-0" />
+            <Globe className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
             <span className="truncate font-mono">{college.website}</span>
           </div>
         </div>
@@ -190,13 +190,13 @@ export default function CollegeDetailPage() {
           onClick={() => setActiveTab("overview")}
           className={`pb-3 px-3 text-xs font-bold transition-all relative ${
             activeTab === "overview"
-              ? "text-[#0F6B6B] dark:text-teal-400"
+              ? "text-blue-600 dark:text-blue-400"
               : "text-slate-500 hover:text-slate-800 dark:hover:text-slate-200"
           }`}
         >
           <span>Overview &amp; Verified Photos</span>
           {activeTab === "overview" && (
-            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#0F6B6B] dark:bg-teal-400" />
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 dark:bg-blue-400" />
           )}
         </button>
 
@@ -204,7 +204,7 @@ export default function CollegeDetailPage() {
           onClick={() => setActiveTab("documents")}
           className={`pb-3 px-3 text-xs font-bold transition-all relative flex items-center gap-1.5 ${
             activeTab === "documents"
-              ? "text-[#0F6B6B] dark:text-teal-400"
+              ? "text-blue-600 dark:text-blue-400"
               : "text-slate-500 hover:text-slate-800 dark:hover:text-slate-200"
           }`}
         >
@@ -213,7 +213,7 @@ export default function CollegeDetailPage() {
             {college.documents?.length || 3} PDFs
           </span>
           {activeTab === "documents" && (
-            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#0F6B6B] dark:bg-teal-400" />
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 dark:bg-blue-400" />
           )}
         </button>
 
@@ -221,7 +221,7 @@ export default function CollegeDetailPage() {
           onClick={() => setActiveTab("courses")}
           className={`pb-3 px-3 text-xs font-bold transition-all relative flex items-center gap-1.5 ${
             activeTab === "courses"
-              ? "text-[#0F6B6B] dark:text-teal-400"
+              ? "text-blue-600 dark:text-blue-400"
               : "text-slate-500 hover:text-slate-800 dark:hover:text-slate-200"
           }`}
         >
@@ -230,7 +230,7 @@ export default function CollegeDetailPage() {
             {college.courses?.length || 0}
           </span>
           {activeTab === "courses" && (
-            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#0F6B6B] dark:bg-teal-400" />
+            <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 dark:bg-blue-400" />
           )}
         </button>
       </div>
@@ -239,16 +239,16 @@ export default function CollegeDetailPage() {
       {activeTab === "overview" && (
         <div className="space-y-6">
           {/* Lightbox Photo Gallery Component */}
-          <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-xs">
+          <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0F172A] p-6 shadow-xs">
             <PhotoGallery photos={college.photos} collegeName={college.name} />
           </div>
 
           {/* Infrastructure Metrics & Compliance Statement */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {/* Campus Land & Built-up Space */}
-            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-xs space-y-4">
+            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0F172A] p-5 shadow-xs space-y-4">
               <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                <Landmark className="w-4 h-4 text-[#0F6B6B] dark:text-teal-400" />
+                <Landmark className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                 <span>Land &amp; Physical Infrastructure (APH Chapter IV)</span>
               </h3>
 
@@ -289,41 +289,44 @@ export default function CollegeDetailPage() {
             </div>
 
             {/* Academic Capacity & Faculty Ratio */}
-            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-xs space-y-4">
+            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0F172A] p-5 shadow-xs space-y-4">
               <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
-                <Users className="w-4 h-4 text-[#0F6B6B] dark:text-teal-400" />
+                <Users className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                 <span>Academic Faculty &amp; Student Intake Quotas</span>
               </h3>
 
               <div className="grid grid-cols-2 gap-3 text-xs">
                 <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50">
                   <span className="text-[10px] uppercase font-bold text-slate-400 block">
-                    Annual Approved Intake
+                    Core Regular Faculty
                   </span>
                   <span className="text-base font-extrabold text-slate-900 dark:text-white font-mono mt-0.5 block">
-                    {college.intake} Students
+                    {college.facultyCount} Members
                   </span>
-                  <span className="text-[10px] text-slate-500 font-medium">
-                    Undergraduate &amp; PG combined
+                  <span className="text-[10px] text-emerald-600 font-medium">
+                    Cadre ratio 1:2:6 compliant
                   </span>
                 </div>
 
                 <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50">
                   <span className="text-[10px] uppercase font-bold text-slate-400 block">
-                    Core Regular Faculty
+                    Total Annual Intake
                   </span>
                   <span className="text-base font-extrabold text-slate-900 dark:text-white font-mono mt-0.5 block">
-                    {college.facultyCount} Faculty
+                    {college.intake} Students
                   </span>
-                  <span className="text-[10px] text-slate-500 font-medium">
-                    Cadre ratio 1:2:6 (Prof:Assoc:Asst)
+                  <span className="text-[10px] text-blue-600 dark:text-blue-400 font-medium">
+                    Across {college.courses?.length || 0} Programs
                   </span>
                 </div>
               </div>
 
-              <div className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+              <div className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed space-y-1">
                 <p>
-                  <strong>Student-Faculty Ratio (SFR):</strong> 1:15 compliance maintained across engineering disciplines. All faculty profiles verified via National Vidwan / DigiLocker portal.
+                  <strong>Teacher-Student Ratio:</strong> 1:15 compliance maintained in accordance with AICTE Gazette Regulations (F.No. 61-1/RIFD/7th CPC/2016-17).
+                </p>
+                <p>
+                  <strong>Accreditation:</strong> Tier-I Outcome-Based NBA Accreditation valid for core disciplines.
                 </p>
               </div>
             </div>
@@ -334,24 +337,25 @@ export default function CollegeDetailPage() {
       {/* Tab 2: Sample Regulatory Dossier Documents */}
       {activeTab === "documents" && (
         <div className="space-y-4">
-          <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300">
-            <p className="font-semibold text-slate-900 dark:text-white">
-              Official Regulatory Dossier (A4 Print PDF Format)
-            </p>
-            <p className="mt-0.5">
-              These 3 documents were programmatically generated with letterheads, reference numbers, tables, drawn signatures, official stamps, QR verification codes, diagonal watermark "SAMPLE – DEMO DATA", and footer notice.
-            </p>
+          <div className="p-4 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/60 flex items-start gap-3">
+            <Sparkles className="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
+            <div className="text-xs text-blue-900 dark:text-blue-200">
+              <p className="font-bold">Automated Document Authentication Benchmark</p>
+              <p className="mt-0.5 text-blue-700 dark:text-blue-300">
+                Each PDF below was synthesized with letterhead, fictional seals, cryptographic QR codes, and simulated watermarks for testing verification algorithms.
+              </p>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {college.documents?.map((doc: any) => (
               <div
                 key={doc.id}
-                className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-xs flex flex-col justify-between space-y-4 hover:border-teal-500/50 transition-colors"
+                className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0F172A] p-5 shadow-xs flex flex-col justify-between space-y-4 hover:border-blue-500/50 transition-colors"
               >
                 <div className="space-y-3">
                   <div className="flex items-start justify-between gap-2">
-                    <div className="w-10 h-10 rounded-xl bg-teal-50 dark:bg-teal-950/60 border border-teal-200 dark:border-teal-800 text-[#0F6B6B] dark:text-teal-400 flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
                       <FileText className="w-5 h-5" />
                     </div>
                     <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
@@ -415,7 +419,7 @@ export default function CollegeDetailPage() {
 
                   <Link
                     href={`/verify?collegeId=${college.id}&docId=${doc.id}`}
-                    className="w-full py-2 px-3 rounded-lg text-center text-xs font-bold text-white bg-[#0F6B6B] hover:bg-[#0a4f4f] transition-colors flex items-center justify-center gap-1.5 shadow-2xs"
+                    className="w-full py-2 px-3 rounded-lg text-center text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 transition-colors flex items-center justify-center gap-1.5 shadow-2xs"
                   >
                     <FileCheck2 className="w-3.5 h-3.5" />
                     <span>Run AI Verification</span>
@@ -429,7 +433,7 @@ export default function CollegeDetailPage() {
 
       {/* Tab 3: Approved Programs & Intake */}
       {activeTab === "courses" && (
-        <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xs overflow-hidden">
+        <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0F172A] shadow-xs overflow-hidden">
           <div className="p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 flex items-center justify-between">
             <div>
               <h3 className="font-bold text-slate-900 dark:text-white text-sm">
@@ -439,7 +443,7 @@ export default function CollegeDetailPage() {
                 Extension of Approval (EoA) schedule for Academic Year 2025-26
               </p>
             </div>
-            <span className="px-2.5 py-1 rounded-full text-xs font-bold font-mono bg-teal-50 dark:bg-teal-950/60 text-[#0F6B6B] dark:text-teal-300 border border-teal-200 dark:border-teal-800">
+            <span className="px-2.5 py-1 rounded-full text-xs font-bold font-mono bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
               Total Approved Intake: {college.intake} Seats
             </span>
           </div>
@@ -458,7 +462,7 @@ export default function CollegeDetailPage() {
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                 {college.courses?.map((course: any, idx: number) => (
                   <tr key={idx} className="hover:bg-slate-50 dark:hover:bg-slate-800/40">
-                    <td className="py-3 px-4 font-mono font-bold text-teal-700 dark:text-teal-400">
+                    <td className="py-3 px-4 font-mono font-bold text-blue-600 dark:text-blue-400">
                       {course.degree}
                     </td>
                     <td className="py-3 px-4 font-semibold text-slate-900 dark:text-white">

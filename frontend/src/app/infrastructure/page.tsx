@@ -142,7 +142,7 @@ export default function InfrastructureEvidencePage() {
                 {/* Photo Header Simulation */}
                 <div className="relative bg-slate-800 text-white p-4 h-44 flex flex-col justify-between border-b border-niyam-border bg-gradient-to-br from-slate-900 to-slate-800">
                   <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-black/60 text-teal-300 border border-teal-500/40">
+                    <span className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded bg-black/60 text-blue-300 border border-blue-500/40">
                       {it.room_type || "Laboratory"}
                     </span>
                     <span className="text-[10px] text-slate-300 bg-black/50 px-2 py-0.5 rounded font-mono">
@@ -151,7 +151,7 @@ export default function InfrastructureEvidencePage() {
                   </div>
 
                   <div className="space-y-1">
-                    <div className="flex items-center gap-1.5 text-xs text-teal-200">
+                    <div className="flex items-center gap-1.5 text-xs text-blue-200">
                       <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
                       <span className="font-mono text-[11px]">
                         {it.latitude?.toFixed(5) || "18.59120"}° N, {it.longitude?.toFixed(5) || "73.73890"}° E
