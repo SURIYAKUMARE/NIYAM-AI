@@ -19,6 +19,10 @@ import {
   Shield,
   Key,
   Fingerprint,
+  Building2,
+  MapPin,
+  Cpu,
+  FileCheck,
 } from "lucide-react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
@@ -249,28 +253,147 @@ function LoginForm() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(37,99,235,0.18),rgba(255,255,255,0))] pointer-events-none" />
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b0a_1px,transparent_1px),linear-gradient(to_bottom,#1e293b0a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
 
-      {/* Centered Single-Column Executive Card */}
-      <div className="w-full max-w-lg mx-auto relative z-10 py-6">
-        <div className="bg-white/95 dark:bg-[#0F172A]/95 backdrop-blur-xl rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-2xl p-6 sm:p-8 space-y-6">
-          
-          {/* Official AICTE Brand Header */}
-          <div className="text-center space-y-2 pb-3 border-b border-slate-200 dark:border-slate-800">
-            <div className="relative w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white font-extrabold text-sm shadow-md mx-auto ring-2 ring-blue-500/20">
-              <span>AICTE</span>
-              <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-amber-400 ring-2 ring-white dark:ring-[#0F172A]" />
-            </div>
-            <div>
-              <div className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">
-                अखिल भारतीय तकनीकी शिक्षा परिषद्
+      {/* Responsive Executive Container: Left Hero Showcase + Right Access Card */}
+      <div className="w-full max-w-5xl mx-auto relative z-10 py-6 sm:py-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+          {/* LEFT COLUMN: HERO SHOWCASE & PHOTO CARD (Visible on Large Screens) */}
+          <div className="hidden lg:flex flex-col justify-between space-y-5 lg:col-span-5 text-white">
+            {/* AICTE Portal Identity */}
+            <div className="space-y-2.5">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/15 border border-blue-400/30 text-blue-300 text-xs font-semibold backdrop-blur-md">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span>AICTE Regulatory Command Center</span>
               </div>
-              <h1 className="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                NIYAM Regulatory Portal
+              <h1 className="text-3xl font-extrabold tracking-tight text-white leading-tight">
+                Empowering Technical Education Governance
               </h1>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                AICTE Institutional Application Review &amp; Compliance Verification
+              <p className="text-xs text-slate-300 leading-relaxed">
+                National decision-support platform for Extension of Approval (EoA), automated document scrutiny, and fraud-resistant verification.
               </p>
             </div>
+
+            {/* AICTE HEADQUARTERS HERO PHOTO CARD */}
+            <div className="relative rounded-3xl overflow-hidden border border-slate-700/80 bg-slate-900/90 shadow-2xl group transition-all duration-300 hover:border-blue-500/50">
+              <div className="relative h-60 w-full overflow-hidden bg-slate-950">
+                <img
+                  src="/images/aicte-hq.png"
+                  alt="AICTE Headquarters, Nelson Mandela Marg, New Delhi"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                {/* Vignette gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
+                
+                {/* Top Floating Badges */}
+                <div className="absolute top-3 left-3 px-3 py-1.5 rounded-xl bg-slate-900/85 backdrop-blur-md border border-white/10 text-white text-[11px] font-bold flex items-center gap-2 shadow-lg">
+                  <Building2 className="w-3.5 h-3.5 text-blue-400" />
+                  <span>AICTE Headquarters</span>
+                </div>
+
+                <div className="absolute top-3 right-3 px-2.5 py-1 rounded-lg bg-blue-600/90 backdrop-blur-md text-white text-[10px] font-mono font-bold tracking-wider uppercase shadow-md">
+                  MoE · Govt of India
+                </div>
+
+                {/* Bottom Photo Caption */}
+                <div className="absolute bottom-3 left-3 right-3 text-white space-y-0.5">
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-slate-100">
+                    <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+                    <span>Nelson Mandela Marg, Vasant Kunj, New Delhi</span>
+                  </div>
+                  <p className="text-[10px] text-slate-300 pl-5">
+                    Apex National Council for Technical Education Planning &amp; Standards
+                  </p>
+                </div>
+              </div>
+
+              {/* Platform Pillars below photo */}
+              <div className="p-4 bg-slate-900/95 border-t border-slate-800 space-y-2.5 text-xs text-slate-300">
+                <div className="flex items-start gap-2.5">
+                  <div className="w-6 h-6 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center justify-center shrink-0 mt-0.5">
+                    <FileCheck className="w-3.5 h-3.5" />
+                  </div>
+                  <div>
+                    <span className="font-bold text-white block text-[11px]">Intelligent Scrutiny &amp; OCR</span>
+                    <span className="text-[10px] text-slate-400">Automated field cross-validation against Approval Process Handbook (APH).</span>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-2.5">
+                  <div className="w-6 h-6 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center shrink-0 mt-0.5">
+                    <Shield className="w-3.5 h-3.5" />
+                  </div>
+                  <div>
+                    <span className="font-bold text-white block text-[11px]">Tampering &amp; Forgery Detection</span>
+                    <span className="text-[10px] text-slate-400">Font anomaly, modified intakes, signature absence, and QR mismatch flags.</span>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-2.5">
+                  <div className="w-6 h-6 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+                    <ShieldCheck className="w-3.5 h-3.5" />
+                  </div>
+                  <div>
+                    <span className="font-bold text-white block text-[11px]">Cryptographic Audit Chain</span>
+                    <span className="text-[10px] text-slate-400">Tamper-evident SHA-256 ledger recording every inspection &amp; decision.</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Active Institutions Live Pill */}
+            <div className="flex items-center justify-between p-3 rounded-2xl bg-slate-900/80 border border-slate-800 text-xs">
+              <div className="flex items-center gap-2">
+                <Cpu className="w-4 h-4 text-blue-400" />
+                <span className="font-medium text-slate-300">Synthetic Test Sandbox Active</span>
+              </div>
+              <span className="font-mono text-[11px] font-bold text-blue-400 bg-blue-950/60 px-2 py-0.5 rounded border border-blue-800/60">
+                12 Institutions Loaded
+              </span>
+            </div>
           </div>
+
+          {/* RIGHT COLUMN: INTERACTIVE AUTHENTICATION CARD */}
+          <div className="w-full lg:col-span-7">
+            <div className="bg-white/95 dark:bg-[#0F172A]/95 backdrop-blur-xl rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-2xl p-6 sm:p-8 space-y-6">
+
+              {/* Mobile Hero Photo Banner (Visible on Small/Medium Screens) */}
+              <div className="lg:hidden relative h-36 sm:h-44 w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-md mb-2 bg-slate-950">
+                <img
+                  src="/images/aicte-hq.png"
+                  alt="AICTE Headquarters, Nelson Mandela Marg, New Delhi"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent" />
+                <div className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-lg bg-slate-900/80 backdrop-blur-md border border-white/10 text-white text-[10px] font-bold flex items-center gap-1.5">
+                  <Building2 className="w-3 h-3 text-blue-400" />
+                  <span>AICTE Headquarters</span>
+                </div>
+                <div className="absolute bottom-2 left-2.5 right-2.5 text-white">
+                  <div className="flex items-center gap-1 text-[11px] font-bold text-slate-100">
+                    <MapPin className="w-3 h-3 text-amber-400 shrink-0" />
+                    <span className="truncate">Nelson Mandela Marg, Vasant Kunj, New Delhi</span>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Official AICTE Brand Header */}
+              <div className="text-center space-y-2 pb-3 border-b border-slate-200 dark:border-slate-800">
+                <div className="relative w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white font-extrabold text-sm shadow-md mx-auto ring-2 ring-blue-500/20">
+                  <span>AICTE</span>
+                  <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-amber-400 ring-2 ring-white dark:ring-[#0F172A]" />
+                </div>
+                <div>
+                  <div className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">
+                    अखिल भारतीय तकनीकी शिक्षा परिषद्
+                  </div>
+                  <h1 className="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                    NIYAM Regulatory Portal
+                  </h1>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                    AICTE Institutional Application Review &amp; Compliance Verification
+                  </p>
+                </div>
+              </div>
 
           {/* SIGN-IN FORM */}
           {mode === "signin" && (
@@ -648,6 +771,8 @@ function LoginForm() {
         </div>
       </div>
     </div>
+  </div>
+</div>
   );
 }
 
