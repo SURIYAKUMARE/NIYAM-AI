@@ -359,11 +359,17 @@ function LoginForm() {
                         />
                       ))}
                     </div>
-                    <div className="mt-3 flex items-center justify-center gap-2 text-xs text-[#5B6B7A]">
-                      <span>Code refresh cycle:</span>
-                      <span className="font-mono font-bold bg-[#F7F9FB] px-2 py-0.5 rounded border border-[#E3E8EE] text-[#0F6B6B]">
-                        {mfaTimer}s
-                      </span>
+                    <div className="mt-3 flex items-center justify-between text-xs text-[#5B6B7A]">
+                      <span>Code refresh cycle: <strong className="text-[#0F6B6B] font-mono">{mfaTimer}s</strong></span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setMfaCode(["1", "2", "3", "4", "5", "6"]);
+                        }}
+                        className="text-[11px] font-mono text-[#0F6B6B] hover:underline font-semibold"
+                      >
+                        Auto-fill: 123456
+                      </button>
                     </div>
                   </div>
                 ) : (
