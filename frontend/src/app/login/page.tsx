@@ -289,7 +289,7 @@ function LoginForm() {
 
             {/* AICTE HEADQUARTERS HERO PHOTO CARD */}
             <div className="relative rounded-3xl overflow-hidden border border-slate-700/80 bg-slate-900/90 shadow-2xl group transition-all duration-300 hover:border-blue-500/50">
-              <div className="relative h-60 w-full overflow-hidden bg-slate-950">
+              <div className="relative h-64 sm:h-72 w-full overflow-hidden bg-slate-950">
                 <img
                   src="/images/aicte-hq.png"
                   alt="AICTE Headquarters, Nelson Mandela Marg, New Delhi"
@@ -371,7 +371,7 @@ function LoginForm() {
             <div className="bg-white/95 dark:bg-[#0F172A]/95 backdrop-blur-xl rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-2xl p-6 sm:p-8 space-y-6">
 
               {/* Mobile Hero Photo Banner (Visible on Small/Medium Screens) */}
-              <div className="lg:hidden relative h-36 sm:h-44 w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-md mb-2 bg-slate-950">
+              <div className="lg:hidden relative h-44 sm:h-52 w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-md mb-2 bg-slate-950">
                 <img
                   src="/images/aicte-hq.png"
                   alt="AICTE Headquarters, Nelson Mandela Marg, New Delhi"
