@@ -17,9 +17,63 @@ import {
   Sparkles,
   ArrowRight,
   Shield,
+  Key,
+  Fingerprint,
 } from "lucide-react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
+
+interface DemoAccount {
+  roleName: string;
+  username: string;
+  password: string;
+  pin: string;
+  description: string;
+  hasMfa: boolean;
+}
+
+const DEMO_ACCOUNTS: DemoAccount[] = [
+  {
+    roleName: "Scrutiny Officer",
+    username: "officer",
+    password: "password123",
+    pin: "123456",
+    description: "Technical Scrutiny Desk, review queue & anomaly checking",
+    hasMfa: true,
+  },
+  {
+    roleName: "Institution Applicant",
+    username: "applicant",
+    password: "password123",
+    pin: "None (Direct Access)",
+    description: "College filing portal, document upload & rectification",
+    hasMfa: false,
+  },
+  {
+    roleName: "Supervising Authority",
+    username: "authority",
+    password: "password123",
+    pin: "123456",
+    description: "AICTE Bureau Head, final approvals, deficiencies & orders",
+    hasMfa: true,
+  },
+  {
+    roleName: "System Administrator",
+    username: "admin",
+    password: "password123",
+    pin: "123456",
+    description: "User management, regulatory rules & engine settings",
+    hasMfa: true,
+  },
+  {
+    roleName: "Regulatory Auditor",
+    username: "auditor",
+    password: "password123",
+    pin: "None (Direct Access)",
+    description: "Tamper-evident logs, cryptographic ledger & chain audit",
+    hasMfa: false,
+  },
+];
 
 function LoginForm() {
   const { user, login, verifyMfa, getRoleRedirect, isLoading } = useAuth();
@@ -34,8 +88,8 @@ function LoginForm() {
   const [mode, setMode] = useState<"signin" | "mfa" | "recovery">("signin");
 
   // Sign-in form states
-  const [identifier, setIdentifier] = useState("");
-  const [password, setPassword] = useState("");
+  const [identifier, setIdentifier] = useState("officer");
+  const [password, setPassword] = useState("password123");
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -54,6 +108,9 @@ function LoginForm() {
   const [recoveryEmail, setRecoveryEmail] = useState("");
   const [recoverySent, setRecoverySent] = useState(false);
   const [recoveryLoading, setRecoveryLoading] = useState(false);
+
+  // Active filled account tracking for visual indicator
+  const [activeFilledUser, setActiveFilledUser] = useState<string>("officer");
 
   // If already logged in, redirect to role home
   useEffect(() => {
@@ -99,9 +156,10 @@ function LoginForm() {
   };
 
   // Quick fill helper for testing authorized roles
-  const handleQuickFill = (roleUser: string) => {
-    setIdentifier(roleUser);
-    setPassword("password123");
+  const handleSelectAccount = (account: DemoAccount) => {
+    setIdentifier(account.username);
+    setPassword(account.password);
+    setActiveFilledUser(account.username);
     setErrorMsg("");
   };
 
@@ -146,7 +204,7 @@ function LoginForm() {
 
     const codeToVerify = useRecoveryCode ? recoveryCode.trim() : mfaCode.join("");
     if (!useRecoveryCode && codeToVerify.length !== 6) {
-      setErrorMsg("Please enter the complete 6-digit TOTP authenticator code.");
+      setErrorMsg("Please enter the complete 6-digit TOTP security PIN (Demo PIN: 123456).");
       return;
     }
     if (useRecoveryCode && !codeToVerify) {
@@ -160,7 +218,7 @@ function LoginForm() {
       const dest = redirectedFrom || getRoleRedirect(verifiedUser?.role);
       router.replace(dest);
     } catch (err: any) {
-      setErrorMsg(err.message || "Invalid MFA verification code or expired session.");
+      setErrorMsg(err.message || "Invalid MFA PIN or expired session. Please use 123456.");
     } finally {
       setSubmitting(false);
     }
@@ -192,7 +250,7 @@ function LoginForm() {
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b0a_1px,transparent_1px),linear-gradient(to_bottom,#1e293b0a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
 
       {/* Centered Single-Column Executive Card */}
-      <div className="w-full max-w-md mx-auto relative z-10 py-8">
+      <div className="w-full max-w-lg mx-auto relative z-10 py-6">
         <div className="bg-white/95 dark:bg-[#0F172A]/95 backdrop-blur-xl rounded-3xl border border-slate-200/90 dark:border-slate-800 shadow-2xl p-6 sm:p-8 space-y-6">
           
           {/* Official AICTE Brand Header */}
@@ -205,7 +263,7 @@ function LoginForm() {
               <div className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">
                 अखिल भारतीय तकनीकी शिक्षा परिषद्
               </div>
-              <h1 className="text-lg font-extrabold text-slate-900 dark:text-white tracking-tight">
+              <h1 className="text-lg sm:text-xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                 NIYAM Regulatory Portal
               </h1>
               <p className="text-[11px] text-slate-500 dark:text-slate-400">
@@ -220,8 +278,69 @@ function LoginForm() {
               <div>
                 <h2 className="text-base font-bold text-slate-900 dark:text-white">Authorized Sign-In</h2>
                 <p className="text-xs text-slate-500 dark:text-slate-400">
-                  Enter your institutional or regulatory credentials.
+                  Select a demo account below or enter your credentials.
                 </p>
+              </div>
+
+              {/* DEMO CREDENTIALS CALLOUT BOX */}
+              <div className="p-3.5 rounded-2xl bg-blue-50/80 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/80 space-y-2">
+                <div className="flex items-center justify-between text-xs font-bold text-blue-900 dark:text-blue-200">
+                  <span className="flex items-center gap-1.5">
+                    <Key className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+                    Demo Credentials (All Roles)
+                  </span>
+                  <span className="font-mono text-[11px] bg-white dark:bg-slate-900 px-2 py-0.5 rounded text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                    Password: <strong>password123</strong>
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 pt-1">
+                  {DEMO_ACCOUNTS.map((acc) => {
+                    const isSelected = identifier === acc.username;
+                    return (
+                      <button
+                        key={acc.username}
+                        type="button"
+                        onClick={() => handleSelectAccount(acc)}
+                        className={`text-left p-2 rounded-xl border transition-all text-xs flex flex-col justify-between ${
+                          isSelected
+                            ? "bg-blue-600 text-white border-blue-600 shadow-xs ring-1 ring-blue-500"
+                            : "bg-white dark:bg-slate-800/80 hover:bg-blue-50/50 dark:hover:bg-slate-700/60 border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200"
+                        }`}
+                      >
+                        <div className="flex items-center justify-between gap-1 w-full">
+                          <span className="font-bold truncate text-[11px]">{acc.roleName}</span>
+                          {acc.hasMfa ? (
+                            <span
+                              className={`text-[9px] font-mono px-1.5 py-0.2 rounded font-bold shrink-0 ${
+                                isSelected
+                                  ? "bg-white/20 text-white"
+                                  : "bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800"
+                              }`}
+                            >
+                              PIN: {acc.pin}
+                            </span>
+                          ) : (
+                            <span
+                              className={`text-[9px] font-mono px-1.5 py-0.2 rounded font-bold shrink-0 ${
+                                isSelected
+                                  ? "bg-white/20 text-white"
+                                  : "bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800"
+                              }`}
+                            >
+                              Direct
+                            </span>
+                          )}
+                        </div>
+
+                        <div className="flex items-center justify-between text-[10px] mt-1 opacity-90">
+                          <span className="font-mono">ID: {acc.username}</span>
+                          <span className="text-[9px] font-semibold underline">Pre-fill</span>
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
 
               {errorMsg && (
@@ -245,7 +364,7 @@ function LoginForm() {
                       autoComplete="username"
                       value={identifier}
                       onChange={(e) => setIdentifier(e.target.value)}
-                      placeholder="e.g. officer_rajesh or applicant_apex"
+                      placeholder="e.g. officer, applicant, authority, admin, auditor"
                       className="w-full pl-9 pr-3 py-2.5 text-xs rounded-xl border bg-slate-50 dark:bg-slate-800/80 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500 border-slate-200 dark:border-slate-700 transition"
                     />
                   </div>
@@ -276,7 +395,7 @@ function LoginForm() {
                       autoComplete="current-password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder="Enter password"
+                      placeholder="Enter password (default: password123)"
                       className="w-full pl-9 pr-10 py-2.5 text-xs rounded-xl border bg-slate-50 dark:bg-slate-800/80 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500 border-slate-200 dark:border-slate-700 transition"
                     />
                     <button
@@ -300,6 +419,10 @@ function LoginForm() {
                     />
                     <span>Remember session</span>
                   </label>
+
+                  <span className="text-[11px] text-slate-400">
+                    Current ID: <strong className="font-mono text-slate-700 dark:text-slate-300">{identifier}</strong>
+                  </span>
                 </div>
 
                 <button
@@ -308,58 +431,9 @@ function LoginForm() {
                   className="w-full py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs rounded-xl transition shadow-xs flex items-center justify-center gap-2 disabled:opacity-60"
                 >
                   <LogIn className="w-4 h-4" />
-                  <span>{submitting ? "Signing in..." : "Sign In to Workspace"}</span>
+                  <span>{submitting ? "Signing in..." : `Sign In as ${identifier.toUpperCase()}`}</span>
                 </button>
               </form>
-
-              {/* Quick Role Selectors for Convenient Review */}
-              <div className="pt-2">
-                <span className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2 text-center">
-                  Quick Role Switcher (Pre-fill Credentials)
-                </span>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
-                  <button
-                    type="button"
-                    onClick={() => handleQuickFill("officer_rajesh")}
-                    className="px-2 py-1.5 rounded-lg text-[11px] font-semibold bg-slate-100 hover:bg-blue-50 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 hover:text-blue-700 dark:text-slate-300 dark:hover:text-blue-300 border border-slate-200 dark:border-slate-700 transition text-center truncate"
-                    title="Scrutiny Officer (Requires TOTP 123456)"
-                  >
-                    Scrutiny Officer
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleQuickFill("applicant_apex")}
-                    className="px-2 py-1.5 rounded-lg text-[11px] font-semibold bg-slate-100 hover:bg-blue-50 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 hover:text-blue-700 dark:text-slate-300 dark:hover:text-blue-300 border border-slate-200 dark:border-slate-700 transition text-center truncate"
-                    title="Institution Applicant"
-                  >
-                    Applicant
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleQuickFill("authority_sharma")}
-                    className="px-2 py-1.5 rounded-lg text-[11px] font-semibold bg-slate-100 hover:bg-blue-50 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 hover:text-blue-700 dark:text-slate-300 dark:hover:text-blue-300 border border-slate-200 dark:border-slate-700 transition text-center truncate"
-                    title="Supervising Authority"
-                  >
-                    Authority
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleQuickFill("admin_super")}
-                    className="px-2 py-1.5 rounded-lg text-[11px] font-semibold bg-slate-100 hover:bg-blue-50 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 hover:text-blue-700 dark:text-slate-300 dark:hover:text-blue-300 border border-slate-200 dark:border-slate-700 transition text-center truncate"
-                    title="System Admin"
-                  >
-                    Admin
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleQuickFill("auditor_verma")}
-                    className="px-2 py-1.5 rounded-lg text-[11px] font-semibold bg-slate-100 hover:bg-blue-50 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 hover:text-blue-700 dark:text-slate-300 dark:hover:text-blue-300 border border-slate-200 dark:border-slate-700 transition text-center truncate col-span-2 sm:col-span-1"
-                    title="Statutory Auditor"
-                  >
-                    Auditor
-                  </button>
-                </div>
-              </div>
 
               <p className="text-xs text-center text-slate-500 dark:text-slate-400 pt-2 border-t border-slate-200 dark:border-slate-800">
                 New institutional applicant?{" "}
@@ -375,14 +449,36 @@ function LoginForm() {
             <div className="space-y-4">
               <div className="text-center space-y-1">
                 <div className="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 text-blue-600 dark:text-blue-400 flex items-center justify-center mx-auto shadow-xs">
-                  <KeyRound className="w-6 h-6" />
+                  <Fingerprint className="w-6 h-6" />
                 </div>
                 <h2 className="text-base font-bold text-slate-900 dark:text-white">
                   Two-Factor Authentication
                 </h2>
                 <p className="text-xs text-slate-500 dark:text-slate-400 max-w-xs mx-auto">
-                  Official regulatory access is protected by RFC 6238 Time-based One-Time Password (TOTP).
+                  Regulatory officials are protected by RFC 6238 Time-based One-Time Password (TOTP).
                 </p>
+              </div>
+
+              {/* DEMO PIN CALLOUT BOX */}
+              <div className="p-3.5 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 flex items-center justify-between text-xs">
+                <div>
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-amber-800 dark:text-amber-300 block">
+                    Demo 2FA Security PIN
+                  </span>
+                  <span className="text-lg font-mono font-extrabold text-amber-900 dark:text-amber-100 tracking-widest">
+                    123456
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMfaCode(["1", "2", "3", "4", "5", "6"]);
+                  }}
+                  className="px-3 py-1.5 rounded-lg text-xs font-bold text-white bg-amber-600 hover:bg-amber-700 shadow-xs transition flex items-center gap-1"
+                >
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>Insert PIN 123456</span>
+                </button>
               </div>
 
               {errorMsg && (
@@ -396,7 +492,7 @@ function LoginForm() {
                 {!useRecoveryCode ? (
                   <div>
                     <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2 text-center">
-                      ENTER 6-DIGIT AUTHENTICATOR CODE
+                      ENTER 6-DIGIT AUTHENTICATOR PIN
                     </label>
                     <div className="flex justify-center gap-2 sm:gap-2.5" onPaste={handlePasteMfa}>
                       {mfaCode.map((digit, idx) => (
@@ -447,7 +543,7 @@ function LoginForm() {
                   disabled={submitting}
                   className="w-full py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs rounded-xl transition shadow-xs flex items-center justify-center gap-2 disabled:opacity-60"
                 >
-                  <span>{submitting ? "Verifying..." : "Verify & Access"}</span>
+                  <span>{submitting ? "Verifying..." : "Verify PIN & Access Workspace"}</span>
                 </button>
 
                 <div className="flex items-center justify-between text-xs pt-2 border-t border-slate-200 dark:border-slate-800">
@@ -467,7 +563,7 @@ function LoginForm() {
                     onClick={() => setUseRecoveryCode(!useRecoveryCode)}
                     className="text-blue-600 dark:text-blue-400 hover:underline font-semibold"
                   >
-                    {useRecoveryCode ? "Use TOTP Code" : "Use Recovery Code"}
+                    {useRecoveryCode ? "Use 6-Digit PIN" : "Use Recovery Code"}
                   </button>
                 </div>
               </form>

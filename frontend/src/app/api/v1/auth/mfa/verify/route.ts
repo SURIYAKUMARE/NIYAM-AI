@@ -32,13 +32,17 @@ const SEEDED_USERS: Record<string, any> = {
   },
 };
 
+SEEDED_USERS["officer_rajesh"] = SEEDED_USERS.officer;
+SEEDED_USERS["authority_sharma"] = SEEDED_USERS.authority;
+SEEDED_USERS["admin_super"] = SEEDED_USERS.admin;
+
 export async function POST(request: Request) {
   try {
     const body = await request.json().catch(() => ({}));
     const token = body.mfa_session_token || "";
     const code = (body.code || "").trim();
 
-    // Parse username from session token: e.g. "mfa_sess_admin_12345"
+    // Parse username from session token: e.g. "mfa_sess_officer_12345"
     let matchedUsername = "admin";
     if (token.includes("officer")) matchedUsername = "officer";
     else if (token.includes("authority")) matchedUsername = "authority";
@@ -49,7 +53,7 @@ export async function POST(request: Request) {
     // Validate code: must be 6 digits or recovery code
     if (!code || (code.length !== 6 && !code.startsWith("REC-"))) {
       return NextResponse.json(
-        { detail: "Invalid MFA verification code or expired session." },
+        { detail: "Invalid MFA verification code or expired session. Demo PIN is: 123456" },
         { status: 400 }
       );
     }
@@ -71,9 +75,9 @@ export async function POST(request: Request) {
         mfa_enrolled: true,
       },
     });
-  } catch (error: any) {
+  } catch (err: any) {
     return NextResponse.json(
-      { detail: error.message || "Failed to verify MFA" },
+      { detail: err.message || "MFA validation service unavailable" },
       { status: 500 }
     );
   }

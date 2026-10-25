@@ -57,6 +57,13 @@ const SEEDED_USERS: Record<string, any> = {
   },
 };
 
+// Aliases for convenience
+SEEDED_USERS["officer_rajesh"] = SEEDED_USERS.officer;
+SEEDED_USERS["applicant_apex"] = SEEDED_USERS.applicant;
+SEEDED_USERS["authority_sharma"] = SEEDED_USERS.authority;
+SEEDED_USERS["admin_super"] = SEEDED_USERS.admin;
+SEEDED_USERS["auditor_verma"] = SEEDED_USERS.auditor;
+
 export async function POST(request: Request) {
   try {
     const body = await request.json().catch(() => ({}));
@@ -68,7 +75,7 @@ export async function POST(request: Request) {
     // Check credentials (password123 for all seeded demo accounts)
     if (!userRecord || (password !== "password123" && password !== "admin123")) {
       return NextResponse.json(
-        { detail: "Incorrect username or password" },
+        { detail: "Incorrect username or password. Demo password is: password123" },
         { status: 401 }
       );
     }
@@ -113,9 +120,9 @@ export async function POST(request: Request) {
         mfa_enrolled: false,
       },
     });
-  } catch (error: any) {
+  } catch (err: any) {
     return NextResponse.json(
-      { detail: error.message || "Internal server error" },
+      { detail: err.message || "Authentication service unavailable" },
       { status: 500 }
     );
   }
