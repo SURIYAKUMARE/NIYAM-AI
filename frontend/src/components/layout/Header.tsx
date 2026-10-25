@@ -95,11 +95,15 @@ export const Header: React.FC<HeaderProps> = ({ onToggleMobileMenu }) => {
         )}
 
         <div className="flex items-center gap-3">
-          {/* NIYAM Executive Seal / Logo */}
+          {/* NIYAM Executive Seal / Official AICTE Logo */}
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="relative w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white font-extrabold text-sm shadow-xs tracking-tighter ring-1 ring-blue-500/20 group-hover:scale-105 transition-transform">
-              <span>NY</span>
-              <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-amber-400 ring-2 ring-white dark:ring-[#090D16]" />
+            <div className="relative w-8 h-8 rounded-lg bg-white dark:bg-slate-800 p-0.5 shadow-xs border border-slate-200 dark:border-slate-700 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+              <img
+                src="/images/aicte-logo.png"
+                alt="AICTE Official Logo"
+                className="w-full h-full object-contain"
+              />
+              <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-[#090D16]" />
             </div>
 
             <div className="flex flex-col">

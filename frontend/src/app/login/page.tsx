@@ -259,11 +259,25 @@ function LoginForm() {
 
           {/* LEFT COLUMN: HERO SHOWCASE & PHOTO CARD (Visible on Large Screens) */}
           <div className="hidden lg:flex flex-col justify-between space-y-5 lg:col-span-5 text-white">
-            {/* AICTE Portal Identity */}
-            <div className="space-y-2.5">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/15 border border-blue-400/30 text-blue-300 text-xs font-semibold backdrop-blur-md">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span>AICTE Regulatory Command Center</span>
+            {/* AICTE Portal Identity with Official Logo */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-2xl bg-white dark:bg-slate-800 p-1 shadow-lg border border-slate-700/60 flex items-center justify-center shrink-0">
+                  <img
+                    src="/images/aicte-logo.png"
+                    alt="AICTE Official Logo"
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <div>
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-500/15 border border-blue-400/30 text-blue-300 text-[11px] font-semibold backdrop-blur-md">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span>Regulatory Command Center</span>
+                  </div>
+                  <div className="text-[11px] font-bold text-slate-300 tracking-wide mt-0.5">
+                    अखिल भारतीय तकनीकी शिक्षा परिषद्
+                  </div>
+                </div>
               </div>
               <h1 className="text-3xl font-extrabold tracking-tight text-white leading-tight">
                 Empowering Technical Education Governance
@@ -378,9 +392,13 @@ function LoginForm() {
               
               {/* Official AICTE Brand Header */}
               <div className="text-center space-y-2 pb-3 border-b border-slate-200 dark:border-slate-800">
-                <div className="relative w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white font-extrabold text-sm shadow-md mx-auto ring-2 ring-blue-500/20">
-                  <span>AICTE</span>
-                  <span className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-amber-400 ring-2 ring-white dark:ring-[#0F172A]" />
+                <div className="relative w-14 h-14 rounded-2xl bg-white dark:bg-slate-800 p-1.5 shadow-md mx-auto ring-2 ring-blue-500/20 border border-slate-200 dark:border-slate-700 flex items-center justify-center">
+                  <img
+                    src="/images/aicte-logo.png"
+                    alt="AICTE Official Logo"
+                    className="w-full h-full object-contain"
+                  />
+                  <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-[#0F172A]" />
                 </div>
                 <div>
                   <div className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">

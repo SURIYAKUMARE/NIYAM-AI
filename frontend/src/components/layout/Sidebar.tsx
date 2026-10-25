@@ -69,18 +69,25 @@ export const Sidebar: React.FC<SidebarProps> = ({ onCloseMobileMenu }) => {
 
   return (
     <aside className="no-print bg-white dark:bg-[#0B101D] border-r border-slate-200/80 dark:border-slate-800/80 flex flex-col h-full select-none shrink-0 w-64 shadow-xs transition-colors">
-      {/* Workspace Role Header */}
-      <div className="px-5 py-3.5 border-b border-slate-200/80 dark:border-slate-800/80 flex items-center justify-between bg-slate-50/70 dark:bg-slate-900/60">
-        <div className="min-w-0">
+      {/* Workspace Role Header with AICTE Logo */}
+      <div className="px-4 py-3.5 border-b border-slate-200/80 dark:border-slate-800/80 flex items-center gap-3 bg-slate-50/70 dark:bg-slate-900/60">
+        <div className="w-8 h-8 rounded-lg bg-white dark:bg-slate-800 p-1 border border-slate-200 dark:border-slate-700 flex items-center justify-center shrink-0 shadow-2xs">
+          <img
+            src="/images/aicte-logo.png"
+            alt="AICTE Official Logo"
+            className="w-full h-full object-contain"
+          />
+        </div>
+        <div className="min-w-0 flex-1">
           <div className="text-[10px] font-extrabold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-            Active Workspace
+            AICTE Council
           </div>
-          <div className="text-xs text-slate-900 dark:text-white font-bold capitalize mt-0.5 flex items-center gap-2 truncate">
-            <span className="w-2 h-2 rounded-full bg-blue-600 dark:bg-blue-400 ring-2 ring-blue-200 dark:ring-blue-900 shrink-0" />
+          <div className="text-xs text-slate-900 dark:text-white font-bold capitalize mt-0.5 flex items-center gap-1.5 truncate">
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400 shrink-0" />
             <span className="truncate">{roleConfig.badge}</span>
           </div>
         </div>
-        <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-white dark:bg-slate-800 text-blue-600 dark:text-blue-400 border border-slate-200 dark:border-slate-700 shrink-0">
+        <span className="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold bg-white dark:bg-slate-800 text-blue-600 dark:text-blue-400 border border-slate-200 dark:border-slate-700 shrink-0">
           APH 2025
         </span>
       </div>

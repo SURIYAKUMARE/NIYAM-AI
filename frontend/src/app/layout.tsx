@@ -6,6 +6,10 @@ import { AppShell } from "@/components/layout/AppShell";
 export const metadata: Metadata = {
   title: "NIYAM — AI-Powered Regulatory Validation & Document Authentication",
   description: "AICTE Problem Statement 26261: AI-powered decision support platform for institutional application review, cryptographic document authentication, and statutory compliance verification.",
+  icons: {
+    icon: "/images/aicte-logo.png",
+    apple: "/images/aicte-logo.png",
+  },
 };
 
 export default function RootLayout({
