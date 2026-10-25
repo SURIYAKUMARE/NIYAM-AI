@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <linearGradient id="vti-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#881337"/>
+      <stop offset="100%" stop-color="#4C0519"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="36" fill="#FFF1F2"/>
+  <!-- Heraldic Shield -->
+  <path d="M128 24 C190 24 214 44 214 104 C214 172 152 216 128 232 C104 216 42 172 42 104 C42 44 66 24 128 24 Z" fill="url(#vti-grad)" stroke="#CA8A04" stroke-width="4"/>
+  <!-- Roman Pillar Structure -->
+  <rect x="100" y="80" width="12" height="66" fill="#FDE047"/>
+  <rect x="144" y="80" width="12" height="66" fill="#FDE047"/>
+  <rect x="92" y="72" width="72" height="8" rx="2" fill="#CA8A04"/>
+  <rect x="92" y="146" width="72" height="8" rx="2" fill="#CA8A04"/>
+  <!-- Cog & Wrench Motif in Center -->
+  <circle cx="128" cy="112" r="14" fill="#FFFFFF"/>
+  <circle cx="128" cy="112" r="6" fill="#881337"/>
+  <!-- Three Stars of Excellence -->
+  <polygon points="128,42 131,48 138,49 133,54 135,60 128,56 121,60 123,54 118,49 125,48" fill="#FDE047"/>
+  <polygon points="98,48 101,54 108,55 103,60 105,66 98,62 91,66 93,60 88,55 95,54" fill="#FDE047"/>
+  <polygon points="158,48 161,54 168,55 163,60 165,66 158,62 151,66 153,60 148,55 155,54" fill="#FDE047"/>
+  <!-- Label -->
+  <rect x="88" y="194" width="80" height="22" rx="4" fill="#CA8A04"/>
+  <text x="128" y="209" text-anchor="middle" font-family="system-ui, sans-serif" font-weight="900" font-size="13" fill="#4C0519" letter-spacing="2">V T I</text>
+</svg>

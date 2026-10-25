@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <linearGradient id="bea-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E1B4B"/>
+      <stop offset="100%" stop-color="#312E81"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="36" fill="#F0F9FF"/>
+  <!-- Pointed Arch Shield -->
+  <path d="M128 24 L212 60 L212 144 C212 196 168 226 128 236 C88 226 44 196 44 144 L44 60 Z" fill="url(#bea-grad)" stroke="#06B6D4" stroke-width="4"/>
+  <!-- Stylized River Sweep -->
+  <path d="M46 116 Q128 70 210 116 L210 144 Q128 98 46 144 Z" fill="#06B6D4" opacity="0.8"/>
+  <path d="M46 142 Q128 96 210 142 L210 170 Q128 124 46 170 Z" fill="#67E8F9" opacity="0.6"/>
+  <!-- Caliper / Compass Vector -->
+  <path d="M128 54 L114 106 L142 106 Z" fill="#FBBF24"/>
+  <circle cx="128" cy="54" r="6" fill="#FBBF24"/>
+  <path d="M110 114 L128 80 L146 114" fill="none" stroke="#FBBF24" stroke-width="3"/>
+  <!-- Badge Label -->
+  <rect x="86" y="196" width="84" height="22" rx="5" fill="#06B6D4"/>
+  <text x="128" y="211" text-anchor="middle" font-family="system-ui, sans-serif" font-weight="900" font-size="13" fill="#1E1B4B" letter-spacing="2">B E A</text>
+</svg>

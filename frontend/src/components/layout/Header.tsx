@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import { fetchApi } from "@/lib/api";
 import { ROLE_ROUTES, UserRole } from "@/lib/roles";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import {
   Shield,
   LogOut,
@@ -78,13 +79,13 @@ export const Header: React.FC<HeaderProps> = ({ onToggleMobileMenu }) => {
   };
 
   return (
-    <header className="no-print bg-white border-b border-[#E3E8EE] h-14 px-4 lg:px-6 flex items-center justify-between sticky top-0 z-30 shadow-[0_1px_2px_rgba(0,0,0,0.03)] text-[#14202B]">
+    <header className="no-print bg-white dark:bg-[#111A24] border-b border-[#E3E8EE] dark:border-slate-800 h-14 px-4 lg:px-6 flex items-center justify-between sticky top-0 z-30 shadow-[0_1px_2px_rgba(0,0,0,0.03)] text-[#14202B] dark:text-slate-100 transition-colors">
       {/* Left: Mobile Drawer Trigger & Official Brand */}
       <div className="flex items-center gap-3 lg:gap-4">
         {onToggleMobileMenu && (
           <button
             onClick={onToggleMobileMenu}
-            className="lg:hidden p-1.5 rounded-lg text-[#5B6B7A] hover:text-[#14202B] hover:bg-[#F7F9FB] transition-colors"
+            className="lg:hidden p-1.5 rounded-lg text-[#5B6B7A] dark:text-slate-400 hover:text-[#14202B] dark:hover:text-white hover:bg-[#F7F9FB] dark:hover:bg-slate-800 transition-colors"
             aria-label="Toggle navigation menu"
           >
             <Menu className="w-5 h-5" />
@@ -98,24 +99,24 @@ export const Header: React.FC<HeaderProps> = ({ onToggleMobileMenu }) => {
 
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
-              <span className="font-extrabold text-[#14202B] text-sm tracking-tight">
+              <span className="font-extrabold text-[#14202B] dark:text-white text-sm tracking-tight">
                 NIYAM
               </span>
-              <span className="hidden sm:inline-block text-[10px] font-mono px-1.5 py-0.2 bg-[#F7F9FB] text-[#5B6B7A] rounded border border-[#E3E8EE]">
+              <span className="hidden sm:inline-block text-[10px] font-mono px-1.5 py-0.2 bg-[#F7F9FB] dark:bg-slate-800 text-[#5B6B7A] dark:text-slate-300 rounded border border-[#E3E8EE] dark:border-slate-700">
                 AICTE APH 2025-26
               </span>
             </div>
-            <span className="hidden md:inline-block text-[10px] text-[#5B6B7A] leading-tight font-medium">
+            <span className="hidden md:inline-block text-[10px] text-[#5B6B7A] dark:text-slate-400 leading-tight font-medium">
               Institutional Regulatory Review &amp; Compliance Verification
             </span>
           </div>
         </div>
       </div>
 
-      {/* Right: Regulatory Status, Role Badge, User Info, Notifications & Logout */}
-      <div className="flex items-center gap-2.5 sm:gap-3.5">
+      {/* Right: Regulatory Status, Role Badge, Theme Toggle, User Info, Notifications & Logout */}
+      <div className="flex items-center gap-2 sm:gap-3">
         {/* System Online Status Indicator */}
-        <div className="hidden sm:flex items-center gap-1.5 text-xs text-[#5B6B7A] px-2.5 py-1 rounded-full bg-[#F7F9FB] border border-[#E3E8EE]">
+        <div className="hidden sm:flex items-center gap-1.5 text-xs text-[#5B6B7A] dark:text-slate-400 px-2.5 py-1 rounded-full bg-[#F7F9FB] dark:bg-slate-800/80 border border-[#E3E8EE] dark:border-slate-700">
           <span
             className={`w-2 h-2 rounded-full ${
               isOnline ? "bg-emerald-500 animate-pulse" : "bg-rose-500"
@@ -126,12 +127,15 @@ export const Header: React.FC<HeaderProps> = ({ onToggleMobileMenu }) => {
           </span>
         </div>
 
+        {/* Theme Toggle Button */}
+        <ThemeToggle />
+
         {/* Notifications Dropdown */}
         {user && (
           <div className="relative">
             <button
               onClick={() => setNotifOpen(!notifOpen)}
-              className="p-1.5 rounded-lg text-[#5B6B7A] hover:text-[#14202B] hover:bg-[#F7F9FB] transition-colors relative"
+              className="p-1.5 rounded-lg text-[#5B6B7A] dark:text-slate-300 hover:text-[#14202B] dark:hover:text-white hover:bg-[#F7F9FB] dark:hover:bg-slate-800 transition-colors relative"
               aria-label="Notifications"
             >
               <Bell className="w-4 h-4" />
@@ -143,33 +147,33 @@ export const Header: React.FC<HeaderProps> = ({ onToggleMobileMenu }) => {
             </button>
 
             {notifOpen && (
-              <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-xl shadow-xl bg-white border border-[#E3E8EE] py-2 text-xs z-50 text-[#14202B]">
-                <div className="px-4 py-2 border-b border-[#E3E8EE] flex items-center justify-between">
-                  <span className="font-bold text-[#14202B] text-xs">Regulatory Alerts &amp; Notifications</span>
-                  <span className="text-[10px] font-semibold text-[#5B6B7A] bg-[#F7F9FB] px-2 py-0.5 rounded border border-[#E3E8EE]">
+              <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-xl shadow-xl bg-white dark:bg-slate-900 border border-[#E3E8EE] dark:border-slate-800 py-2 text-xs z-50 text-[#14202B] dark:text-slate-100">
+                <div className="px-4 py-2 border-b border-[#E3E8EE] dark:border-slate-800 flex items-center justify-between">
+                  <span className="font-bold text-[#14202B] dark:text-white text-xs">Regulatory Alerts &amp; Notifications</span>
+                  <span className="text-[10px] font-semibold text-[#5B6B7A] dark:text-slate-400 bg-[#F7F9FB] dark:bg-slate-800 px-2 py-0.5 rounded border border-[#E3E8EE] dark:border-slate-700">
                     {unreadCount} Unread
                   </span>
                 </div>
 
-                <div className="max-h-80 overflow-y-auto divide-y divide-[#E3E8EE]/60">
+                <div className="max-h-80 overflow-y-auto divide-y divide-[#E3E8EE]/60 dark:divide-slate-800/80">
                   {notifications.length === 0 ? (
-                    <p className="p-4 text-center text-[#5B6B7A] text-xs">No active alerts at this time.</p>
+                    <p className="p-4 text-center text-[#5B6B7A] dark:text-slate-400 text-xs">No active alerts at this time.</p>
                   ) : (
                     notifications.map((n) => (
                       <div
                         key={n.id}
-                        className={`p-3.5 hover:bg-[#F7F9FB] transition flex items-start justify-between gap-2 ${
-                          !n.is_read ? "bg-teal-50/40" : ""
+                        className={`p-3.5 hover:bg-[#F7F9FB] dark:hover:bg-slate-800 transition flex items-start justify-between gap-2 ${
+                          !n.is_read ? "bg-teal-50/40 dark:bg-teal-950/20" : ""
                         }`}
                       >
                         <div className="space-y-1">
-                          <span className="font-bold text-[#14202B] block text-xs">
+                          <span className="font-bold text-[#14202B] dark:text-white block text-xs">
                             {n.title}
                           </span>
-                          <p className="text-[11px] text-[#5B6B7A] leading-relaxed">
+                          <p className="text-[11px] text-[#5B6B7A] dark:text-slate-300 leading-relaxed">
                             {n.message}
                           </p>
-                          <span className="text-[10px] text-[#5B6B7A] block font-mono">
+                          <span className="text-[10px] text-[#5B6B7A] dark:text-slate-400 block font-mono">
                             {new Date(n.created_at).toLocaleTimeString()}
                           </span>
                         </div>
@@ -177,7 +181,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleMobileMenu }) => {
                         {!n.is_read && (
                           <button
                             onClick={() => handleMarkRead(n.id)}
-                            className="text-[10px] text-[#0F6B6B] hover:underline font-semibold flex-shrink-0"
+                            className="text-[10px] text-[#0F6B6B] dark:text-teal-400 hover:underline font-semibold flex-shrink-0"
                           >
                             Mark Read
                           </button>
@@ -193,7 +197,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleMobileMenu }) => {
 
         {/* Clean Official Role Badge */}
         {user && (
-          <div className="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-teal-50 text-[#0F6B6B] border border-teal-200 shadow-xs">
+          <div className="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-teal-50 dark:bg-teal-950/40 text-[#0F6B6B] dark:text-teal-300 border border-teal-200 dark:border-teal-800 shadow-xs">
             <Shield className="w-3.5 h-3.5" />
             <span>{getRoleBadge(user.role)}</span>
           </div>
@@ -201,15 +205,15 @@ export const Header: React.FC<HeaderProps> = ({ onToggleMobileMenu }) => {
 
         {/* User Avatar, Name & Logout Button */}
         {user ? (
-          <div className="flex items-center gap-2 pl-1 border-l border-[#E3E8EE]">
+          <div className="flex items-center gap-2 pl-1 border-l border-[#E3E8EE] dark:border-slate-800">
             <div className="w-7 h-7 rounded-full bg-[#0F6B6B] text-white text-xs font-bold flex items-center justify-center shadow-xs select-none">
               {getInitials(user.full_name)}
             </div>
             <div className="hidden lg:block text-left">
-              <div className="text-xs font-bold text-[#14202B] leading-none truncate max-w-[140px]">
+              <div className="text-xs font-bold text-[#14202B] dark:text-white leading-none truncate max-w-[140px]">
                 {user.full_name || user.username}
               </div>
-              <div className="text-[10px] text-[#5B6B7A] leading-none mt-0.5 truncate max-w-[140px]">
+              <div className="text-[10px] text-[#5B6B7A] dark:text-slate-400 leading-none mt-0.5 truncate max-w-[140px]">
                 {getRoleLabel(user.role)}
               </div>
             </div>
@@ -217,7 +221,7 @@ export const Header: React.FC<HeaderProps> = ({ onToggleMobileMenu }) => {
             {/* Logout button */}
             <button
               onClick={logout}
-              className="p-1.5 rounded-lg text-[#5B6B7A] hover:text-rose-600 hover:bg-rose-50 transition-colors ml-1"
+              className="p-1.5 rounded-lg text-[#5B6B7A] dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors ml-1"
               title="Sign Out"
               aria-label="Sign Out"
             >

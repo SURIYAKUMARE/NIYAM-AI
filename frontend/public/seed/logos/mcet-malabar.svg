@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <linearGradient id="mcet-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#064E3B"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="36" fill="#F0FDF4"/>
+  <!-- Classic Curvature Shield -->
+  <path d="M128 26 C194 26 216 52 216 118 C216 186 164 218 128 234 C92 218 40 186 40 118 C40 52 62 26 128 26 Z" fill="url(#mcet-grad)" stroke="#84CC16" stroke-width="4"/>
+  <!-- Stylized Palm Frond Geometry -->
+  <path d="M128 160 C128 90 80 80 72 74 C86 94 108 120 128 160 Z" fill="#84CC16"/>
+  <path d="M128 160 C128 90 176 80 184 74 C170 94 148 120 128 160 Z" fill="#A3E635"/>
+  <!-- Lighthouse Beacon Tower -->
+  <polygon points="120,160 136,160 132,100 124,100" fill="#FFFFFF"/>
+  <rect x="122" y="94" width="12" height="6" fill="#FBBF24"/>
+  <!-- Light rays -->
+  <polygon points="122,96 86,84 88,96" fill="#FDE68A" opacity="0.6"/>
+  <polygon points="134,96 170,84 168,96" fill="#FDE68A" opacity="0.6"/>
+  <!-- Name Plaque -->
+  <rect x="80" y="196" width="96" height="22" rx="4" fill="#84CC16"/>
+  <text x="128" y="211" text-anchor="middle" font-family="system-ui, sans-serif" font-weight="900" font-size="12" fill="#064E3B" letter-spacing="2">M C E T</text>
+</svg>

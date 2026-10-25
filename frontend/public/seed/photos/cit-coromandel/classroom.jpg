@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <defs>
+    <linearGradient id="wall-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F1F5F9"/>
+      <stop offset="100%" stop-color="#E2E8F0"/>
+    </linearGradient>
+    <linearGradient id="floor-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#334155"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </linearGradient>
+    <linearGradient id="screen-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284C7"/>
+      <stop offset="100%" stop-color="#0F172A"/>
+    </linearGradient>
+    <filter id="soft-glow">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <!-- Back & Side Walls -->
+  <rect width="1200" height="480" fill="url(#wall-grad)"/>
+  <!-- Modern Wood Slat Feature Wall on Left -->
+  <g fill="#B45309" opacity="0.85">
+    <rect x="40" y="40" width="8" height="420" rx="2"/>
+    <rect x="60" y="40" width="8" height="420" rx="2"/>
+    <rect x="80" y="40" width="8" height="420" rx="2"/>
+    <rect x="100" y="40" width="8" height="420" rx="2"/>
+    <rect x="120" y="40" width="8" height="420" rx="2"/>
+  </g>
+  <!-- Sloping Auditorium Floor -->
+  <polygon points="0,480 1200,480 1200,800 0,800" fill="url(#floor-grad)"/>
+  <!-- Front Presentation Screen (Dual Smart Display) -->
+  <rect x="260" y="70" width="680" height="320" rx="12" fill="#020617" stroke="#38BDF8" stroke-width="4" filter="url(#soft-glow)"/>
+  <rect x="280" y="90" width="640" height="280" rx="8" fill="url(#screen-grad)"/>
+  <!-- Display Interface Graphics -->
+  <text x="320" y="140" font-family="system-ui, sans-serif" font-weight="800" font-size="20" fill="#FFFFFF">AICTE Approval Process Handbook (APH 2025-26)</text>
+  <text x="320" y="170" font-family="system-ui, sans-serif" font-weight="600" font-size="14" fill="#38BDF8">Coromandel Institute of Technology — Interactive Lecture Theater</text>
+  <!-- Data Chart Graphic on Screen -->
+  <line x1="320" y1="310" x2="880" y2="310" stroke="#64748B" stroke-width="2"/>
+  <rect x="360" y="240" width="40" height="70" rx="4" fill="#38BDF8"/>
+  <rect x="430" y="210" width="40" height="100" rx="4" fill="#10B981"/>
+  <rect x="500" y="190" width="40" height="120" rx="4" fill="#6366F1"/>
+  <rect x="570" y="220" width="40" height="90" rx="4" fill="#F59E0B"/>
+  <rect x="640" y="170" width="40" height="140" rx="4" fill="#EC4899"/>
+  <!-- Digital Podium -->
+  <polygon points="560,400 640,400 660,520 540,520" fill="#1E293B"/>
+  <rect x="550" y="390" width="100" height="18" rx="4" fill="#0284C7"/>
+  <circle cx="600" cy="380" r="4" fill="#38BDF8"/>
+  <line x1="600" y1="384" x2="600" y2="394" stroke="#64748B" stroke-width="2"/>
+  <!-- Tiered Desks & Ergonomic Seating Rows -->
+  <!-- Row 1 -->
+  <g fill="#475569">
+    <rect x="180" y="530" width="840" height="35" rx="8" fill="#64748B"/>
+    <rect x="220" y="580" width="90" height="40" rx="8"/>
+    <rect x="360" y="580" width="90" height="40" rx="8"/>
+    <rect x="500" y="580" width="90" height="40" rx="8"/>
+    <rect x="640" y="580" width="90" height="40" rx="8"/>
+    <rect x="780" y="580" width="90" height="40" rx="8"/>
+  </g>
+  <!-- Row 2 -->
+  <g fill="#334155">
+    <rect x="100" y="630" width="1000" height="40" rx="8" fill="#475569"/>
+    <rect x="160" y="690" width="110" height="45" rx="8"/>
+    <rect x="320" y="690" width="110" height="45" rx="8"/>
+    <rect x="480" y="690" width="110" height="45" rx="8"/>
+    <rect x="640" y="690" width="110" height="45" rx="8"/>
+    <rect x="800" y="690" width="110" height="45" rx="8"/>
+    <rect x="950" y="690" width="110" height="45" rx="8"/>
+  </g>
+  <!-- Ceiling LED Panel Lights -->
+  <g fill="#FFFFFF" opacity="0.9">
+    <rect x="200" y="10" width="200" height="12" rx="4"/>
+    <rect x="500" y="10" width="200" height="12" rx="4"/>
+    <rect x="800" y="10" width="200" height="12" rx="4"/>
+  </g>
+  <!-- Watermark Badge -->
+  <rect x="30" y="730" width="400" height="40" rx="8" fill="#020617" opacity="0.85"/>
+  <text x="50" y="755" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#FFFFFF">Coromandel Institute of Technology · Smart Lecture Hall</text>
+</svg>

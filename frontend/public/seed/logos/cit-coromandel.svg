@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <linearGradient id="cit-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0C4A6E"/>
+      <stop offset="100%" stop-color="#0369A1"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="36" fill="#F0F9FF"/>
+  <!-- Circular Compass Outer Base -->
+  <circle cx="128" cy="128" r="98" fill="url(#cit-grad)" stroke="#38BDF8" stroke-width="4"/>
+  <circle cx="128" cy="128" r="86" fill="none" stroke="#BAE6FD" stroke-width="2"/>
+  <!-- Compass Star -->
+  <polygon points="128,46 136,118 208,128 136,138 128,210 120,138 48,128 120,118" fill="#FFFFFF" opacity="0.3"/>
+  <polygon points="128,60 134,122 196,128 134,134 128,196 122,134 60,128 122,122" fill="#38BDF8"/>
+  <!-- Gear & Anchor Central Icon -->
+  <circle cx="128" cy="128" r="22" fill="#0C4A6E" stroke="#FDE047" stroke-width="3"/>
+  <circle cx="128" cy="128" r="8" fill="#FDE047"/>
+  <!-- Banner -->
+  <rect x="86" y="184" width="84" height="22" rx="5" fill="#38BDF8"/>
+  <text x="128" y="199" text-anchor="middle" font-family="system-ui, sans-serif" font-weight="900" font-size="13" fill="#0C4A6E" letter-spacing="2">C I T</text>
+</svg>

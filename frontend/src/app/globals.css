@@ -19,14 +19,42 @@
   --info: #1D4ED8;
 }
 
+.dark {
+  --background: #0B111A;
+  --surface: #111A24;
+  --text-primary: #F1F5F9;
+  --text-secondary: #94A3B8;
+  --border: #1E293B;
+  --border-strong: #334155;
+  --accent: #14B8A6;
+  --accent-hover: #0D9488;
+  --accent-active: #0F766E;
+  --accent-light: #132E35;
+  --success: #10B981;
+  --warning: #F97316;
+  --error: #EF4444;
+  --info: #3B82F6;
+}
+
 body {
   color: var(--text-primary);
   background-color: var(--background);
+  transition: background-color 0.2s ease, color 0.2s ease;
   font-family: Geist, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #0B111A;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
 }
 
 /* Accessible focus ring standards */

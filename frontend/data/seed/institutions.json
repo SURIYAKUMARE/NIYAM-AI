@@ -1,0 +1,1049 @@
+[
+  {
+    "id": "nit-nilgiri",
+    "permanentId": "SYN-2025-001",
+    "name": "Nilgiri Institute of Technology",
+    "shortName": "NIT",
+    "city": "Ooty",
+    "district": "The Nilgiris",
+    "state": "Tamil Nadu",
+    "pincode": "643001",
+    "establishedYear": 2004,
+    "legalEntityType": "Nilgiri Educational Trust (Fictional)",
+    "status": "Valid",
+    "statusReason": "Full regulatory compliance across all 5 APH 2025-26 pillars with verified digital signatures.",
+    "trustScore": 98,
+    "intake": 480,
+    "facultyCount": 32,
+    "campusAreaAcres": 12.5,
+    "builtUpAreaSqm": 19400,
+    "contactEmail": "dean@nilgiri-tech.demo-edu.in",
+    "contactPhone": "+91-423-2891001",
+    "website": "https://nilgiri-tech.demo-edu.in",
+    "address": "Survey No. 104/2A, Mountain View Highway, Ooty, Tamil Nadu - 643001",
+    "courses": [
+      { "id": "c1", "degree": "B.Tech", "name": "Computer Science & Engineering", "intake": 120, "durationYears": 4 },
+      { "id": "c2", "degree": "B.Tech", "name": "Electronics & Communication Engineering", "intake": 120, "durationYears": 4 },
+      { "id": "c3", "degree": "B.Tech", "name": "Artificial Intelligence & Data Science", "intake": 60, "durationYears": 4 },
+      { "id": "c4", "degree": "B.Tech", "name": "Mechanical Engineering", "intake": 60, "durationYears": 4 },
+      { "id": "c5", "degree": "B.Tech", "name": "Civil Engineering & Smart Infrastructure", "intake": 60, "durationYears": 4 },
+      { "id": "c6", "degree": "M.Tech", "name": "Cyber Physical Systems", "intake": 30, "durationYears": 2 },
+      { "id": "c7", "degree": "M.Tech", "name": "Renewable Power Systems", "intake": 30, "durationYears": 2 }
+    ],
+    "photos": [
+      {
+        "type": "campus",
+        "title": "Main Academic & Heritage Administration Complex",
+        "path": "/seed/photos/nit-nilgiri/campus.jpg",
+        "alt": "Nilgiri Institute of Technology main academic building surrounded by hill terrain and green landscaping"
+      },
+      {
+        "type": "classroom",
+        "title": "Tiered Interactive Smart Seminar Hall",
+        "path": "/seed/photos/nit-nilgiri/classroom.jpg",
+        "alt": "Modern tiered digital classroom with projection displays and ergonomic seating at Nilgiri Tech"
+      },
+      {
+        "type": "lab",
+        "title": "High Performance Computing & AI Research Laboratory",
+        "path": "/seed/photos/nit-nilgiri/lab.jpg",
+        "alt": "Computing laboratory equipped with high-performance desktop workstations and networking racks at Nilgiri Tech"
+      }
+    ],
+    "logo": "/seed/logos/nit-nilgiri.svg",
+    "documents": [
+      {
+        "id": "doc-nit-01",
+        "type": "approval_letter",
+        "title": "AICTE Extension of Approval (EoA) 2025-26",
+        "refNumber": "AICTE/SRO/SYN-2025-001/2025/EOA",
+        "issueDate": "2025-05-10",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/nit-nilgiri/approval_letter.pdf"
+      },
+      {
+        "id": "doc-nit-02",
+        "type": "affiliation_certificate",
+        "title": "State Technological University Affiliation Order",
+        "refNumber": "STU/AFFIL/2025/TN-841",
+        "issueDate": "2025-06-01",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/nit-nilgiri/affiliation_certificate.pdf"
+      },
+      {
+        "id": "doc-nit-03",
+        "type": "compliance_report",
+        "title": "TER Regulatory Fee & Facility Compliance Clearance",
+        "refNumber": "COMP/SYN-2025-001/AUDIT-25",
+        "issueDate": "2025-05-15",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/nit-nilgiri/compliance_report.pdf"
+      }
+    ]
+  },
+  {
+    "id": "kce-kaveri",
+    "permanentId": "SYN-2025-002",
+    "name": "Kaveri College of Engineering",
+    "shortName": "KCE",
+    "city": "Mysuru",
+    "district": "Mysuru",
+    "state": "Karnataka",
+    "pincode": "570008",
+    "establishedYear": 2008,
+    "legalEntityType": "Kaveri Vidya Peeth Foundation (Fictional)",
+    "status": "Valid",
+    "statusReason": "All statutory certificates valid; 1:15 faculty ratio verified; DigiLocker sync completed.",
+    "trustScore": 95,
+    "intake": 420,
+    "facultyCount": 28,
+    "campusAreaAcres": 11.2,
+    "builtUpAreaSqm": 17800,
+    "contactEmail": "principal@kaveri-engg.demo-edu.in",
+    "contactPhone": "+91-821-2514002",
+    "website": "https://kaveri-engg.demo-edu.in",
+    "address": "Plot 18, Chamundi Tech Corridor, Mysuru, Karnataka - 570008",
+    "courses": [
+      { "id": "c1", "degree": "B.Tech", "name": "Computer Science & Engineering", "intake": 120, "durationYears": 4 },
+      { "id": "c2", "degree": "B.Tech", "name": "Information Science & Engineering", "intake": 60, "durationYears": 4 },
+      { "id": "c3", "degree": "B.Tech", "name": "Electronics & Communication Engineering", "intake": 120, "durationYears": 4 },
+      { "id": "c4", "degree": "B.Tech", "name": "Mechanical & Mechatronics Engineering", "intake": 60, "durationYears": 4 },
+      { "id": "c5", "degree": "B.Tech", "name": "Civil Engineering", "intake": 60, "durationYears": 4 }
+    ],
+    "photos": [
+      {
+        "type": "campus",
+        "title": "Main Boulevard & Engineering Quadrangle",
+        "path": "/seed/photos/kce-kaveri/campus.jpg",
+        "alt": "Kaveri College of Engineering modern campus with central glass rotunda and tree-lined walkways"
+      },
+      {
+        "type": "classroom",
+        "title": "Acoustically Treated Amphitheatre Lecture Hall",
+        "path": "/seed/photos/kce-kaveri/classroom.jpg",
+        "alt": "Well-lit auditorium classroom with modern audio-visual setup at Kaveri College"
+      },
+      {
+        "type": "lab",
+        "title": "Mechatronics & Embedded Systems Workshop",
+        "path": "/seed/photos/kce-kaveri/lab.jpg",
+        "alt": "Robotics workstations with oscilloscopes and circuit design kits at Kaveri College"
+      }
+    ],
+    "logo": "/seed/logos/kce-kaveri.svg",
+    "documents": [
+      {
+        "id": "doc-kce-01",
+        "type": "approval_letter",
+        "title": "AICTE Extension of Approval (EoA) 2025-26",
+        "refNumber": "AICTE/SWRO/SYN-2025-002/2025/EOA",
+        "issueDate": "2025-05-12",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/kce-kaveri/approval_letter.pdf"
+      },
+      {
+        "id": "doc-kce-02",
+        "type": "affiliation_certificate",
+        "title": "State Technological University Affiliation Order",
+        "refNumber": "STU/AFFIL/2025/KA-512",
+        "issueDate": "2025-06-03",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/kce-kaveri/affiliation_certificate.pdf"
+      },
+      {
+        "id": "doc-kce-03",
+        "type": "compliance_report",
+        "title": "TER Regulatory Fee & Facility Compliance Clearance",
+        "refNumber": "COMP/SYN-2025-002/AUDIT-25",
+        "issueDate": "2025-05-18",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/kce-kaveri/compliance_report.pdf"
+      }
+    ]
+  },
+  {
+    "id": "sviet-sahyadri",
+    "permanentId": "SYN-2025-003",
+    "name": "Sahyadri Valley Institute of Engineering & Technology",
+    "shortName": "SVIET",
+    "city": "Mahabaleshwar",
+    "district": "Satara",
+    "state": "Maharashtra",
+    "pincode": "412806",
+    "establishedYear": 2011,
+    "legalEntityType": "Sahyadri Shikshan Mandal (Fictional)",
+    "status": "Valid",
+    "statusReason": "Valid accreditation; municipal fire clearance authenticated through State Fire NOC portal.",
+    "trustScore": 94,
+    "intake": 360,
+    "facultyCount": 24,
+    "campusAreaAcres": 14.0,
+    "builtUpAreaSqm": 16200,
+    "contactEmail": "registrar@sahyadri-valley.demo-edu.in",
+    "contactPhone": "+91-2168-240103",
+    "website": "https://sahyadri-valley.demo-edu.in",
+    "address": "Valley Vista Campus, Mahabaleshwar Road, Satara, Maharashtra - 412806",
+    "courses": [
+      { "id": "c1", "degree": "B.Tech", "name": "Computer Science & Engineering", "intake": 120, "durationYears": 4 },
+      { "id": "c2", "degree": "B.Tech", "name": "Information Technology", "intake": 60, "durationYears": 4 },
+      { "id": "c3", "degree": "B.Tech", "name": "Electrical & Electronics Engineering", "intake": 60, "durationYears": 4 },
+      { "id": "c4", "degree": "B.Tech", "name": "Civil & Environmental Engineering", "intake": 60, "durationYears": 4 },
+      { "id": "c5", "degree": "B.Tech", "name": "Mechanical Engineering", "intake": 60, "durationYears": 4 }
+    ],
+    "photos": [
+      {
+        "type": "campus",
+        "title": "Valley Campus Terraces & Sustainable Library",
+        "path": "/seed/photos/sviet-sahyadri/campus.jpg",
+        "alt": "Sahyadri Valley Institute eco-friendly campus surrounded by Western Ghats greenery"
+      },
+      {
+        "type": "classroom",
+        "title": "Interactive Multi-Media Classroom Suite",
+        "path": "/seed/photos/sviet-sahyadri/classroom.jpg",
+        "alt": "Modern multimedia lecture room with video conferencing displays at Sahyadri Valley"
+      },
+      {
+        "type": "lab",
+        "title": "Renewable Energy & IoT Automation Facility",
+        "path": "/seed/photos/sviet-sahyadri/lab.jpg",
+        "alt": "Electrical test benches and solar instrumentation panels at Sahyadri Valley"
+      }
+    ],
+    "logo": "/seed/logos/sviet-sahyadri.svg",
+    "documents": [
+      {
+        "id": "doc-sviet-01",
+        "type": "approval_letter",
+        "title": "AICTE Extension of Approval (EoA) 2025-26",
+        "refNumber": "AICTE/WRO/SYN-2025-003/2025/EOA",
+        "issueDate": "2025-05-14",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/sviet-sahyadri/approval_letter.pdf"
+      },
+      {
+        "id": "doc-sviet-02",
+        "type": "affiliation_certificate",
+        "title": "State Technological University Affiliation Order",
+        "refNumber": "STU/AFFIL/2025/MH-319",
+        "issueDate": "2025-06-05",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/sviet-sahyadri/affiliation_certificate.pdf"
+      },
+      {
+        "id": "doc-sviet-03",
+        "type": "compliance_report",
+        "title": "TER Regulatory Fee & Facility Compliance Clearance",
+        "refNumber": "COMP/SYN-2025-003/AUDIT-25",
+        "issueDate": "2025-05-20",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/sviet-sahyadri/compliance_report.pdf"
+      }
+    ]
+  },
+  {
+    "id": "bea-brahmaputra",
+    "permanentId": "SYN-2025-004",
+    "name": "Brahmaputra Engineering Academy",
+    "shortName": "BEA",
+    "city": "Tezpur",
+    "district": "Sonitpur",
+    "state": "Assam",
+    "pincode": "784001",
+    "establishedYear": 2014,
+    "legalEntityType": "Assam Technology Pioneer Society (Fictional)",
+    "status": "Valid",
+    "statusReason": "Clean institutional records; all statutory clearances verified; Bharatkosh TER fee settled.",
+    "trustScore": 92,
+    "intake": 300,
+    "facultyCount": 20,
+    "campusAreaAcres": 15.2,
+    "builtUpAreaSqm": 14200,
+    "contactEmail": "academic@brahmaputra-engg.demo-edu.in",
+    "contactPhone": "+91-3712-230004",
+    "website": "https://brahmaputra-engg.demo-edu.in",
+    "address": "Riverbank Knowledge City, Tezpur Bypass, Sonitpur, Assam - 784001",
+    "courses": [
+      { "id": "c1", "degree": "B.Tech", "name": "Computer Science & Engineering", "intake": 90, "durationYears": 4 },
+      { "id": "c2", "degree": "B.Tech", "name": "Electronics & Telecommunication", "intake": 60, "durationYears": 4 },
+      { "id": "c3", "degree": "B.Tech", "name": "Electrical & Power Engineering", "intake": 60, "durationYears": 4 },
+      { "id": "c4", "degree": "B.Tech", "name": "Civil Engineering & Geomatics", "intake": 60, "durationYears": 4 },
+      { "id": "c5", "degree": "B.Tech", "name": "Bio-Technology & Process Engineering", "intake": 30, "durationYears": 4 }
+    ],
+    "photos": [
+      {
+        "type": "campus",
+        "title": "East Campus Main Gateway & Academic Plaza",
+        "path": "/seed/photos/bea-brahmaputra/campus.jpg",
+        "alt": "Brahmaputra Engineering Academy modern facade featuring expansive glass colonnade"
+      },
+      {
+        "type": "classroom",
+        "title": "Smart Collaborative Technology Classroom",
+        "path": "/seed/photos/bea-brahmaputra/classroom.jpg",
+        "alt": "Collaborative round-table classroom with individual monitors at Brahmaputra Academy"
+      },
+      {
+        "type": "lab",
+        "title": "Hydraulics & Environmental Simulation Lab",
+        "path": "/seed/photos/bea-brahmaputra/lab.jpg",
+        "alt": "Fluid mechanics test flumes and measurement systems at Brahmaputra Academy"
+      }
+    ],
+    "logo": "/seed/logos/bea-brahmaputra.svg",
+    "documents": [
+      {
+        "id": "doc-bea-01",
+        "type": "approval_letter",
+        "title": "AICTE Extension of Approval (EoA) 2025-26",
+        "refNumber": "AICTE/NERO/SYN-2025-004/2025/EOA",
+        "issueDate": "2025-05-15",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/bea-brahmaputra/approval_letter.pdf"
+      },
+      {
+        "id": "doc-bea-02",
+        "type": "affiliation_certificate",
+        "title": "State Technological University Affiliation Order",
+        "refNumber": "STU/AFFIL/2025/AS-204",
+        "issueDate": "2025-06-08",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/bea-brahmaputra/affiliation_certificate.pdf"
+      },
+      {
+        "id": "doc-bea-03",
+        "type": "compliance_report",
+        "title": "TER Regulatory Fee & Facility Compliance Clearance",
+        "refNumber": "COMP/SYN-2025-004/AUDIT-25",
+        "issueDate": "2025-05-22",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/bea-brahmaputra/compliance_report.pdf"
+      }
+    ]
+  },
+  {
+    "id": "aitr-aravali",
+    "permanentId": "SYN-2025-005",
+    "name": "Aravali Institute of Technology & Research",
+    "shortName": "AITR",
+    "city": "Mount Abu",
+    "district": "Sirohi",
+    "state": "Rajasthan",
+    "pincode": "307501",
+    "establishedYear": 2006,
+    "legalEntityType": "Aravali Vidya Seva Sansthan (Fictional)",
+    "status": "Valid",
+    "statusReason": "NAAC A grade; faculty cadre compliant; land parcel titles verified with Sub-Registrar records.",
+    "trustScore": 96,
+    "intake": 540,
+    "facultyCount": 36,
+    "campusAreaAcres": 18.5,
+    "builtUpAreaSqm": 21500,
+    "contactEmail": "info@aravali-tech.demo-edu.in",
+    "contactPhone": "+91-2974-238005",
+    "website": "https://aravali-tech.demo-edu.in",
+    "address": "Sunset Point Road, Mount Abu Foothills, Sirohi, Rajasthan - 307501",
+    "courses": [
+      { "id": "c1", "degree": "B.Tech", "name": "Computer Science & Engineering", "intake": 180, "durationYears": 4 },
+      { "id": "c2", "degree": "B.Tech", "name": "Artificial Intelligence & Machine Learning", "intake": 60, "durationYears": 4 },
+      { "id": "c3", "degree": "B.Tech", "name": "Electronics & Communication Engineering", "intake": 120, "durationYears": 4 },
+      { "id": "c4", "degree": "B.Tech", "name": "Electrical Engineering", "intake": 60, "durationYears": 4 },
+      { "id": "c5", "degree": "B.Tech", "name": "Mechanical Engineering & Robotics", "intake": 60, "durationYears": 4 },
+      { "id": "c6", "degree": "M.Tech", "name": "VLSI & Embedded Design", "intake": 30, "durationYears": 2 },
+      { "id": "c7", "degree": "M.Tech", "name": "Computer Science & Systems", "intake": 30, "durationYears": 2 }
+    ],
+    "photos": [
+      {
+        "type": "campus",
+        "title": "Stone-Crafted Administrative & Convention Center",
+        "path": "/seed/photos/aitr-aravali/campus.jpg",
+        "alt": "Aravali Institute of Technology sandstone architectural block with landscaped courtyards"
+      },
+      {
+        "type": "classroom",
+        "title": "Contemporary Harvard-Style Case Study Hall",
+        "path": "/seed/photos/aitr-aravali/classroom.jpg",
+        "alt": "Horseshoe style seminar lecture theater with acoustic wood paneling at Aravali Tech"
+      },
+      {
+        "type": "lab",
+        "title": "Embedded Systems & VLSI Cleanroom Facility",
+        "path": "/seed/photos/aitr-aravali/lab.jpg",
+        "alt": "Micro-electronics lab benches with digital logic analyzers and microscope stations at Aravali Tech"
+      }
+    ],
+    "logo": "/seed/logos/aitr-aravali.svg",
+    "documents": [
+      {
+        "id": "doc-aitr-01",
+        "type": "approval_letter",
+        "title": "AICTE Extension of Approval (EoA) 2025-26",
+        "refNumber": "AICTE/NWRO/SYN-2025-005/2025/EOA",
+        "issueDate": "2025-05-11",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/aitr-aravali/approval_letter.pdf"
+      },
+      {
+        "id": "doc-aitr-02",
+        "type": "affiliation_certificate",
+        "title": "State Technological University Affiliation Order",
+        "refNumber": "STU/AFFIL/2025/RJ-119",
+        "issueDate": "2025-06-02",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/aitr-aravali/affiliation_certificate.pdf"
+      },
+      {
+        "id": "doc-aitr-03",
+        "type": "compliance_report",
+        "title": "TER Regulatory Fee & Facility Compliance Clearance",
+        "refNumber": "COMP/SYN-2025-005/AUDIT-25",
+        "issueDate": "2025-05-17",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/aitr-aravali/compliance_report.pdf"
+      }
+    ]
+  },
+  {
+    "id": "mcet-malabar",
+    "permanentId": "SYN-2025-006",
+    "name": "Malabar College of Engineering & Technology",
+    "shortName": "MCET",
+    "city": "Kozhikode",
+    "district": "Kozhikode",
+    "state": "Kerala",
+    "pincode": "673001",
+    "establishedYear": 2009,
+    "legalEntityType": "Malabar Coast Charity Educational Society (Fictional)",
+    "status": "Valid",
+    "statusReason": "Full regulatory compliance; digital signatures validated; barrier-free PWD infrastructure confirmed.",
+    "trustScore": 95,
+    "intake": 420,
+    "facultyCount": 28,
+    "campusAreaAcres": 10.8,
+    "builtUpAreaSqm": 18200,
+    "contactEmail": "office@malabar-engg.demo-edu.in",
+    "contactPhone": "+91-495-2748006",
+    "website": "https://malabar-engg.demo-edu.in",
+    "address": "Coastal Tech Campus, Palayam Road, Kozhikode, Kerala - 673001",
+    "courses": [
+      { "id": "c1", "degree": "B.Tech", "name": "Computer Science & Engineering", "intake": 120, "durationYears": 4 },
+      { "id": "c2", "degree": "B.Tech", "name": "Information Technology & Marine Informatics", "intake": 60, "durationYears": 4 },
+      { "id": "c3", "degree": "B.Tech", "name": "Electronics & Biomedical Engineering", "intake": 60, "durationYears": 4 },
+      { "id": "c4", "degree": "B.Tech", "name": "Electrical & Electronics Engineering", "intake": 60, "durationYears": 4 },
+      { "id": "c5", "degree": "B.Tech", "name": "Mechanical Engineering", "intake": 60, "durationYears": 4 },
+      { "id": "c6", "degree": "B.Tech", "name": "Civil & Coastal Infrastructure", "intake": 60, "durationYears": 4 }
+    ],
+    "photos": [
+      {
+        "type": "campus",
+        "title": "Verdant Coastal Main Quadrangle & Library",
+        "path": "/seed/photos/mcet-malabar/campus.jpg",
+        "alt": "Malabar College of Engineering campus with tropical landscaping and open glass verandas"
+      },
+      {
+        "type": "classroom",
+        "title": "Digital Lecture Theater with Dual Projection",
+        "path": "/seed/photos/mcet-malabar/classroom.jpg",
+        "alt": "Modern air-conditioned engineering lecture theater with digital podium at Malabar College"
+      },
+      {
+        "type": "lab",
+        "title": "Biomedical Signal Processing & IoT Lab",
+        "path": "/seed/photos/mcet-malabar/lab.jpg",
+        "alt": "Electronic sensor test workstations and biomedical monitoring modules at Malabar College"
+      }
+    ],
+    "logo": "/seed/logos/mcet-malabar.svg",
+    "documents": [
+      {
+        "id": "doc-mcet-01",
+        "type": "approval_letter",
+        "title": "AICTE Extension of Approval (EoA) 2025-26",
+        "refNumber": "AICTE/SWRO/SYN-2025-006/2025/EOA",
+        "issueDate": "2025-05-13",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/mcet-malabar/approval_letter.pdf"
+      },
+      {
+        "id": "doc-mcet-02",
+        "type": "affiliation_certificate",
+        "title": "State Technological University Affiliation Order",
+        "refNumber": "STU/AFFIL/2025/KL-772",
+        "issueDate": "2025-06-04",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/mcet-malabar/affiliation_certificate.pdf"
+      },
+      {
+        "id": "doc-mcet-03",
+        "type": "compliance_report",
+        "title": "TER Regulatory Fee & Facility Compliance Clearance",
+        "refNumber": "COMP/SYN-2025-006/AUDIT-25",
+        "issueDate": "2025-05-19",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/mcet-malabar/compliance_report.pdf"
+      }
+    ]
+  },
+  {
+    "id": "vti-vindhya",
+    "permanentId": "SYN-2025-007",
+    "name": "Vindhya Technical Institute",
+    "shortName": "VTI",
+    "city": "Rewa",
+    "district": "Rewa",
+    "state": "Madhya Pradesh",
+    "pincode": "486001",
+    "establishedYear": 2012,
+    "legalEntityType": "Vindhya Valley Pragati Trust (Fictional)",
+    "status": "Expired",
+    "statusReason": "Mandatory Fire & Life Safety Clearance expired on 31-Mar-2023; pending municipal renewal inspection.",
+    "trustScore": 48,
+    "intake": 360,
+    "facultyCount": 24,
+    "campusAreaAcres": 11.5,
+    "builtUpAreaSqm": 15400,
+    "contactEmail": "principal@vindhya-tech.demo-edu.in",
+    "contactPhone": "+91-7662-251007",
+    "website": "https://vindhya-tech.demo-edu.in",
+    "address": "Bichhiya Industrial Bypass, Rewa, Madhya Pradesh - 486001",
+    "courses": [
+      { "id": "c1", "degree": "B.Tech", "name": "Computer Science & Engineering", "intake": 120, "durationYears": 4 },
+      { "id": "c2", "degree": "B.Tech", "name": "Electrical Engineering", "intake": 60, "durationYears": 4 },
+      { "id": "c3", "degree": "B.Tech", "name": "Mechanical Engineering", "intake": 60, "durationYears": 4 },
+      { "id": "c4", "degree": "B.Tech", "name": "Civil Engineering", "intake": 60, "durationYears": 4 },
+      { "id": "c5", "degree": "B.Tech", "name": "Mining Machinery & Mechanics", "intake": 60, "durationYears": 4 }
+    ],
+    "photos": [
+      {
+        "type": "campus",
+        "title": "Central Academic Wing & Workshop Courtyard",
+        "path": "/seed/photos/vti-vindhya/campus.jpg",
+        "alt": "Vindhya Technical Institute main administrative building with arched brick entryway"
+      },
+      {
+        "type": "classroom",
+        "title": "Standard Institutional Lecture Hall",
+        "path": "/seed/photos/vti-vindhya/classroom.jpg",
+        "alt": "Spacious tiered engineering classroom with whiteboard and student bench rows at Vindhya Tech"
+      },
+      {
+        "type": "lab",
+        "title": "Heavy Machinery & Mechanical Fabrication Lab",
+        "path": "/seed/photos/vti-vindhya/lab.jpg",
+        "alt": "Lathe machines and metal shaping equipment inside mechanical engineering workshop at Vindhya Tech"
+      }
+    ],
+    "logo": "/seed/logos/vti-vindhya.svg",
+    "documents": [
+      {
+        "id": "doc-vti-01",
+        "type": "approval_letter",
+        "title": "AICTE Extension of Approval (EoA) 2025-26",
+        "refNumber": "AICTE/CRO/SYN-2025-007/2025/EOA",
+        "issueDate": "2025-05-16",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/vti-vindhya/approval_letter.pdf"
+      },
+      {
+        "id": "doc-vti-02",
+        "type": "affiliation_certificate",
+        "title": "State Technological University Affiliation Order (Expired)",
+        "refNumber": "STU/AFFIL/2023/MP-402",
+        "issueDate": "2022-06-15",
+        "validUntil": "2023-03-31",
+        "status": "Expired",
+        "tamperDetected": true,
+        "tamperType": "EXPIRED_DATE",
+        "tamperDetails": "Affiliation order validity expired on 31-Mar-2023; unrenewed for current academic session 2025-26.",
+        "filePath": "/seed/docs/vti-vindhya/affiliation_certificate.pdf"
+      },
+      {
+        "id": "doc-vti-03",
+        "type": "compliance_report",
+        "title": "TER Regulatory Fee & Facility Compliance Clearance",
+        "refNumber": "COMP/SYN-2025-007/AUDIT-25",
+        "issueDate": "2025-05-25",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/vti-vindhya/compliance_report.pdf"
+      }
+    ]
+  },
+  {
+    "id": "cit-coromandel",
+    "permanentId": "SYN-2025-008",
+    "name": "Coromandel Institute of Technology",
+    "shortName": "CIT",
+    "city": "Puducherry",
+    "district": "Puducherry",
+    "state": "Puducherry",
+    "pincode": "605001",
+    "establishedYear": 2015,
+    "legalEntityType": "Coromandel Maritime Knowledge Trust (Fictional)",
+    "status": "Expired",
+    "statusReason": "State Pollution Control Board Consent to Operate expired; renewed water treatment audit required.",
+    "trustScore": 52,
+    "intake": 300,
+    "facultyCount": 20,
+    "campusAreaAcres": 10.2,
+    "builtUpAreaSqm": 13800,
+    "contactEmail": "dean@coromandel-tech.demo-edu.in",
+    "contactPhone": "+91-413-2289008",
+    "website": "https://coromandel-tech.demo-edu.in",
+    "address": "East Coast Highway, Kalapet, Puducherry - 605014",
+    "courses": [
+      { "id": "c1", "degree": "B.Tech", "name": "Computer Science & Engineering", "intake": 90, "durationYears": 4 },
+      { "id": "c2", "degree": "B.Tech", "name": "Marine & Offshore Technology", "intake": 60, "durationYears": 4 },
+      { "id": "c3", "degree": "B.Tech", "name": "Electronics & Communication Engineering", "intake": 60, "durationYears": 4 },
+      { "id": "c4", "degree": "B.Tech", "name": "Electrical & Green Power Systems", "intake": 60, "durationYears": 4 },
+      { "id": "c5", "degree": "B.Tech", "name": "Chemical & Environmental Process", "intake": 30, "durationYears": 4 }
+    ],
+    "photos": [
+      {
+        "type": "campus",
+        "title": "East Coast Seaside Engineering Campus & Clocktower",
+        "path": "/seed/photos/cit-coromandel/campus.jpg",
+        "alt": "Coromandel Institute of Technology white modernist building with solar canopy"
+      },
+      {
+        "type": "classroom",
+        "title": "Aero-Cooled Seminar Classroom",
+        "path": "/seed/photos/cit-coromandel/classroom.jpg",
+        "alt": "Spacious sunlit engineering classroom overlooking coastal grounds at Coromandel Tech"
+      },
+      {
+        "type": "lab",
+        "title": "Marine Simulation & Fluid Dynamics Lab",
+        "path": "/seed/photos/cit-coromandel/lab.jpg",
+        "alt": "Tow tank simulation flume and maritime navigation radar simulators at Coromandel Tech"
+      }
+    ],
+    "logo": "/seed/logos/cit-coromandel.svg",
+    "documents": [
+      {
+        "id": "doc-cit-01",
+        "type": "approval_letter",
+        "title": "AICTE Extension of Approval (EoA) 2025-26",
+        "refNumber": "AICTE/SRO/SYN-2025-008/2025/EOA",
+        "issueDate": "2025-05-18",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/cit-coromandel/approval_letter.pdf"
+      },
+      {
+        "id": "doc-cit-02",
+        "type": "affiliation_certificate",
+        "title": "State Technological University Affiliation Order",
+        "refNumber": "STU/AFFIL/2025/PY-190",
+        "issueDate": "2025-06-09",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/cit-coromandel/affiliation_certificate.pdf"
+      },
+      {
+        "id": "doc-cit-03",
+        "type": "compliance_report",
+        "title": "TER Regulatory Fee & Facility Compliance Clearance (Expired)",
+        "refNumber": "COMP/SYN-2025-008/AUDIT-23",
+        "issueDate": "2023-04-10",
+        "validUntil": "2024-03-31",
+        "status": "Expired",
+        "tamperDetected": true,
+        "tamperType": "EXPIRED_CLEARANCE",
+        "tamperDetails": "Facility environmental clearance expired on 31-Mar-2024; PCB consent renewal not submitted.",
+        "filePath": "/seed/docs/cit-coromandel/compliance_report.pdf"
+      }
+    ]
+  },
+  {
+    "id": "zec-zaskar",
+    "permanentId": "SYN-2025-009",
+    "name": "Zaskar Engineering College",
+    "shortName": "ZEC",
+    "city": "Leh",
+    "district": "Leh Ladakh",
+    "state": "Ladakh",
+    "pincode": "194101",
+    "establishedYear": 2017,
+    "legalEntityType": "Himalayan Technical Development Council (Fictional)",
+    "status": "Tampered",
+    "statusReason": "Altered course intake detected in Approval Letter (inflated from sanctioned 60 to 180 seats); SHA-256 hash mismatch.",
+    "trustScore": 24,
+    "intake": 240,
+    "facultyCount": 16,
+    "campusAreaAcres": 20.0,
+    "builtUpAreaSqm": 12800,
+    "contactEmail": "rector@zaskar-engg.demo-edu.in",
+    "contactPhone": "+91-1982-259009",
+    "website": "https://zaskar-engg.demo-edu.in",
+    "address": "Cold Desert Tech Park, Skara Valley, Leh, Ladakh - 194101",
+    "courses": [
+      { "id": "c1", "degree": "B.Tech", "name": "Computer Science & Engineering", "intake": 60, "durationYears": 4 },
+      { "id": "c2", "degree": "B.Tech", "name": "Civil & Cold-Climate Infrastructure", "intake": 60, "durationYears": 4 },
+      { "id": "c3", "degree": "B.Tech", "name": "Renewable High-Altitude Energy", "intake": 60, "durationYears": 4 },
+      { "id": "c4", "degree": "B.Tech", "name": "Electronics & Satellite Communications", "intake": 60, "durationYears": 4 }
+    ],
+    "photos": [
+      {
+        "type": "campus",
+        "title": "High Altitude Solar Heated Academic Campus",
+        "path": "/seed/photos/zec-zaskar/campus.jpg",
+        "alt": "Zaskar Engineering College passive solar architecture against rugged snow-capped mountain backdrop"
+      },
+      {
+        "type": "classroom",
+        "title": "Thermal Insulated Digital Amphitheatre",
+        "path": "/seed/photos/zec-zaskar/classroom.jpg",
+        "alt": "Thermally insulated modern classroom with panoramic mountain windows at Zaskar College"
+      },
+      {
+        "type": "lab",
+        "title": "Geothermal & Solar Energy Research Station",
+        "path": "/seed/photos/zec-zaskar/lab.jpg",
+        "alt": "Solar inverters and cryogenic testing chambers in energy laboratory at Zaskar College"
+      }
+    ],
+    "logo": "/seed/logos/zec-zaskar.svg",
+    "documents": [
+      {
+        "id": "doc-zec-01",
+        "type": "approval_letter",
+        "title": "AICTE Extension of Approval (EoA) 2025-26 [TAMPERED]",
+        "refNumber": "AICTE/NWRO/SYN-2025-009/2025/EOA",
+        "issueDate": "2025-05-20",
+        "validUntil": "2026-06-30",
+        "status": "Tampered",
+        "tamperDetected": true,
+        "tamperType": "INTAKE_INFLATION",
+        "tamperDetails": "Computer Science intake unauthorizedly altered in PDF table from 60 to 180 seats; cryptographic signature mismatch.",
+        "filePath": "/seed/docs/zec-zaskar/approval_letter.pdf"
+      },
+      {
+        "id": "doc-zec-02",
+        "type": "affiliation_certificate",
+        "title": "State Technological University Affiliation Order",
+        "refNumber": "STU/AFFIL/2025/UT-014",
+        "issueDate": "2025-06-11",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/zec-zaskar/affiliation_certificate.pdf"
+      },
+      {
+        "id": "doc-zec-03",
+        "type": "compliance_report",
+        "title": "TER Regulatory Fee & Facility Compliance Clearance",
+        "refNumber": "COMP/SYN-2025-009/AUDIT-25",
+        "issueDate": "2025-05-28",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/zec-zaskar/compliance_report.pdf"
+      }
+    ]
+  },
+  {
+    "id": "tieas-thar",
+    "permanentId": "SYN-2025-010",
+    "name": "Thar Institute of Engineering & Applied Sciences",
+    "shortName": "TIEAS",
+    "city": "Jaisalmer",
+    "district": "Jaisalmer",
+    "state": "Rajasthan",
+    "pincode": "345001",
+    "establishedYear": 2013,
+    "legalEntityType": "Marwar Technology Foundation (Fictional)",
+    "status": "Tampered",
+    "statusReason": "Mismatched reference number & sponsoring trust identity detected; altered signature metadata.",
+    "trustScore": 28,
+    "intake": 360,
+    "facultyCount": 24,
+    "campusAreaAcres": 22.0,
+    "builtUpAreaSqm": 16000,
+    "contactEmail": "principal@thar-institute.demo-edu.in",
+    "contactPhone": "+91-2992-254010",
+    "website": "https://thar-institute.demo-edu.in",
+    "address": "Desert Knowledge Expressway, Sam Dunes Road, Jaisalmer, Rajasthan - 345001",
+    "courses": [
+      { "id": "c1", "degree": "B.Tech", "name": "Computer Science & Engineering", "intake": 120, "durationYears": 4 },
+      { "id": "c2", "degree": "B.Tech", "name": "Renewable Solar & Wind Technology", "intake": 60, "durationYears": 4 },
+      { "id": "c3", "degree": "B.Tech", "name": "Electrical & Power Grid Management", "intake": 60, "durationYears": 4 },
+      { "id": "c4", "degree": "B.Tech", "name": "Mechanical Engineering", "intake": 60, "durationYears": 4 },
+      { "id": "c5", "degree": "B.Tech", "name": "Civil & Water Resource Management", "intake": 60, "durationYears": 4 }
+    ],
+    "photos": [
+      {
+        "type": "campus",
+        "title": "Golden Sandstone Main Engineering Gateway",
+        "path": "/seed/photos/tieas-thar/campus.jpg",
+        "alt": "Thar Institute of Engineering yellow jali architectural gateway in desert surroundings"
+      },
+      {
+        "type": "classroom",
+        "title": "Air-Cooled Multi-Media Lecture Theater",
+        "path": "/seed/photos/tieas-thar/classroom.jpg",
+        "alt": "Modern auditorium hall equipped with dual smartboards at Thar Institute"
+      },
+      {
+        "type": "lab",
+        "title": "Mega Solar PV Testing & Inverter Lab",
+        "path": "/seed/photos/tieas-thar/lab.jpg",
+        "alt": "Solar photovoltaic test benches and DC microgrid analyzers at Thar Institute"
+      }
+    ],
+    "logo": "/seed/logos/tieas-thar.svg",
+    "documents": [
+      {
+        "id": "doc-thar-01",
+        "type": "approval_letter",
+        "title": "AICTE Extension of Approval (EoA) 2025-26",
+        "refNumber": "AICTE/NWRO/SYN-2025-010/2025/EOA",
+        "issueDate": "2025-05-21",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/tieas-thar/approval_letter.pdf"
+      },
+      {
+        "id": "doc-thar-02",
+        "type": "affiliation_certificate",
+        "title": "State Technological University Affiliation Order [TAMPERED]",
+        "refNumber": "STU/AFFIL/2025/RJ-999-TAMPERED",
+        "issueDate": "2025-06-15",
+        "validUntil": "2026-06-30",
+        "status": "Tampered",
+        "tamperDetected": true,
+        "tamperType": "REF_ENTITY_MISMATCH",
+        "tamperDetails": "Reference number and Sponsoring Trust name do not match official university registrar records; mismatched signature vector.",
+        "filePath": "/seed/docs/tieas-thar/affiliation_certificate.pdf"
+      },
+      {
+        "id": "doc-thar-03",
+        "type": "compliance_report",
+        "title": "TER Regulatory Fee & Facility Compliance Clearance",
+        "refNumber": "COMP/SYN-2025-010/AUDIT-25",
+        "issueDate": "2025-05-29",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/tieas-thar/compliance_report.pdf"
+      }
+    ]
+  },
+  {
+    "id": "cit-chilika",
+    "permanentId": "SYN-2025-011",
+    "name": "Chilika Institute of Technology",
+    "shortName": "CIT-OD",
+    "city": "Puri",
+    "district": "Puri",
+    "state": "Odisha",
+    "pincode": "752002",
+    "establishedYear": 2016,
+    "legalEntityType": "Kalinga Educational Society (Fictional)",
+    "status": "Missing Fields",
+    "statusReason": "Mandatory Land Deed survey numbers and Competent Authority signature block omitted in submitted report.",
+    "trustScore": 42,
+    "intake": 300,
+    "facultyCount": 20,
+    "campusAreaAcres": 10.5,
+    "builtUpAreaSqm": 13900,
+    "contactEmail": "info@chilika-tech.demo-edu.in",
+    "contactPhone": "+91-6752-239011",
+    "website": "https://chilika-tech.demo-edu.in",
+    "address": "Coastal Marine Drive, Marine Tech Enclave, Puri, Odisha - 752002",
+    "courses": [
+      { "id": "c1", "degree": "B.Tech", "name": "Computer Science & Engineering", "intake": 90, "durationYears": 4 },
+      { "id": "c2", "degree": "B.Tech", "name": "Electronics & Marine Systems", "intake": 60, "durationYears": 4 },
+      { "id": "c3", "degree": "B.Tech", "name": "Electrical & Energy Engineering", "intake": 60, "durationYears": 4 },
+      { "id": "c4", "degree": "B.Tech", "name": "Civil & Coastal Protection Engineering", "intake": 60, "durationYears": 4 },
+      { "id": "c5", "degree": "B.Tech", "name": "Aquaculture & Environmental Tech", "intake": 30, "durationYears": 4 }
+    ],
+    "photos": [
+      {
+        "type": "campus",
+        "title": "Lagoon View Academic Block & Central Plaza",
+        "path": "/seed/photos/cit-chilika/campus.jpg",
+        "alt": "Chilika Institute of Technology modern academic building bordered by palm gardens"
+      },
+      {
+        "type": "classroom",
+        "title": "Tiered Technology Lecture Room",
+        "path": "/seed/photos/cit-chilika/classroom.jpg",
+        "alt": "Bright tiered lecture room with interactive display screen at Chilika Institute"
+      },
+      {
+        "type": "lab",
+        "title": "Advanced Water Analytics & Environmental Lab",
+        "path": "/seed/photos/cit-chilika/lab.jpg",
+        "alt": "Spectrophotometers and titration testing stations in chemical laboratory at Chilika Institute"
+      }
+    ],
+    "logo": "/seed/logos/cit-chilika.svg",
+    "documents": [
+      {
+        "id": "doc-chilika-01",
+        "type": "approval_letter",
+        "title": "AICTE Extension of Approval (EoA) 2025-26",
+        "refNumber": "AICTE/ERO/SYN-2025-011/2025/EOA",
+        "issueDate": "2025-05-22",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/cit-chilika/approval_letter.pdf"
+      },
+      {
+        "id": "doc-chilika-02",
+        "type": "affiliation_certificate",
+        "title": "State Technological University Affiliation Order",
+        "refNumber": "STU/AFFIL/2025/OD-801",
+        "issueDate": "2025-06-18",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/cit-chilika/affiliation_certificate.pdf"
+      },
+      {
+        "id": "doc-chilika-03",
+        "type": "compliance_report",
+        "title": "TER Regulatory Fee & Facility Compliance Clearance [INCOMPLETE]",
+        "refNumber": "COMP/SYN-2025-011/AUDIT-25",
+        "issueDate": "2025-05-30",
+        "validUntil": "2026-06-30",
+        "status": "Missing Fields",
+        "tamperDetected": true,
+        "tamperType": "MISSING_FIELDS",
+        "tamperDetails": "Survey numbers, built-up area certification, and registrar signature block omitted from document submission.",
+        "filePath": "/seed/docs/cit-chilika/compliance_report.pdf"
+      }
+    ]
+  },
+  {
+    "id": "sec-satpura",
+    "permanentId": "SYN-2025-012",
+    "name": "Satpura Engineering College",
+    "shortName": "SEC",
+    "city": "Chhindwara",
+    "district": "Chhindwara",
+    "state": "Madhya Pradesh",
+    "pincode": "480001",
+    "establishedYear": 2018,
+    "legalEntityType": "Satpura Forest Regional Education Society (Fictional)",
+    "status": "Missing Fields",
+    "statusReason": "Mandatory Bharatkosh transaction reference and Municipal Building Sanction Plan missing in uploaded dossier.",
+    "trustScore": 38,
+    "intake": 240,
+    "facultyCount": 16,
+    "campusAreaAcres": 13.0,
+    "builtUpAreaSqm": 12400,
+    "contactEmail": "principal@satpura-engg.demo-edu.in",
+    "contactPhone": "+91-7162-243012",
+    "website": "https://satpura-engg.demo-edu.in",
+    "address": "Plateau Tech Zone, Nagpur-Jabalpur Link Road, Chhindwara, Madhya Pradesh - 480001",
+    "courses": [
+      { "id": "c1", "degree": "B.Tech", "name": "Computer Science & Engineering", "intake": 60, "durationYears": 4 },
+      { "id": "c2", "degree": "B.Tech", "name": "Mining & Geotechnical Engineering", "intake": 60, "durationYears": 4 },
+      { "id": "c3", "degree": "B.Tech", "name": "Mechanical Engineering", "intake": 60, "durationYears": 4 },
+      { "id": "c4", "degree": "B.Tech", "name": "Civil Engineering & Forest Roadways", "intake": 60, "durationYears": 4 }
+    ],
+    "photos": [
+      {
+        "type": "campus",
+        "title": "Plateau Campus Administrative Complex",
+        "path": "/seed/photos/sec-satpura/campus.jpg",
+        "alt": "Satpura Engineering College multi-story academic complex with pine tree grove"
+      },
+      {
+        "type": "classroom",
+        "title": "Spacious Natural Light Engineering Classroom",
+        "path": "/seed/photos/sec-satpura/classroom.jpg",
+        "alt": "Engineering classroom featuring modern student desks and digital projector at Satpura College"
+      },
+      {
+        "type": "lab",
+        "title": "Rock Mechanics & Geology Surveying Lab",
+        "path": "/seed/photos/sec-satpura/lab.jpg",
+        "alt": "Core compression testing machines and mineral identification kits at Satpura College"
+      }
+    ],
+    "logo": "/seed/logos/sec-satpura.svg",
+    "documents": [
+      {
+        "id": "doc-sec-01",
+        "type": "approval_letter",
+        "title": "AICTE Extension of Approval (EoA) 2025-26 [INCOMPLETE]",
+        "refNumber": "AICTE/CRO/SYN-2025-012/2025/EOA",
+        "issueDate": "2025-05-24",
+        "validUntil": "2026-06-30",
+        "status": "Missing Fields",
+        "tamperDetected": true,
+        "tamperType": "MISSING_FIELDS",
+        "tamperDetails": "Municipal Sanction Plan approval reference and Bharatkosh TER challan number left unpopulated.",
+        "filePath": "/seed/docs/sec-satpura/approval_letter.pdf"
+      },
+      {
+        "id": "doc-sec-02",
+        "type": "affiliation_certificate",
+        "title": "State Technological University Affiliation Order",
+        "refNumber": "STU/AFFIL/2025/MP-910",
+        "issueDate": "2025-06-20",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/sec-satpura/affiliation_certificate.pdf"
+      },
+      {
+        "id": "doc-sec-03",
+        "type": "compliance_report",
+        "title": "TER Regulatory Fee & Facility Compliance Clearance",
+        "refNumber": "COMP/SYN-2025-012/AUDIT-25",
+        "issueDate": "2025-05-31",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/sec-satpura/compliance_report.pdf"
+      }
+    ]
+  }
+]

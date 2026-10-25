@@ -23,14 +23,14 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
   if (isLoginPage || !user) {
     return (
       <RouteGuard>
-        <main className="min-h-screen bg-[#F7F9FB]">{children}</main>
+        <main className="min-h-screen bg-[#F7F9FB] dark:bg-[#0B111A] text-[#14202B] dark:text-slate-100">{children}</main>
       </RouteGuard>
     );
   }
 
   return (
     <RouteGuard>
-      <div className="min-h-screen bg-[#F7F9FB] flex flex-col antialiased text-[#14202B]">
+      <div className="min-h-screen bg-[#F7F9FB] dark:bg-[#0B111A] flex flex-col antialiased text-[#14202B] dark:text-slate-100 transition-colors">
         {/* Top Header */}
         <Header onToggleMobileMenu={() => setMobileMenuOpen(true)} />
 
@@ -50,11 +50,11 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
               />
 
               {/* Drawer */}
-              <div className="relative flex-1 flex flex-col max-w-xs w-full bg-white shadow-2xl z-10">
+              <div className="relative flex-1 flex flex-col max-w-xs w-full bg-white dark:bg-[#111A24] border-r border-[#E3E8EE] dark:border-slate-800 shadow-2xl z-10">
                 <div className="absolute top-3 right-3">
                   <button
                     onClick={() => setMobileMenuOpen(false)}
-                    className="p-1.5 rounded-lg text-[#5B6B7A] hover:bg-[#F7F9FB] transition"
+                    className="p-1.5 rounded-lg text-[#5B6B7A] dark:text-slate-400 hover:bg-[#F7F9FB] dark:hover:bg-slate-800 transition"
                     aria-label="Close menu"
                   >
                     <X className="w-5 h-5" />
@@ -69,7 +69,7 @@ export const AppShell: React.FC<AppShellProps> = ({ children }) => {
           )}
 
           {/* Main Content Area */}
-          <main className="flex-1 min-w-0 overflow-y-auto bg-[#F7F9FB] p-4 sm:p-6 w-full max-w-full">
+          <main className="flex-1 min-w-0 overflow-y-auto bg-[#F7F9FB] dark:bg-[#0B111A] p-4 sm:p-6 w-full max-w-full">
             <div className="max-w-7xl mx-auto w-full">
               {children}
             </div>

@@ -1,0 +1,168 @@
+{
+  "version": "1.0.0",
+  "dataset": "AICTE Synthetic Validation Benchmark v2025-26",
+  "generatedAt": "2026-10-25T00:00:00Z",
+  "totalColleges": 12,
+  "totalDocuments": 36,
+  "summary": {
+    "validColleges": 6,
+    "expiredColleges": 2,
+    "tamperedColleges": 2,
+    "missingFieldsColleges": 2
+  },
+  "colleges": {
+    "nit-nilgiri": {
+      "collegeName": "Nilgiri Institute of Technology",
+      "expectedStatus": "Valid",
+      "expectedTrustScore": 98,
+      "anomaliesExpected": [],
+      "verificationMethod": "DigiLocker & X.509 PKI Signature Match"
+    },
+    "kce-kaveri": {
+      "collegeName": "Kaveri College of Engineering",
+      "expectedStatus": "Valid",
+      "expectedTrustScore": 95,
+      "anomaliesExpected": [],
+      "verificationMethod": "State University API & QR Match"
+    },
+    "sviet-sahyadri": {
+      "collegeName": "Sahyadri Valley Institute of Engineering & Technology",
+      "expectedStatus": "Valid",
+      "expectedTrustScore": 94,
+      "anomaliesExpected": [],
+      "verificationMethod": "State Fire Portal & Digital Certificate Match"
+    },
+    "bea-brahmaputra": {
+      "collegeName": "Brahmaputra Engineering Academy",
+      "expectedStatus": "Valid",
+      "expectedTrustScore": 92,
+      "anomaliesExpected": [],
+      "verificationMethod": "Bharatkosh e-Receipt & Land Revenue Reconciliation"
+    },
+    "aitr-aravali": {
+      "collegeName": "Aravali Institute of Technology & Research",
+      "expectedStatus": "Valid",
+      "expectedTrustScore": 96,
+      "anomaliesExpected": [],
+      "verificationMethod": "Sub-Registrar 7/12 Land Registry & Affiliation Portal"
+    },
+    "mcet-malabar": {
+      "collegeName": "Malabar College of Engineering & Technology",
+      "expectedStatus": "Valid",
+      "expectedTrustScore": 95,
+      "anomaliesExpected": [],
+      "verificationMethod": "PWD Barrier-Free Certification & PKI Match"
+    },
+    "vti-vindhya": {
+      "collegeName": "Vindhya Technical Institute",
+      "expectedStatus": "Expired",
+      "expectedTrustScore": 48,
+      "anomaliesExpected": [
+        {
+          "documentId": "doc-vti-02",
+          "documentType": "affiliation_certificate",
+          "anomalyType": "EXPIRED_DATE",
+          "ruleViolated": "APH-2025-RULE-02 (Statutory Certificate Validity)",
+          "severity": "CRITICAL",
+          "extractedValue": "2023-03-31",
+          "expectedValue": ">= 2026-06-30",
+          "explanation": "State Technological University Affiliation Certificate expired on 31-Mar-2023 and has not been renewed for academic session 2025-26."
+        }
+      ]
+    },
+    "cit-coromandel": {
+      "collegeName": "Coromandel Institute of Technology",
+      "expectedStatus": "Expired",
+      "expectedTrustScore": 52,
+      "anomaliesExpected": [
+        {
+          "documentId": "doc-cit-03",
+          "documentType": "compliance_report",
+          "anomalyType": "EXPIRED_CLEARANCE",
+          "ruleViolated": "APH-2025-RULE-05 (Statutory Environmental Consent)",
+          "severity": "CRITICAL",
+          "extractedValue": "2024-03-31",
+          "expectedValue": ">= 2026-06-30",
+          "explanation": "State Pollution Control Board Consent to Operate expired on 31-Mar-2024; missing required renewal order for water treatment facility."
+        }
+      ]
+    },
+    "zec-zaskar": {
+      "collegeName": "Zaskar Engineering College",
+      "expectedStatus": "Tampered",
+      "expectedTrustScore": 24,
+      "anomaliesExpected": [
+        {
+          "documentId": "doc-zec-01",
+          "documentType": "approval_letter",
+          "anomalyType": "INTAKE_INFLATION",
+          "ruleViolated": "APH-2025-RULE-01 (Sanctioned Intake Authenticity)",
+          "severity": "CRITICAL",
+          "extractedValue": "B.Tech CSE Intake = 180 seats",
+          "expectedValue": "B.Tech CSE Intake = 60 seats",
+          "sha256Mismatched": true,
+          "qrPayloadMismatched": true,
+          "explanation": "The course intake table in the submitted PDF has been manually altered from the AICTE sanctioned 60 seats to 180 seats. Cryptographic hash check and QR code payload verification failed."
+        }
+      ]
+    },
+    "tieas-thar": {
+      "collegeName": "Thar Institute of Engineering & Applied Sciences",
+      "expectedStatus": "Tampered",
+      "expectedTrustScore": 28,
+      "anomaliesExpected": [
+        {
+          "documentId": "doc-thar-02",
+          "documentType": "affiliation_certificate",
+          "anomalyType": "REF_ENTITY_MISMATCH",
+          "ruleViolated": "APH-2025-RULE-04 (Institutional Trust Entity Consistency)",
+          "severity": "CRITICAL",
+          "extractedValue": "Ref: STU/AFFIL/2025/RJ-999-TAMPERED | Entity: Marwar Tech Foundation",
+          "expectedValue": "Ref: STU/AFFIL/2025/RJ-512 | Entity: Thar Education Trust (Fictional)",
+          "sha256Mismatched": true,
+          "qrPayloadMismatched": true,
+          "explanation": "Mismatched document reference number and sponsoring trust entity name. Digital signature vector points to an unrelated institution."
+        }
+      ]
+    },
+    "cit-chilika": {
+      "collegeName": "Chilika Institute of Technology",
+      "expectedStatus": "Missing Fields",
+      "expectedTrustScore": 42,
+      "anomaliesExpected": [
+        {
+          "documentId": "doc-chilika-03",
+          "documentType": "compliance_report",
+          "anomalyType": "MISSING_FIELDS",
+          "ruleViolated": "APH-2025-RULE-03 (Mandatory Document Completeness)",
+          "severity": "MAJOR",
+          "missingFields": [
+            "land_survey_numbers",
+            "instructional_built_up_area_sqm",
+            "registrar_signature_block"
+          ],
+          "explanation": "Submitted Compliance Report omits mandatory revenue survey numbers, certified built-up square meters, and official registrar signature block."
+        }
+      ]
+    },
+    "sec-satpura": {
+      "collegeName": "Satpura Engineering College",
+      "expectedStatus": "Missing Fields",
+      "expectedTrustScore": 38,
+      "anomaliesExpected": [
+        {
+          "documentId": "doc-sec-01",
+          "documentType": "approval_letter",
+          "anomalyType": "MISSING_FIELDS",
+          "ruleViolated": "APH-2025-RULE-03 (Mandatory Application Dossier Fields)",
+          "severity": "MAJOR",
+          "missingFields": [
+            "bharatkosh_transaction_ref",
+            "municipal_sanction_order_number"
+          ],
+          "explanation": "Mandatory Bharatkosh regulatory fee payment receipt reference and Municipal Sanction Plan approval number left blank in the submitted application."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,2 @@
+import "./scripts/seed.ts";
+

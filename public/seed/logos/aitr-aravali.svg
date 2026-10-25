@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <linearGradient id="aitr-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#78350F"/>
+      <stop offset="100%" stop-color="#C2410C"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="36" fill="#FFFBEB"/>
+  <!-- Octagonal Motif -->
+  <polygon points="80,30 176,30 226,80 226,176 176,226 80,226 30,176 30,80" fill="url(#aitr-grad)" stroke="#F59E0B" stroke-width="4"/>
+  <!-- Radiant Sunburst -->
+  <circle cx="128" cy="110" r="26" fill="#FDE68A"/>
+  <g stroke="#FDE68A" stroke-width="3">
+    <line x1="128" y1="74" x2="128" y2="64"/>
+    <line x1="128" y1="146" x2="128" y2="156"/>
+    <line x1="92" y1="110" x2="82" y2="110"/>
+    <line x1="164" y1="110" x2="174" y2="110"/>
+    <line x1="102" y1="84" x2="94" y2="76"/>
+    <line x1="154" y1="136" x2="162" y2="144"/>
+    <line x1="102" y1="136" x2="94" y2="144"/>
+    <line x1="154" y1="84" x2="162" y2="76"/>
+  </g>
+  <!-- Architectural Arch Motif -->
+  <path d="M88 184 L88 140 C88 116 168 116 168 140 L168 184 Z" fill="none" stroke="#FFFFFF" stroke-width="3"/>
+  <rect x="76" y="188" width="104" height="22" rx="4" fill="#F59E0B"/>
+  <text x="128" y="203" text-anchor="middle" font-family="system-ui, sans-serif" font-weight="900" font-size="12" fill="#78350F" letter-spacing="2">A I T R</text>
+</svg>

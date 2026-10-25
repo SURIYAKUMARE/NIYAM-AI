@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <defs>
+    <linearGradient id="lab-wall" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#1E293B"/>
+    </linearGradient>
+    <linearGradient id="bench-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#334155"/>
+      <stop offset="50%" stop-color="#475569"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+    <linearGradient id="monitor-glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </linearGradient>
+  </defs>
+  <!-- Tech Lab Walls -->
+  <rect width="1200" height="460" fill="url(#lab-wall)"/>
+  <!-- ESD Flooring -->
+  <rect y="460" width="1200" height="340" fill="#0B132B"/>
+  <line x1="0" y1="560" x2="1200" y2="560" stroke="#1E293B" stroke-width="2"/>
+  <line x1="0" y1="670" x2="1200" y2="670" stroke="#1E293B" stroke-width="2"/>
+  <!-- Server Rack / Equipment Cabinet in Background -->
+  <rect x="960" y="80" width="180" height="380" rx="8" fill="#090D16" stroke="#334155" stroke-width="3"/>
+  <g fill="#22C55E">
+    <circle cx="990" cy="120" r="4"/><circle cx="1010" cy="120" r="4"/><circle cx="1030" cy="120" r="4"/>
+    <circle cx="990" cy="180" r="4"/><circle cx="1010" cy="180" r="4"/><circle cx="1050" cy="180" r="4"/>
+    <circle cx="990" cy="240" r="4"/><circle cx="1030" cy="240" r="4"/>
+    <circle cx="990" cy="300" r="4"/><circle cx="1010" cy="300" r="4"/><circle cx="1030" cy="300" r="4"/>
+  </g>
+  <g fill="#EF4444">
+    <circle cx="1090" cy="120" r="4"/>
+    <circle cx="1090" cy="240" r="4"/>
+  </g>
+  <!-- Workstations & Benches -->
+  <!-- Bench Row 1 -->
+  <polygon points="120,440 880,440 920,530 80,530" fill="url(#bench-grad)"/>
+  <rect x="100" y="530" width="20" height="180" fill="#1E293B"/>
+  <rect x="490" y="530" width="20" height="180" fill="#1E293B"/>
+  <rect x="880" y="530" width="20" height="180" fill="#1E293B"/>
+  <!-- Dual Screen Terminal 1 -->
+  <rect x="180" y="320" width="100" height="85" rx="6" fill="#020617" stroke="#38BDF8" stroke-width="2"/>
+  <rect x="185" y="325" width="90" height="75" rx="4" fill="url(#monitor-glow)"/>
+  <polygon points="225,405 235,405 240,435 220,435" fill="#64748B"/>
+  <rect x="190" y="445" width="80" height="8" rx="2" fill="#020617"/>
+  <!-- Oscilloscope Station 2 -->
+  <rect x="340" y="335" width="110" height="70" rx="6" fill="#1E293B" stroke="#64748B" stroke-width="2"/>
+  <rect x="350" y="345" width="55" height="50" rx="3" fill="#064E3B"/>
+  <path d="M352 370 Q365 350 377 370 T402 370" fill="none" stroke="#22C55E" stroke-width="2"/>
+  <circle cx="425" cy="355" r="7" fill="#64748B"/>
+  <circle cx="425" cy="380" r="7" fill="#64748B"/>
+  <!-- Robotics Arm Setup 3 -->
+  <polygon points="560,435 620,435 610,380 570,380" fill="#F59E0B"/>
+  <line x1="590" y1="380" x2="640" y2="310" stroke="#F59E0B" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="640" cy="310" r="10" fill="#0F172A"/>
+  <line x1="640" y1="310" x2="690" y2="350" stroke="#F59E0B" stroke-width="10" stroke-linecap="round"/>
+  <polygon points="685,350 710,360 705,375 680,365" fill="#334155"/>
+  <!-- Dual Screen Terminal 4 -->
+  <rect x="740" y="320" width="100" height="85" rx="6" fill="#020617" stroke="#38BDF8" stroke-width="2"/>
+  <rect x="745" y="325" width="90" height="75" rx="4" fill="url(#monitor-glow)"/>
+  <polygon points="785,405 795,405 800,435 780,435" fill="#64748B"/>
+  <!-- Overhead Cable Tray & LED Batten Lighting -->
+  <rect x="0" y="20" width="1200" height="14" fill="#334155"/>
+  <g fill="#F8FAFC" opacity="0.95">
+    <rect x="160" y="34" width="220" height="8" rx="3"/>
+    <rect x="520" y="34" width="220" height="8" rx="3"/>
+    <rect x="860" y="34" width="220" height="8" rx="3"/>
+  </g>
+  <!-- Watermark / Label -->
+  <rect x="30" y="730" width="420" height="40" rx="8" fill="#020617" opacity="0.9"/>
+  <text x="50" y="755" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#FFFFFF">Malabar College of Engineering & Technology · Research Laboratory</text>
+</svg>
