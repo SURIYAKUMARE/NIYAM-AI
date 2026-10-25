@@ -280,8 +280,8 @@ function LoginForm() {
         </div>
       </header>
 
-      {/* COMPACT FLOATING GLASSMORPHIC LOGIN CARD (Offset to right on desktop to leave building unobstructed) */}
-      <div className="relative z-10 w-full max-w-sm sm:max-w-[420px] mx-auto lg:mr-16 lg:ml-auto my-auto py-3 sm:py-4">
+      {/* CENTERED COMPACT GLASSMORPHIC LOGIN CARD */}
+      <div className="relative z-10 w-full max-w-sm sm:max-w-[420px] mx-auto my-auto py-3 sm:py-4">
         <div className="bg-white/92 dark:bg-[#0A101D]/90 backdrop-blur-xl rounded-2xl border border-white/30 dark:border-slate-700/60 shadow-[0_20px_50px_rgba(0,0,0,0.4)] p-4 sm:p-5 space-y-3.5">
           
           {/* Official AICTE Brand Header */}
