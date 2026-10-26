@@ -29,6 +29,7 @@ import { createClient } from "@/lib/supabase/client";
 
 interface DemoAccount {
   roleName: string;
+  shortRole: string;
   username: string;
   password: string;
   pin: string;
@@ -39,42 +40,47 @@ interface DemoAccount {
 const DEMO_ACCOUNTS: DemoAccount[] = [
   {
     roleName: "Scrutiny Officer",
+    shortRole: "Officer",
     username: "officer",
     password: "password123",
     pin: "123456",
-    description: "Technical Scrutiny Desk, review queue & anomaly checking",
+    description: "Technical Scrutiny Desk & Deficiencies",
     hasMfa: true,
   },
   {
     roleName: "Institution Applicant",
+    shortRole: "Applicant",
     username: "applicant",
     password: "password123",
     pin: "None (Direct Access)",
-    description: "College filing portal, document upload & rectification",
+    description: "College Filing Portal & Upload Scrutiny",
     hasMfa: false,
   },
   {
     roleName: "Supervising Authority",
+    shortRole: "Authority",
     username: "authority",
     password: "password123",
     pin: "123456",
-    description: "AICTE Bureau Head, final approvals, deficiencies & orders",
+    description: "AICTE Bureau Head, Deficiencies & Approvals",
     hasMfa: true,
   },
   {
     roleName: "System Administrator",
+    shortRole: "Admin",
     username: "admin",
     password: "password123",
     pin: "123456",
-    description: "User management, regulatory rules & engine settings",
+    description: "User Management & Regulatory Rules Engine",
     hasMfa: true,
   },
   {
     roleName: "Regulatory Auditor",
+    shortRole: "Auditor",
     username: "auditor",
     password: "password123",
     pin: "None (Direct Access)",
-    description: "Tamper-evident logs, cryptographic ledger & chain audit",
+    description: "Tamper-Evident SHA-256 Ledger Audit",
     hasMfa: false,
   },
 ];
@@ -247,61 +253,64 @@ function LoginForm() {
     }
   };
 
+  const selectedAccount = DEMO_ACCOUNTS.find((a) => a.username === identifier) || DEMO_ACCOUNTS[0];
+
   return (
-    <div className="min-h-screen relative flex flex-col justify-between p-3 sm:p-5 text-slate-900 dark:text-slate-100 font-sans antialiased overflow-y-auto">
-      {/* FULL-SCREEN BACKGROUND PHOTOGRAPH OF AICTE HEADQUARTERS - HIGH VISIBILITY */}
+    <div className="min-h-screen relative flex flex-col justify-between p-4 sm:p-6 text-slate-900 dark:text-slate-100 font-sans antialiased overflow-y-auto">
+      {/* FULL-SCREEN BACKGROUND PHOTOGRAPH OF AICTE HEADQUARTERS - HIGH FIDELITY */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden select-none">
         <img
           src="/images/aicte-hq.png"
           alt="AICTE Headquarters Campus, Nelson Mandela Marg, New Delhi"
-          className="w-full h-full object-cover object-center filter brightness-[0.92] contrast-[1.02] saturate-[1.08]"
+          className="w-full h-full object-cover object-center filter brightness-[0.96] contrast-[1.04] saturate-[1.12]"
         />
-        {/* Subtle, translucent gradient so campus & building are 100% visible while preserving text legibility */}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-transparent to-slate-950/45" />
+        {/* Subtle, translucent vignette gradient so campus & building are 100% visible while preserving text legibility */}
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/25 to-slate-950/60" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_50%,rgba(37,99,235,0.12),transparent)]" />
       </div>
 
       {/* TOP FLOATING REGULATORY STATUS BAR */}
-      <header className="relative z-10 w-full max-w-6xl mx-auto flex items-center justify-between py-1.5 sm:py-2">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/15 text-white shadow-lg text-xs">
-          <div className="w-5 h-5 rounded-full bg-white p-0.5 flex items-center justify-center shrink-0">
+      <header className="relative z-10 w-full max-w-5xl mx-auto flex items-center justify-between py-2 sm:py-3">
+        <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-slate-900/85 backdrop-blur-md border border-white/15 text-white shadow-xl text-xs">
+          <div className="w-5 h-5 rounded-full bg-white p-0.5 flex items-center justify-center shrink-0 shadow-xs">
             <img src="/images/aicte-logo.png" alt="AICTE Logo" className="w-full h-full object-contain" />
           </div>
-          <span className="font-bold hidden sm:inline text-slate-200 text-[11px]">
+          <span className="font-bold hidden sm:inline text-slate-200 text-xs">
             All India Council for Technical Education
           </span>
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse ml-0.5" />
-          <span className="text-[10px] font-semibold text-emerald-300">Live Portal</span>
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse ml-0.5" />
+          <span className="text-[11px] font-semibold text-emerald-300">Live Regulatory Portal</span>
         </div>
 
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/15 text-white shadow-lg text-xs">
-          <MapPin className="w-3 h-3 text-amber-400 shrink-0" />
-          <span className="text-[11px] font-medium text-slate-200 hidden sm:inline">Nelson Mandela Marg, New Delhi</span>
-          <span className="text-[9px] font-mono px-1 py-0.2 rounded bg-blue-600/90 font-bold">MoE</span>
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/85 backdrop-blur-md border border-white/15 text-white shadow-xl text-xs">
+          <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+          <span className="text-xs font-medium text-slate-200 hidden sm:inline">Nelson Mandela Marg, New Delhi</span>
+          <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-blue-600/90 font-bold">MoE</span>
         </div>
       </header>
 
-      {/* CENTERED COMPACT GLASSMORPHIC LOGIN CARD */}
-      <div className="relative z-10 w-full max-w-sm sm:max-w-[420px] mx-auto my-auto py-3 sm:py-4">
-        <div className="bg-white/92 dark:bg-[#0A101D]/90 backdrop-blur-xl rounded-2xl border border-white/30 dark:border-slate-700/60 shadow-[0_20px_50px_rgba(0,0,0,0.4)] p-4 sm:p-5 space-y-3.5">
+      {/* CENTERED EXECUTIVE GLASSMORPHIC LOGIN CARD (GOLDEN RATIO PROPORTIONS) */}
+      <div className="relative z-10 w-full max-w-[460px] mx-auto my-auto py-4 sm:py-6">
+        <div className="bg-white/95 dark:bg-[#0C1222]/92 backdrop-blur-2xl rounded-3xl border border-white/60 dark:border-slate-700/80 shadow-[0_24px_64px_-12px_rgba(0,0,0,0.5),0_0_0_1px_rgba(255,255,255,0.2)_inset] p-6 sm:p-8 space-y-5">
           
           {/* Official AICTE Brand Header */}
-          <div className="text-center space-y-1 pb-2 border-b border-slate-200 dark:border-slate-800">
-            <div className="relative w-12 h-12 rounded-xl bg-white dark:bg-slate-800 p-1.5 shadow-md mx-auto ring-2 ring-blue-500/20 border border-slate-200 dark:border-slate-700 flex items-center justify-center">
+          <div className="text-center space-y-2 pb-3 border-b border-slate-200/80 dark:border-slate-800">
+            <div className="relative w-15 h-15 rounded-2xl bg-white dark:bg-slate-800 p-2 shadow-lg mx-auto ring-4 ring-blue-500/20 border border-slate-200 dark:border-slate-700 flex items-center justify-center">
               <img
                 src="/images/aicte-logo.png"
                 alt="AICTE Official Logo"
                 className="w-full h-full object-contain"
               />
-              <span className="absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-[#0A101D]" />
+              <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-[#0C1222]" />
             </div>
             <div>
-              <div className="text-[9px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">
+              <div className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest font-mono">
                 अखिल भारतीय तकनीकी शिक्षा परिषद्
               </div>
-              <h1 className="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white tracking-tight">
+              <h1 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight mt-0.5">
                 NIYAM Regulatory Portal
               </h1>
-              <p className="text-[10px] text-slate-500 dark:text-slate-400">
+              <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                 AICTE Application Review &amp; Compliance Verification
               </p>
             </div>
@@ -309,27 +318,21 @@ function LoginForm() {
 
           {/* SIGN-IN FORM */}
           {mode === "signin" && (
-            <div className="space-y-3">
-              <div>
-                <h2 className="text-sm font-bold text-slate-900 dark:text-white">Authorized Sign-In</h2>
-                <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                  Select a demo account below or enter your credentials.
-                </p>
-              </div>
-
-              {/* DEMO CREDENTIALS CALLOUT BOX */}
-              <div className="p-2.5 rounded-xl bg-blue-50/80 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/70 space-y-1.5">
-                <div className="flex items-center justify-between text-[11px] font-bold text-blue-900 dark:text-blue-200">
-                  <span className="flex items-center gap-1">
-                    <Key className="w-3 h-3 text-blue-600 dark:text-blue-400" />
-                    Demo Credentials
+            <div className="space-y-4">
+              {/* EXECUTIVE DEMO ROLE SELECTOR */}
+              <div className="rounded-2xl bg-slate-100/90 dark:bg-slate-900/80 border border-slate-200/90 dark:border-slate-800 p-2.5 space-y-2">
+                <div className="flex items-center justify-between text-xs px-0.5">
+                  <span className="font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+                    Quick Demo Access
                   </span>
-                  <span className="font-mono text-[10px] bg-white dark:bg-slate-900 px-1.5 py-0.2 rounded text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
-                    PW: <strong>password123</strong>
+                  <span className="text-[11px] font-mono text-slate-500 dark:text-slate-400">
+                    PW: <strong className="text-slate-800 dark:text-slate-200">password123</strong>
                   </span>
                 </div>
 
-                <div className="grid grid-cols-2 gap-1 pt-0.5">
+                {/* 5-Role Segmented Selector */}
+                <div className="grid grid-cols-5 gap-1 p-0.5 bg-slate-200/70 dark:bg-slate-950/70 rounded-xl">
                   {DEMO_ACCOUNTS.map((acc) => {
                     const isSelected = identifier === acc.username;
                     return (
@@ -337,57 +340,58 @@ function LoginForm() {
                         key={acc.username}
                         type="button"
                         onClick={() => handleSelectAccount(acc)}
-                        className={`text-left p-1.5 rounded-lg border transition-all text-[11px] flex items-center justify-between gap-1 ${
+                        className={`py-1.5 px-1 rounded-lg text-xs font-bold transition-all text-center truncate ${
                           isSelected
-                            ? "bg-blue-600 text-white border-blue-600 shadow-2xs ring-1 ring-blue-500"
-                            : "bg-white dark:bg-slate-800/80 hover:bg-blue-50/50 dark:hover:bg-slate-700/60 border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200"
+                            ? "bg-blue-600 text-white shadow-sm ring-1 ring-blue-500"
+                            : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-800/60"
                         }`}
+                        title={`${acc.roleName} (${acc.username})`}
                       >
-                        <div className="truncate">
-                          <span className="font-bold block truncate text-[10px]">{acc.roleName}</span>
-                          <span className="font-mono text-[9px] opacity-80 block truncate">ID: {acc.username}</span>
-                        </div>
-                        {acc.hasMfa ? (
-                          <span
-                            className={`text-[8px] font-mono px-1 py-0.2 rounded font-bold shrink-0 ${
-                              isSelected
-                                ? "bg-white/20 text-white"
-                                : "bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300"
-                            }`}
-                          >
-                            PIN
-                          </span>
-                        ) : (
-                          <span
-                            className={`text-[8px] font-mono px-1 py-0.2 rounded font-bold shrink-0 ${
-                              isSelected
-                                ? "bg-white/20 text-white"
-                                : "bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300"
-                            }`}
-                          >
-                            Direct
-                          </span>
-                        )}
+                        {acc.shortRole}
                       </button>
                     );
                   })}
                 </div>
+
+                {/* Active Role Feedback Context Bar */}
+                {selectedAccount && (
+                  <div className="flex items-center justify-between text-[11px] px-1 pt-0.5 text-slate-600 dark:text-slate-400">
+                    <div className="flex items-center gap-1.5 truncate">
+                      <span className="w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400 shrink-0" />
+                      <span className="font-semibold text-slate-800 dark:text-slate-200 truncate">
+                        {selectedAccount.roleName}
+                      </span>
+                      <span className="font-mono text-slate-500">
+                        ({selectedAccount.username})
+                      </span>
+                    </div>
+                    {selectedAccount.hasMfa ? (
+                      <span className="px-2 py-0.5 rounded-full font-mono text-[10px] font-bold bg-amber-100 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800/60 shrink-0">
+                        PIN: 123456
+                      </span>
+                    ) : (
+                      <span className="px-2 py-0.5 rounded-full font-mono text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60 shrink-0">
+                        Direct Access
+                      </span>
+                    )}
+                  </div>
+                )}
               </div>
 
               {errorMsg && (
-                <div className="p-2.5 rounded-lg bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-300 text-xs flex items-start gap-2">
-                  <AlertCircle className="w-3.5 h-3.5 shrink-0 text-rose-600 dark:text-rose-400 mt-0.5" />
+                <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-300 text-xs flex items-start gap-2.5">
+                  <AlertCircle className="w-4 h-4 shrink-0 text-rose-600 dark:text-rose-400 mt-0.5" />
                   <span>{errorMsg}</span>
                 </div>
               )}
 
-              <form onSubmit={handleSignIn} className="space-y-3">
-                <div className="space-y-1">
-                  <label className="text-[11px] font-bold text-slate-800 dark:text-slate-200" htmlFor="login-email">
-                    Username / AICTE ID
+              <form onSubmit={handleSignIn} className="space-y-4">
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block" htmlFor="login-email">
+                    Username / AICTE Official ID
                   </label>
                   <div className="relative">
-                    <User className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                    <User className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
                     <input
                       id="login-email"
                       type="text"
@@ -395,15 +399,15 @@ function LoginForm() {
                       autoComplete="username"
                       value={identifier}
                       onChange={(e) => setIdentifier(e.target.value)}
-                      placeholder="officer, applicant, authority, admin, auditor"
-                      className="w-full pl-8 pr-3 py-2 text-xs rounded-lg border bg-slate-50 dark:bg-slate-800/80 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500 border-slate-200 dark:border-slate-700 transition"
+                      placeholder="Enter username (e.g. officer, applicant)"
+                      className="w-full pl-10 pr-3.5 py-2.5 text-sm rounded-xl border bg-slate-50/80 dark:bg-slate-800/60 text-slate-900 dark:text-white focus:outline-none focus:ring-4 focus:ring-blue-500/15 focus:border-blue-600 dark:focus:border-blue-500 border-slate-200 dark:border-slate-700 transition"
                     />
                   </div>
                 </div>
 
-                <div className="space-y-1">
+                <div className="space-y-1.5">
                   <div className="flex items-center justify-between">
-                    <label className="text-[11px] font-bold text-slate-800 dark:text-slate-200" htmlFor="login-pw">
+                    <label className="text-xs font-bold text-slate-700 dark:text-slate-300" htmlFor="login-pw">
                       Password
                     </label>
                     <button
@@ -412,13 +416,13 @@ function LoginForm() {
                         setMode("recovery");
                         setErrorMsg("");
                       }}
-                      className="text-[10px] text-blue-600 dark:text-blue-400 hover:underline font-semibold"
+                      className="text-xs text-blue-600 dark:text-blue-400 hover:underline font-semibold"
                     >
                       Forgot password?
                     </button>
                   </div>
                   <div className="relative">
-                    <Lock className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+                    <Lock className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
                     <input
                       id="login-pw"
                       type={showPassword ? "text" : "password"}
@@ -426,50 +430,46 @@ function LoginForm() {
                       autoComplete="current-password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder="password123"
-                      className="w-full pl-8 pr-9 py-2 text-xs rounded-lg border bg-slate-50 dark:bg-slate-800/80 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 dark:focus:border-blue-500 border-slate-200 dark:border-slate-700 transition"
+                      placeholder="Enter password"
+                      className="w-full pl-10 pr-10 py-2.5 text-sm rounded-xl border bg-slate-50/80 dark:bg-slate-800/60 text-slate-900 dark:text-white focus:outline-none focus:ring-4 focus:ring-blue-500/15 focus:border-blue-600 dark:focus:border-blue-500 border-slate-200 dark:border-slate-700 transition"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1"
                       aria-label={showPassword ? "Hide password" : "Show password"}
                     >
-                      {showPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between text-[11px] text-slate-500">
-                  <label className="flex items-center gap-1.5 text-[11px] text-slate-700 dark:text-slate-300 cursor-pointer select-none">
+                <div className="flex items-center justify-between text-xs text-slate-500">
+                  <label className="flex items-center gap-2 text-xs text-slate-700 dark:text-slate-300 cursor-pointer select-none">
                     <input
                       type="checkbox"
                       checked={rememberMe}
                       onChange={(e) => setRememberMe(e.target.checked)}
-                      className="w-3.5 h-3.5 rounded border-slate-300 dark:border-slate-600 accent-blue-600"
+                      className="w-4 h-4 rounded border-slate-300 dark:border-slate-600 accent-blue-600 cursor-pointer"
                     />
-                    <span>Remember me</span>
+                    <span>Remember active session</span>
                   </label>
-
-                  <span className="text-[10px] text-slate-400">
-                    ID: <strong className="font-mono text-slate-700 dark:text-slate-300">{identifier}</strong>
-                  </span>
                 </div>
 
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs rounded-lg transition shadow-xs flex items-center justify-center gap-1.5 disabled:opacity-60"
+                  className="w-full py-3 px-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-500 hover:via-indigo-500 hover:to-blue-600 text-white font-bold text-sm rounded-xl transition shadow-lg shadow-blue-600/25 active:scale-[0.99] flex items-center justify-center gap-2 disabled:opacity-60"
                 >
-                  <LogIn className="w-3.5 h-3.5" />
-                  <span>{submitting ? "Signing in..." : `Sign In (${identifier})`}</span>
+                  <LogIn className="w-4 h-4" />
+                  <span>{submitting ? "Authenticating..." : `Sign In to Workspace`}</span>
                 </button>
               </form>
 
-              <p className="text-[11px] text-center text-slate-500 dark:text-slate-400 pt-1.5 border-t border-slate-200 dark:border-slate-800">
-                New applicant?{" "}
+              <p className="text-xs text-center text-slate-500 dark:text-slate-400 pt-2 border-t border-slate-200/80 dark:border-slate-800">
+                New institutional applicant?{" "}
                 <Link href="/auth/register" className="font-bold text-blue-600 dark:text-blue-400 hover:underline">
-                  Register institution
+                  Register institutional account
                 </Link>
               </p>
             </div>
@@ -477,26 +477,26 @@ function LoginForm() {
 
           {/* MFA VERIFICATION FORM */}
           {mode === "mfa" && (
-            <div className="space-y-3">
-              <div className="text-center space-y-1">
-                <div className="w-9 h-9 rounded-xl bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 text-blue-600 dark:text-blue-400 flex items-center justify-center mx-auto shadow-xs">
-                  <Fingerprint className="w-5 h-5" />
+            <div className="space-y-4">
+              <div className="text-center space-y-1.5">
+                <div className="w-11 h-11 rounded-2xl bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 text-blue-600 dark:text-blue-400 flex items-center justify-center mx-auto shadow-sm">
+                  <Fingerprint className="w-6 h-6" />
                 </div>
-                <h2 className="text-sm font-bold text-slate-900 dark:text-white">
+                <h2 className="text-base font-bold text-slate-900 dark:text-white">
                   Two-Factor Authentication
                 </h2>
-                <p className="text-[11px] text-slate-500 dark:text-slate-400 max-w-xs mx-auto">
-                  Protected by RFC 6238 Time-based One-Time Password (TOTP).
+                <p className="text-xs text-slate-500 dark:text-slate-400 max-w-xs mx-auto">
+                  Protected by RFC 6238 Time-based One-Time Password (TOTP)
                 </p>
               </div>
 
               {/* DEMO PIN CALLOUT BOX */}
-              <div className="p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 flex items-center justify-between text-xs">
+              <div className="p-3 rounded-2xl bg-amber-50/90 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/80 flex items-center justify-between text-xs">
                 <div>
-                  <span className="text-[9px] uppercase font-bold tracking-wider text-amber-800 dark:text-amber-300 block">
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-amber-800 dark:text-amber-300 block">
                     Demo Security PIN
                   </span>
-                  <span className="text-base font-mono font-extrabold text-amber-900 dark:text-amber-100 tracking-widest">
+                  <span className="text-lg font-mono font-black text-amber-900 dark:text-amber-100 tracking-widest">
                     123456
                   </span>
                 </div>
@@ -505,27 +505,27 @@ function LoginForm() {
                   onClick={() => {
                     setMfaCode(["1", "2", "3", "4", "5", "6"]);
                   }}
-                  className="px-2.5 py-1 rounded-lg text-[11px] font-bold text-white bg-amber-600 hover:bg-amber-700 shadow-xs transition flex items-center gap-1"
+                  className="px-3 py-1.5 rounded-xl text-xs font-bold text-white bg-amber-600 hover:bg-amber-500 shadow-sm transition flex items-center gap-1.5 active:scale-95"
                 >
-                  <Sparkles className="w-3 h-3" />
-                  <span>Insert PIN 123456</span>
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>Insert 123456</span>
                 </button>
               </div>
 
               {errorMsg && (
-                <div className="p-2.5 rounded-lg bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-300 text-xs flex items-start gap-2">
-                  <AlertCircle className="w-3.5 h-3.5 shrink-0 text-rose-600 dark:text-rose-400 mt-0.5" />
+                <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-300 text-xs flex items-start gap-2.5">
+                  <AlertCircle className="w-4 h-4 shrink-0 text-rose-600 dark:text-rose-400 mt-0.5" />
                   <span>{errorMsg}</span>
                 </div>
               )}
 
-              <form onSubmit={handleMfaSubmit} className="space-y-3">
+              <form onSubmit={handleMfaSubmit} className="space-y-4">
                 {!useRecoveryCode ? (
                   <div>
-                    <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5 text-center">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-2.5 text-center">
                       ENTER 6-DIGIT AUTHENTICATOR PIN
                     </label>
-                    <div className="flex justify-center gap-1.5 sm:gap-2" onPaste={handlePasteMfa}>
+                    <div className="flex justify-center gap-2 sm:gap-2.5" onPaste={handlePasteMfa}>
                       {mfaCode.map((digit, idx) => (
                         <input
                           key={idx}
@@ -537,18 +537,18 @@ function LoginForm() {
                           value={digit}
                           onChange={(e) => handleDigitChange(idx, e.target.value)}
                           onKeyDown={(e) => handleKeyDown(idx, e)}
-                          className="w-9 h-11 text-center text-base font-bold font-mono border border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 focus:border-blue-600 dark:focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition text-slate-900 dark:text-white"
+                          className="w-10 sm:w-11 h-12 sm:h-13 text-center text-lg sm:text-xl font-bold font-mono border border-slate-200 dark:border-slate-700 rounded-xl bg-slate-50/90 dark:bg-slate-800/80 focus:border-blue-600 dark:focus:border-blue-500 focus:ring-4 focus:ring-blue-500/15 outline-none transition text-slate-900 dark:text-white shadow-xs"
                         />
                       ))}
                     </div>
-                    <div className="mt-2 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
-                      <span>Refresh: <strong className="text-blue-600 dark:text-blue-400 font-mono">{mfaTimer}s</strong></span>
+                    <div className="mt-2.5 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 px-1">
+                      <span>Window: <strong className="text-blue-600 dark:text-blue-400 font-mono font-bold">{mfaTimer}s</strong></span>
                       <button
                         type="button"
                         onClick={() => {
                           setMfaCode(["1", "2", "3", "4", "5", "6"]);
                         }}
-                        className="text-[10px] font-mono text-blue-600 dark:text-blue-400 hover:underline font-semibold"
+                        className="text-xs font-mono text-blue-600 dark:text-blue-400 hover:underline font-semibold"
                       >
                         Auto-fill: 123456
                       </button>
@@ -556,7 +556,7 @@ function LoginForm() {
                   </div>
                 ) : (
                   <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
                       Emergency Single-Use Recovery Code
                     </label>
                     <input
@@ -564,7 +564,7 @@ function LoginForm() {
                       value={recoveryCode}
                       onChange={(e) => setRecoveryCode(e.target.value)}
                       placeholder="e.g. REC-XXXX-XXXX"
-                      className="w-full text-xs font-mono p-2.5 border border-slate-200 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 outline-none"
+                      className="w-full text-sm font-mono py-2.5 px-3.5 border border-slate-200 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-4 focus:ring-blue-500/15 focus:border-blue-600 outline-none"
                     />
                   </div>
                 )}
@@ -572,12 +572,13 @@ function LoginForm() {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs rounded-xl transition shadow-xs flex items-center justify-center gap-2 disabled:opacity-60"
+                  className="w-full py-3 px-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-500 hover:via-indigo-500 hover:to-blue-600 text-white font-bold text-sm rounded-xl transition shadow-lg shadow-blue-600/25 flex items-center justify-center gap-2 disabled:opacity-60 active:scale-[0.99]"
                 >
+                  <KeyRound className="w-4 h-4" />
                   <span>{submitting ? "Verifying..." : "Verify PIN & Access Workspace"}</span>
                 </button>
 
-                <div className="flex items-center justify-between text-xs pt-2 border-t border-slate-200 dark:border-slate-800">
+                <div className="flex items-center justify-between text-xs pt-2 border-t border-slate-200/80 dark:border-slate-800">
                   <button
                     type="button"
                     onClick={() => {
@@ -604,9 +605,9 @@ function LoginForm() {
           {/* PASSWORD RECOVERY FORM */}
           {mode === "recovery" && (
             <div className="space-y-4">
-              <div className="text-center space-y-1">
-                <div className="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 text-blue-600 dark:text-blue-400 flex items-center justify-center mx-auto">
-                  <Mail className="w-6 h-6" />
+              <div className="text-center space-y-1.5">
+                <div className="w-11 h-11 rounded-2xl bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800 text-blue-600 dark:text-blue-400 flex items-center justify-center mx-auto shadow-sm">
+                  <Mail className="w-5 h-5" />
                 </div>
                 <h2 className="text-base font-bold text-slate-900 dark:text-white">
                   Reset Password
@@ -617,7 +618,7 @@ function LoginForm() {
               </div>
 
               {recoverySent ? (
-                <div className="p-4 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-900 dark:text-emerald-300 rounded-xl text-xs space-y-3 text-center">
+                <div className="p-4 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-900 dark:text-emerald-300 rounded-2xl text-xs space-y-3 text-center">
                   <CheckCircle2 className="w-6 h-6 text-emerald-600 dark:text-emerald-400 mx-auto" />
                   <p className="font-semibold">
                     If an account exists for {recoveryEmail}, password reset instructions have been dispatched.
@@ -634,27 +635,30 @@ function LoginForm() {
                   </button>
                 </div>
               ) : (
-                <form onSubmit={handleRecoverySubmit} className="space-y-3.5">
-                  <div>
-                    <label className="text-xs font-bold text-slate-800 dark:text-slate-200 block mb-1">
+                <form onSubmit={handleRecoverySubmit} className="space-y-4">
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-slate-800 dark:text-slate-200 block">
                       Institutional Email Address
                     </label>
-                    <input
-                      type="email"
-                      required
-                      value={recoveryEmail}
-                      onChange={(e) => setRecoveryEmail(e.target.value)}
-                      placeholder="official@institution.edu.in"
-                      className="w-full text-xs p-2.5 border border-slate-200 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500/20 focus:border-blue-600 outline-none"
-                    />
+                    <div className="relative">
+                      <Mail className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                      <input
+                        type="email"
+                        required
+                        value={recoveryEmail}
+                        onChange={(e) => setRecoveryEmail(e.target.value)}
+                        placeholder="official@institution.edu.in"
+                        className="w-full pl-10 pr-3.5 py-2.5 text-sm border border-slate-200 dark:border-slate-700 rounded-xl bg-slate-50/80 dark:bg-slate-800/60 text-slate-900 dark:text-white focus:ring-4 focus:ring-blue-500/15 focus:border-blue-600 outline-none transition"
+                      />
+                    </div>
                   </div>
 
                   <button
                     type="submit"
                     disabled={recoveryLoading}
-                    className="w-full py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-xs rounded-xl transition shadow-xs disabled:opacity-60"
+                    className="w-full py-3 px-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-500 hover:via-indigo-500 hover:to-blue-600 text-white font-bold text-sm rounded-xl transition shadow-lg shadow-blue-600/25 flex items-center justify-center gap-2 disabled:opacity-60 active:scale-[0.99]"
                   >
-                    {recoveryLoading ? "Dispatching..." : "Send Reset Link"}
+                    <span>{recoveryLoading ? "Dispatching..." : "Send Reset Link"}</span>
                   </button>
 
                   <div className="text-center pt-1">
@@ -672,7 +676,7 @@ function LoginForm() {
           )}
 
           {/* Regulatory Citation Footer */}
-          <div className="pt-2 text-center text-[10px] text-slate-400 dark:text-slate-500 border-t border-slate-200 dark:border-slate-800">
+          <div className="pt-2 text-center text-[11px] text-slate-400 dark:text-slate-500 border-t border-slate-200/80 dark:border-slate-800">
             <span>AICTE Problem Statement 26261 · APH 2025-26</span>
           </div>
 
