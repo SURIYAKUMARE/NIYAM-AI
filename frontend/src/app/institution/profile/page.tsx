@@ -16,16 +16,22 @@ import {
   Layers,
   Users,
   AlertTriangle,
+  ImageIcon,
 } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { StatusBadge } from "@/components/ui/Badge";
+import rawInstitutions from "../../../../data/seed/institutions.json";
 
 export default function InstitutionProfilePage() {
   const { user } = useAuth();
   const [profile, setProfile] = useState<any>(null);
   const [history, setHistory] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [activePhotoIdx, setActivePhotoIdx] = useState(0);
+
+  const college = rawInstitutions[0]; // Default institution
+  const activePhoto = college?.photos?.[activePhotoIdx] || college?.photos?.[0];
 
   useEffect(() => {
     const loadProfileData = async () => {
@@ -98,21 +104,32 @@ export default function InstitutionProfilePage() {
 
   return (
     <div className="space-y-6">
-      {/* Top Banner & Header */}
+      {/* Top Banner & Header with Official Emblem */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-niyam-border">
-        <div>
-          <div className="flex items-center gap-2 text-xs text-niyam-secondary mb-1">
-            <span>Institutional Records</span>
-            <span>/</span>
-            <span className="font-mono text-niyam-text">Permanent ID: {profile?.permanent_id || "1-3512891911"}</span>
+        <div className="flex items-start gap-4">
+          <div className="w-16 h-16 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-2 shadow-xs shrink-0 flex items-center justify-center overflow-hidden">
+            <img
+              src={college?.logo || "/seed/logos/nit-nilgiri.svg"}
+              alt={`${college?.name || "College"} Emblem`}
+              className="w-12 h-12 object-contain"
+            />
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-niyam-text tracking-tight flex items-center gap-2">
-            <Building2 className="w-7 h-7 text-niyam-accent" />
-            <span>{profile?.legal_name || "Apex Institute of Technology & Management"}</span>
-          </h1>
-          <p className="text-sm text-niyam-secondary mt-1">
-            Registered Trust/Society: <strong className="text-niyam-text">{profile?.society_name || "Apex Technical Education Society"}</strong> | Established: {profile?.establishment_year || 2008}
-          </p>
+          <div>
+            <div className="flex items-center gap-2 text-xs text-niyam-secondary mb-1">
+              <span>Institutional Records</span>
+              <span>/</span>
+              <span className="font-mono text-niyam-text font-bold">Permanent ID: {college?.permanentId || profile?.permanent_id || "SYN-2025-001"}</span>
+              <span className="px-2 py-0.2 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
+                Verified APH 2025-26
+              </span>
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-niyam-text tracking-tight flex items-center gap-2">
+              <span>{college?.name || profile?.legal_name || "Nilgiri Institute of Technology"}</span>
+            </h1>
+            <p className="text-sm text-niyam-secondary mt-1">
+              Registered Trust/Society: <strong className="text-niyam-text">{college?.legalEntityType || profile?.society_name || "Nilgiri Educational Trust (Fictional)"}</strong> | Established: {college?.establishedYear || 2004}
+            </p>
+          </div>
         </div>
 
         <div className="flex items-center gap-3">
@@ -124,6 +141,55 @@ export default function InstitutionProfilePage() {
           >
             Export Historical Dossier
           </Button>
+        </div>
+      </div>
+
+      {/* College Campus Photo Showcase */}
+      <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0F172A] p-5 shadow-xs space-y-4">
+        <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
+          <div>
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <ImageIcon className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+              <span>Campus Infrastructure &amp; Statutory Evidence</span>
+            </h3>
+            <p className="text-xs text-slate-500">
+              Photographic evidence verified against NBC 2016 physical norms and municipal building plans
+            </p>
+          </div>
+          <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 flex items-center gap-1.5">
+            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+            3 Geotagged Photos
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {college?.photos?.map((photo: any, idx: number) => (
+            <div
+              key={idx}
+              className="rounded-2xl border border-slate-200 dark:border-slate-700 overflow-hidden bg-slate-900 group shadow-xs hover:border-blue-500 transition-all flex flex-col justify-between"
+            >
+              <div className="aspect-[16/10] overflow-hidden relative">
+                <img
+                  src={photo.path}
+                  alt={photo.alt}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute top-2 right-2">
+                  <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-900/80 backdrop-blur-sm text-white uppercase">
+                    {photo.type}
+                  </span>
+                </div>
+              </div>
+              <div className="p-3 bg-white dark:bg-slate-800/80 space-y-1">
+                <h4 className="text-xs font-bold text-slate-900 dark:text-white truncate">
+                  {photo.title}
+                </h4>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2">
+                  {photo.alt}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
