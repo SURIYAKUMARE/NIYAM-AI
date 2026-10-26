@@ -295,13 +295,13 @@ function LoginForm() {
           
           {/* Official AICTE Brand Header */}
           <div className="text-center space-y-2 pb-3 border-b border-slate-200/80 dark:border-slate-800">
-            <div className="relative w-15 h-15 rounded-2xl bg-white dark:bg-slate-800 p-2 shadow-lg mx-auto ring-4 ring-blue-500/20 border border-slate-200 dark:border-slate-700 flex items-center justify-center">
+            <div className="relative w-10 h-10 rounded-xl bg-white dark:bg-slate-800 p-1.5 shadow-md mx-auto ring-2 ring-blue-500/20 border border-slate-200 dark:border-slate-700 flex items-center justify-center">
               <img
                 src="/images/aicte-logo.png"
                 alt="AICTE Official Logo"
                 className="w-full h-full object-contain"
               />
-              <span className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-[#0C1222]" />
+              <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-white dark:ring-[#0C1222]" />
             </div>
             <div>
               <div className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest font-mono">
