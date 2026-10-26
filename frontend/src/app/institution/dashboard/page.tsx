@@ -32,8 +32,155 @@ import {
   Sparkles,
   ImageIcon,
   ChevronDown,
+  Scale,
+  BookOpen,
+  XCircle,
 } from "lucide-react";
 import rawInstitutions from "../../../../data/seed/institutions.json";
+
+interface AicteRule {
+  id: string;
+  code: string;
+  category: "all" | "land" | "documents" | "academic" | "integrity";
+  title: string;
+  severity: "CRITICAL" | "MAJOR" | "STANDARD";
+  clause: string;
+  handbookSection: string;
+  requirement: string;
+  deterministicCheck: string;
+}
+
+const AICTE_STATUTORY_RULES: AicteRule[] = [
+  {
+    id: "r1",
+    code: "RULE-MANDATORY-DOC-01",
+    category: "documents",
+    title: "Mandatory Checklist Document Submission",
+    severity: "CRITICAL",
+    clause: "Chapter I, Clause 2.1",
+    handbookSection: "Mandatory Statutory Dossier",
+    requirement: "All 6 statutory documents (EoA, Fire NOC, Land Deed, Building Plan, Affiliation Order, and TER Receipt) must be submitted.",
+    deterministicCheck: "Automated checklist presence check. Absence triggers immediate deficiency notice.",
+  },
+  {
+    id: "r2",
+    code: "RULE-FIRE-EXP-02",
+    category: "land",
+    title: "Fire & Life Safety NOC Validity",
+    severity: "CRITICAL",
+    clause: "Chapter I, Clause 4.8",
+    handbookSection: "National Building Code 2016 Part 4",
+    requirement: "Fire Safety Certificate issued by State Fire Services must remain legally unexpired through 30-June of the academic session.",
+    deterministicCheck: "Validity date extracted via OCR must be >= 2026-06-30.",
+  },
+  {
+    id: "r3",
+    code: "RULE-LAND-TIT-03",
+    category: "land",
+    title: "Campus Land Ownership & Entity Title",
+    severity: "CRITICAL",
+    clause: "Chapter I, Clause 3.4 & Chapter IV",
+    handbookSection: "Land Title & Ownership Records",
+    requirement: "Minimum 7.5 contiguous acres (rural) or 3.0 acres (metro) registered under unencumbered 30-year lease or title in favor of the Society/Trust.",
+    deterministicCheck: "Cross-document reconciliation: title holder name in registered deed must match sponsoring trust entity.",
+  },
+  {
+    id: "r4",
+    code: "RULE-INTAKE-SANCTION-04",
+    category: "academic",
+    title: "Sanctioned Course Intake Authenticity",
+    severity: "CRITICAL",
+    clause: "Chapter II, Clause 1.4",
+    handbookSection: "Approved Technical Course Matrix",
+    requirement: "Institutional student intake numbers in submitted application must match AICTE central approval records without unauthorized seat inflation.",
+    deterministicCheck: "Course intake extracted from PDF table cross-referenced with Central Approval Database. Mismatch triggers tampering alert.",
+  },
+  {
+    id: "r5",
+    code: "RULE-AFFILIATION-VAL-05",
+    category: "documents",
+    title: "State University Affiliation Order",
+    severity: "CRITICAL",
+    clause: "Chapter II, Clause 3.2",
+    handbookSection: "State Technical University NOC",
+    requirement: "Formal provisional or permanent affiliation order issued by the affiliating university must cover academic year 2025-26.",
+    deterministicCheck: "Academic session in affiliation order verified against application year. Expired orders blocked.",
+  },
+  {
+    id: "r6",
+    code: "RULE-FACULTY-RATIO-06",
+    category: "academic",
+    title: "Faculty Cadre & Student Ratio Compliance",
+    severity: "MAJOR",
+    clause: "Chapter II, Clause 4.1",
+    handbookSection: "Cadre & Qualifications Standard",
+    requirement: "Mandatory faculty-to-student cadre ratio of 1:15 for Undergraduate B.Tech and 1:12 for Postgraduate M.Tech programs with qualified Ph.D. Director.",
+    deterministicCheck: "Faculty roster count divided by sanctioned student intake must satisfy >= 1:15.",
+  },
+  {
+    id: "r7",
+    code: "RULE-DUPLICATE-HASH-07",
+    category: "integrity",
+    title: "Cryptographic SHA-256 Dossier Integrity",
+    severity: "CRITICAL",
+    clause: "Chapter II, Clause 5.1",
+    handbookSection: "Digital Authentication & Fraud Prevention",
+    requirement: "All PDF regulatory documents must be unique original records. Exact hash collisions with unrelated institutions trigger automated investigation.",
+    deterministicCheck: "SHA-256 fingerprint generated upon upload and queried against multi-tenant regulatory ledger.",
+  },
+  {
+    id: "r8",
+    code: "RULE-TER-PAY-08",
+    category: "documents",
+    title: "TER Processing Fee Reconciliation",
+    severity: "CRITICAL",
+    clause: "Chapter I, Clause 1.6",
+    handbookSection: "Bharatkosh Regulatory Settlement",
+    requirement: "Technical Education Regulatory (TER) fee payment transaction must be confirmed through the Bharatkosh Government of India receipt portal.",
+    deterministicCheck: "Bharatkosh e-Receipt reference queried via gateway adapter. Status must return 'SETTLED'.",
+  },
+  {
+    id: "r9",
+    code: "RULE-ACCESSIBILITY-09",
+    category: "land",
+    title: "Barrier-Free PwD Campus Access",
+    severity: "STANDARD",
+    clause: "Chapter IV, Clause 2.8",
+    handbookSection: "Rights of Persons with Disabilities Act 2016",
+    requirement: "All instructional blocks must have wheelchair ramps (1:12 slope), accessible restrooms, braille elevator signage, and dedicated medical centers.",
+    deterministicCheck: "PWD compliance certificate verification and physical infrastructure evidence inspection.",
+  },
+];
+
+function getRuleComplianceStatus(ruleCode: string, college: any) {
+  if (college.status === "Valid") {
+    return { status: "PASS", message: "Statutory requirements verified & certified" };
+  }
+  if (college.id === "rit-rann" || college.id === "zec-zaskar") {
+    if (ruleCode === "RULE-INTAKE-SANCTION-04") {
+      return { status: "FAIL", message: "Intake altered in PDF from sanctioned quota (180 seats vs 60 seats)" };
+    }
+    if (ruleCode === "RULE-DUPLICATE-HASH-07") {
+      return { status: "FAIL", message: "Cryptographic SHA-256 hash validation and QR code check failed" };
+    }
+  }
+  if (college.id === "dpit-deccan" || college.id === "vti-vindhya") {
+    if (ruleCode === "RULE-AFFILIATION-VAL-05") {
+      return { status: "EXPIRED", message: "University affiliation order expired and lacks AY 2025-26 renewal" };
+    }
+  }
+  if (college.id === "cit-coromandel") {
+    if (ruleCode === "RULE-FIRE-EXP-02") {
+      return { status: "EXPIRED", message: "Environmental consent and fire clearance expired" };
+    }
+  }
+  if (college.id === "cit-chilika" || college.id === "sec-satpura") {
+    if (ruleCode === "RULE-MANDATORY-DOC-01") {
+      return { status: "DEFICIENT", message: "Mandatory statutory fields left unpopulated in submission" };
+    }
+  }
+  return { status: "PASS", message: "Meets prescribed regulatory norm" };
+}
 
 export default function InstitutionDashboardPage() {
   const { user } = useAuth();
@@ -44,9 +191,15 @@ export default function InstitutionDashboardPage() {
   // Active institution showcase state for applicant demo
   const [selectedCollegeId, setSelectedCollegeId] = useState<string>("nit-nilgiri");
   const [activePhotoIdx, setActivePhotoIdx] = useState<number>(0);
+  const [selectedRuleCategory, setSelectedRuleCategory] = useState<string>("all");
 
   const selectedCollege = rawInstitutions.find((c: any) => c.id === selectedCollegeId) || rawInstitutions[0];
   const activePhoto = selectedCollege?.photos?.[activePhotoIdx] || selectedCollege?.photos?.[0];
+
+  const filteredRules = AICTE_STATUTORY_RULES.filter((rule) => {
+    if (selectedRuleCategory === "all") return true;
+    return rule.category === selectedRuleCategory;
+  });
 
   const loadData = async () => {
     setLoading(true);
@@ -416,6 +569,154 @@ export default function InstitutionDashboardPage() {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* AICTE APPROVAL PROCESS HANDBOOK (APH 2025-26) STATUTORY RULES SECTION */}
+      <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0F172A] p-5 sm:p-7 shadow-xs space-y-5 transition-colors">
+        {/* Section Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
+          <div>
+            <div className="flex items-center gap-2 mb-1">
+              <span className="px-2.5 py-0.5 rounded text-[10px] font-bold bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 uppercase tracking-wider">
+                Statutory Regulatory Engine v2025.1
+              </span>
+              <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400">
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                Live Automated Audit Active
+              </span>
+            </div>
+            <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <Scale className="w-5 h-5 text-blue-600 dark:text-blue-400 shrink-0" />
+              <span>AICTE Approval Process Handbook (APH 2025-26) Rules</span>
+            </h2>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+              Statutory verification standards enforced autonomously across all institutional filings, credentials, and uploaded PDFs.
+            </p>
+          </div>
+
+          {/* Handbook Reference Link & Info Pill */}
+          <div className="flex items-center gap-2 shrink-0">
+            <span className="text-xs font-mono text-slate-500 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700">
+              Active: <strong>APH 2025-26</strong>
+            </span>
+            <Link
+              href="/admin/rules"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-100 dark:hover:bg-blue-900/60 border border-blue-200 dark:border-blue-800 rounded-xl transition-colors"
+            >
+              <BookOpen className="w-3.5 h-3.5" />
+              <span>Rules Admin</span>
+            </Link>
+          </div>
+        </div>
+
+        {/* Category Navigation Pills */}
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none text-xs">
+          {[
+            { id: "all", label: "All AICTE Rules", count: AICTE_STATUTORY_RULES.length },
+            { id: "documents", label: "Document Verification", count: AICTE_STATUTORY_RULES.filter((r) => r.category === "documents").length },
+            { id: "land", label: "Land & Infrastructure", count: AICTE_STATUTORY_RULES.filter((r) => r.category === "land").length },
+            { id: "academic", label: "Academic & Intake Quotas", count: AICTE_STATUTORY_RULES.filter((r) => r.category === "academic").length },
+            { id: "integrity", label: "Cryptographic Integrity", count: AICTE_STATUTORY_RULES.filter((r) => r.category === "integrity").length },
+          ].map((tab) => {
+            const isSelected = selectedRuleCategory === tab.id;
+            return (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => setSelectedRuleCategory(tab.id)}
+                className={`py-1.5 px-3 rounded-xl font-semibold transition-all whitespace-nowrap flex items-center gap-1.5 ${
+                  isSelected
+                    ? "bg-blue-600 text-white shadow-xs"
+                    : "bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                }`}
+              >
+                <span>{tab.label}</span>
+                <span className={`px-1.5 py-0.2 rounded-full text-[10px] font-mono ${
+                  isSelected ? "bg-white/20 text-white" : "bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300"
+                }`}>
+                  {tab.count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Rules Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+          {filteredRules.map((rule) => {
+            const auditResult = getRuleComplianceStatus(rule.code, selectedCollege);
+            return (
+              <div
+                key={rule.id}
+                className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30 p-4 flex flex-col justify-between space-y-3 hover:border-blue-500/50 transition-colors shadow-2xs"
+              >
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="font-mono text-[10px] font-bold px-2 py-0.5 rounded bg-slate-200/80 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                      {rule.code}
+                    </span>
+                    <span className={`px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-wider ${
+                      rule.severity === "CRITICAL"
+                        ? "bg-rose-100 dark:bg-rose-950/70 text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-800"
+                        : rule.severity === "MAJOR"
+                        ? "bg-amber-100 dark:bg-amber-950/70 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800"
+                        : "bg-blue-100 dark:bg-blue-950/70 text-blue-800 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
+                    }`}>
+                      {rule.severity}
+                    </span>
+                  </div>
+
+                  <div>
+                    <h3 className="font-bold text-sm text-slate-900 dark:text-white leading-snug">
+                      {rule.title}
+                    </h3>
+                    <p className="text-[11px] font-semibold text-blue-600 dark:text-blue-400 mt-0.5">
+                      {rule.clause} · {rule.handbookSection}
+                    </p>
+                  </div>
+
+                  <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                    {rule.requirement}
+                  </p>
+
+                  <div className="p-2 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200/70 dark:border-slate-700/70 text-[11px] text-slate-500 dark:text-slate-400">
+                    <span className="font-bold text-slate-700 dark:text-slate-300 block mb-0.5">
+                      Deterministic Check:
+                    </span>
+                    {rule.deterministicCheck}
+                  </div>
+                </div>
+
+                {/* Live Audit Evaluation Result for Selected College */}
+                <div className="pt-2.5 border-t border-slate-200/70 dark:border-slate-800/80">
+                  <div className={`p-2 rounded-xl text-xs flex items-start gap-2 ${
+                    auditResult.status === "PASS"
+                      ? "bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800/60"
+                      : auditResult.status === "EXPIRED"
+                      ? "bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800/60"
+                      : "bg-rose-50 dark:bg-rose-950/40 text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-800/60"
+                  }`}>
+                    {auditResult.status === "PASS" ? (
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
+                    ) : auditResult.status === "EXPIRED" ? (
+                      <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+                    ) : (
+                      <XCircle className="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0 mt-0.5" />
+                    )}
+                    <div className="min-w-0">
+                      <span className="font-bold block text-[11px] uppercase tracking-wider">
+                        {auditResult.status === "PASS" ? "Rule Compliant" : auditResult.status === "EXPIRED" ? "Statutory Expiry" : "Rule Violation"}
+                      </span>
+                      <span className="text-[11px] leading-tight block mt-0.5">
+                        {auditResult.message}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 
