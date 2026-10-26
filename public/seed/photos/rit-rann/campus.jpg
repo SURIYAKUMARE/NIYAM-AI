@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+  <defs>
+    <linearGradient id="sky-rit-rann" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#92400E"/>
+      <stop offset="60%" stop-color="#F59E0B"/>
+      <stop offset="100%" stop-color="#FFFFFF"/>
+    </linearGradient>
+    <linearGradient id="ground-rit-rann" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#22C55E"/>
+      <stop offset="100%" stop-color="#15803D"/>
+    </linearGradient>
+    <linearGradient id="facade" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F8FAFC"/>
+      <stop offset="100%" stop-color="#CBD5E1"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="520" fill="url(#sky-rit-rann)"/>
+  <circle cx="1020" cy="140" r="70" fill="#FEF08A" opacity="0.45"/>
+  <path d="M0 450 Q300 380 600 420 T1200 400 L1200 520 L0 520 Z" fill="#64748B" opacity="0.35"/>
+  <rect y="480" width="1200" height="320" fill="url(#ground-rit-rann)"/>
+  <!-- Main Building Center -->
+  <g transform="translate(180, 220)">
+    <rect x="0" y="40" width="840" height="260" rx="8" fill="url(#facade)" stroke="#94A3B8" stroke-width="3"/>
+    <rect x="340" y="0" width="160" height="300" rx="6" fill="#0F172A"/>
+    <!-- Glass Portico -->
+    <rect x="360" y="20" width="120" height="240" fill="#38BDF8" opacity="0.85"/>
+    <!-- Window Grid -->
+    <g transform="translate(20, 60)">
+            <rect x="0" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="42" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="84" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="126" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="168" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="210" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="252" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/>
+          </g>
+          <g transform="translate(530, 60)">
+            <rect x="0" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="42" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="84" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="126" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="168" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="210" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="252" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/>
+          </g><g transform="translate(20, 110)">
+            <rect x="0" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="42" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="84" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="126" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="168" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="210" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="252" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/>
+          </g>
+          <g transform="translate(530, 110)">
+            <rect x="0" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="42" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="84" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="126" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="168" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="210" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="252" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/>
+          </g><g transform="translate(20, 160)">
+            <rect x="0" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="42" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="84" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="126" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="168" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="210" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="252" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/>
+          </g>
+          <g transform="translate(530, 160)">
+            <rect x="0" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="42" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="84" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="126" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="168" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="210" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="252" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/>
+          </g><g transform="translate(20, 210)">
+            <rect x="0" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="42" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="84" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="126" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="168" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="210" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="252" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/>
+          </g>
+          <g transform="translate(530, 210)">
+            <rect x="0" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="42" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="84" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="126" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="168" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="210" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/><rect x="252" width="28" height="32" rx="3" fill="#0284C7" opacity="0.8"/>
+          </g>
+  </g>
+  <!-- Institution Title Signboard -->
+  <rect x="320" y="560" width="560" height="52" rx="10" fill="#0F172A" stroke="#38BDF8" stroke-width="2"/>
+  <text x="600" y="592" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="20" fill="#FFFFFF" letter-spacing="1">RANN INSTITUTE OF TECHNOLOGY & MARINE</text>
+</svg>

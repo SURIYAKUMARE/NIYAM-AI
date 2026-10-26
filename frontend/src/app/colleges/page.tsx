@@ -96,7 +96,7 @@ export default function CollegesDirectoryPage() {
             AICTE Problem Statement 26261: Synthetic Institutions Benchmark Dataset
           </p>
           <p className="mt-0.5 text-blue-800 dark:text-blue-300">
-            This repository contains 12 completely fictional engineering colleges, original SVG emblems, 36 campus photos, and 36 A4 PDF regulatory dossiers. Created exclusively for testing and evaluating automated verification pipelines without using real institutional names or government seals.
+            This benchmark repository contains {colleges.length} completely fictional engineering colleges, original SVG emblems, {colleges.length * 3} campus photos, and {colleges.length * 3} A4 PDF regulatory dossiers. Created exclusively for testing and evaluating automated verification pipelines without using real institutional names or government seals.
           </p>
         </div>
       </div>

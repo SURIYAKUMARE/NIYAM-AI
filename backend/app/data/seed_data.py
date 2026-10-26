@@ -252,9 +252,37 @@ def seed_database(db: Session):
         accreditation_grade="Eligible for Accreditation",
         has_prior_deficiencies=True
     )
+    inst4 = Institution(
+        aicte_permanent_id="SYN-2025-013",
+        name="Kailash Institute of Advanced Technology & AI",
+        legal_entity_type="Himalayan Higher Education & Research Trust",
+        state="Uttarakhand",
+        district="Dehradun",
+        pin_code="248007",
+        contact_email="dean@kailash-tech.demo-edu.in",
+        contact_phone="+91-135-2789013",
+        established_year=2011,
+        accreditation_grade="NAAC A++",
+        has_prior_deficiencies=False
+    )
+    inst5 = Institution(
+        aicte_permanent_id="SYN-2025-014",
+        name="Rann Institute of Technology & Marine Systems",
+        legal_entity_type="Kutch Marine & Engineering Trust",
+        state="Gujarat",
+        district="Kachchh",
+        pin_code="370001",
+        contact_email="registrar@rit-kutch.demo-edu.in",
+        contact_phone="+91-2832-259014",
+        established_year=2016,
+        accreditation_grade="Eligible for Accreditation",
+        has_prior_deficiencies=True
+    )
     db.add(inst1)
     db.add(inst2)
     db.add(inst3)
+    db.add(inst4)
+    db.add(inst5)
     db.flush()
 
     # 4. Seed Users (5 Demo Roles)

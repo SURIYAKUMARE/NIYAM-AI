@@ -22,13 +22,55 @@
     "website": "https://nilgiri-tech.demo-edu.in",
     "address": "Survey No. 104/2A, Mountain View Highway, Ooty, Tamil Nadu - 643001",
     "courses": [
-      { "id": "c1", "degree": "B.Tech", "name": "Computer Science & Engineering", "intake": 120, "durationYears": 4 },
-      { "id": "c2", "degree": "B.Tech", "name": "Electronics & Communication Engineering", "intake": 120, "durationYears": 4 },
-      { "id": "c3", "degree": "B.Tech", "name": "Artificial Intelligence & Data Science", "intake": 60, "durationYears": 4 },
-      { "id": "c4", "degree": "B.Tech", "name": "Mechanical Engineering", "intake": 60, "durationYears": 4 },
-      { "id": "c5", "degree": "B.Tech", "name": "Civil Engineering & Smart Infrastructure", "intake": 60, "durationYears": 4 },
-      { "id": "c6", "degree": "M.Tech", "name": "Cyber Physical Systems", "intake": 30, "durationYears": 2 },
-      { "id": "c7", "degree": "M.Tech", "name": "Renewable Power Systems", "intake": 30, "durationYears": 2 }
+      {
+        "id": "c1",
+        "degree": "B.Tech",
+        "name": "Computer Science & Engineering",
+        "intake": 120,
+        "durationYears": 4
+      },
+      {
+        "id": "c2",
+        "degree": "B.Tech",
+        "name": "Electronics & Communication Engineering",
+        "intake": 120,
+        "durationYears": 4
+      },
+      {
+        "id": "c3",
+        "degree": "B.Tech",
+        "name": "Artificial Intelligence & Data Science",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c4",
+        "degree": "B.Tech",
+        "name": "Mechanical Engineering",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c5",
+        "degree": "B.Tech",
+        "name": "Civil Engineering & Smart Infrastructure",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c6",
+        "degree": "M.Tech",
+        "name": "Cyber Physical Systems",
+        "intake": 30,
+        "durationYears": 2
+      },
+      {
+        "id": "c7",
+        "degree": "M.Tech",
+        "name": "Renewable Power Systems",
+        "intake": 30,
+        "durationYears": 2
+      }
     ],
     "photos": [
       {
@@ -110,11 +152,41 @@
     "website": "https://kaveri-engg.demo-edu.in",
     "address": "Plot 18, Chamundi Tech Corridor, Mysuru, Karnataka - 570008",
     "courses": [
-      { "id": "c1", "degree": "B.Tech", "name": "Computer Science & Engineering", "intake": 120, "durationYears": 4 },
-      { "id": "c2", "degree": "B.Tech", "name": "Information Science & Engineering", "intake": 60, "durationYears": 4 },
-      { "id": "c3", "degree": "B.Tech", "name": "Electronics & Communication Engineering", "intake": 120, "durationYears": 4 },
-      { "id": "c4", "degree": "B.Tech", "name": "Mechanical & Mechatronics Engineering", "intake": 60, "durationYears": 4 },
-      { "id": "c5", "degree": "B.Tech", "name": "Civil Engineering", "intake": 60, "durationYears": 4 }
+      {
+        "id": "c1",
+        "degree": "B.Tech",
+        "name": "Computer Science & Engineering",
+        "intake": 120,
+        "durationYears": 4
+      },
+      {
+        "id": "c2",
+        "degree": "B.Tech",
+        "name": "Information Science & Engineering",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c3",
+        "degree": "B.Tech",
+        "name": "Electronics & Communication Engineering",
+        "intake": 120,
+        "durationYears": 4
+      },
+      {
+        "id": "c4",
+        "degree": "B.Tech",
+        "name": "Mechanical & Mechatronics Engineering",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c5",
+        "degree": "B.Tech",
+        "name": "Civil Engineering",
+        "intake": 60,
+        "durationYears": 4
+      }
     ],
     "photos": [
       {
@@ -189,18 +261,48 @@
     "trustScore": 94,
     "intake": 360,
     "facultyCount": 24,
-    "campusAreaAcres": 14.0,
+    "campusAreaAcres": 14,
     "builtUpAreaSqm": 16200,
     "contactEmail": "registrar@sahyadri-valley.demo-edu.in",
     "contactPhone": "+91-2168-240103",
     "website": "https://sahyadri-valley.demo-edu.in",
     "address": "Valley Vista Campus, Mahabaleshwar Road, Satara, Maharashtra - 412806",
     "courses": [
-      { "id": "c1", "degree": "B.Tech", "name": "Computer Science & Engineering", "intake": 120, "durationYears": 4 },
-      { "id": "c2", "degree": "B.Tech", "name": "Information Technology", "intake": 60, "durationYears": 4 },
-      { "id": "c3", "degree": "B.Tech", "name": "Electrical & Electronics Engineering", "intake": 60, "durationYears": 4 },
-      { "id": "c4", "degree": "B.Tech", "name": "Civil & Environmental Engineering", "intake": 60, "durationYears": 4 },
-      { "id": "c5", "degree": "B.Tech", "name": "Mechanical Engineering", "intake": 60, "durationYears": 4 }
+      {
+        "id": "c1",
+        "degree": "B.Tech",
+        "name": "Computer Science & Engineering",
+        "intake": 120,
+        "durationYears": 4
+      },
+      {
+        "id": "c2",
+        "degree": "B.Tech",
+        "name": "Information Technology",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c3",
+        "degree": "B.Tech",
+        "name": "Electrical & Electronics Engineering",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c4",
+        "degree": "B.Tech",
+        "name": "Civil & Environmental Engineering",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c5",
+        "degree": "B.Tech",
+        "name": "Mechanical Engineering",
+        "intake": 60,
+        "durationYears": 4
+      }
     ],
     "photos": [
       {
@@ -282,11 +384,41 @@
     "website": "https://brahmaputra-engg.demo-edu.in",
     "address": "Riverbank Knowledge City, Tezpur Bypass, Sonitpur, Assam - 784001",
     "courses": [
-      { "id": "c1", "degree": "B.Tech", "name": "Computer Science & Engineering", "intake": 90, "durationYears": 4 },
-      { "id": "c2", "degree": "B.Tech", "name": "Electronics & Telecommunication", "intake": 60, "durationYears": 4 },
-      { "id": "c3", "degree": "B.Tech", "name": "Electrical & Power Engineering", "intake": 60, "durationYears": 4 },
-      { "id": "c4", "degree": "B.Tech", "name": "Civil Engineering & Geomatics", "intake": 60, "durationYears": 4 },
-      { "id": "c5", "degree": "B.Tech", "name": "Bio-Technology & Process Engineering", "intake": 30, "durationYears": 4 }
+      {
+        "id": "c1",
+        "degree": "B.Tech",
+        "name": "Computer Science & Engineering",
+        "intake": 90,
+        "durationYears": 4
+      },
+      {
+        "id": "c2",
+        "degree": "B.Tech",
+        "name": "Electronics & Telecommunication",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c3",
+        "degree": "B.Tech",
+        "name": "Electrical & Power Engineering",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c4",
+        "degree": "B.Tech",
+        "name": "Civil Engineering & Geomatics",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c5",
+        "degree": "B.Tech",
+        "name": "Bio-Technology & Process Engineering",
+        "intake": 30,
+        "durationYears": 4
+      }
     ],
     "photos": [
       {
@@ -368,13 +500,55 @@
     "website": "https://aravali-tech.demo-edu.in",
     "address": "Sunset Point Road, Mount Abu Foothills, Sirohi, Rajasthan - 307501",
     "courses": [
-      { "id": "c1", "degree": "B.Tech", "name": "Computer Science & Engineering", "intake": 180, "durationYears": 4 },
-      { "id": "c2", "degree": "B.Tech", "name": "Artificial Intelligence & Machine Learning", "intake": 60, "durationYears": 4 },
-      { "id": "c3", "degree": "B.Tech", "name": "Electronics & Communication Engineering", "intake": 120, "durationYears": 4 },
-      { "id": "c4", "degree": "B.Tech", "name": "Electrical Engineering", "intake": 60, "durationYears": 4 },
-      { "id": "c5", "degree": "B.Tech", "name": "Mechanical Engineering & Robotics", "intake": 60, "durationYears": 4 },
-      { "id": "c6", "degree": "M.Tech", "name": "VLSI & Embedded Design", "intake": 30, "durationYears": 2 },
-      { "id": "c7", "degree": "M.Tech", "name": "Computer Science & Systems", "intake": 30, "durationYears": 2 }
+      {
+        "id": "c1",
+        "degree": "B.Tech",
+        "name": "Computer Science & Engineering",
+        "intake": 180,
+        "durationYears": 4
+      },
+      {
+        "id": "c2",
+        "degree": "B.Tech",
+        "name": "Artificial Intelligence & Machine Learning",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c3",
+        "degree": "B.Tech",
+        "name": "Electronics & Communication Engineering",
+        "intake": 120,
+        "durationYears": 4
+      },
+      {
+        "id": "c4",
+        "degree": "B.Tech",
+        "name": "Electrical Engineering",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c5",
+        "degree": "B.Tech",
+        "name": "Mechanical Engineering & Robotics",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c6",
+        "degree": "M.Tech",
+        "name": "VLSI & Embedded Design",
+        "intake": 30,
+        "durationYears": 2
+      },
+      {
+        "id": "c7",
+        "degree": "M.Tech",
+        "name": "Computer Science & Systems",
+        "intake": 30,
+        "durationYears": 2
+      }
     ],
     "photos": [
       {
@@ -456,12 +630,48 @@
     "website": "https://malabar-engg.demo-edu.in",
     "address": "Coastal Tech Campus, Palayam Road, Kozhikode, Kerala - 673001",
     "courses": [
-      { "id": "c1", "degree": "B.Tech", "name": "Computer Science & Engineering", "intake": 120, "durationYears": 4 },
-      { "id": "c2", "degree": "B.Tech", "name": "Information Technology & Marine Informatics", "intake": 60, "durationYears": 4 },
-      { "id": "c3", "degree": "B.Tech", "name": "Electronics & Biomedical Engineering", "intake": 60, "durationYears": 4 },
-      { "id": "c4", "degree": "B.Tech", "name": "Electrical & Electronics Engineering", "intake": 60, "durationYears": 4 },
-      { "id": "c5", "degree": "B.Tech", "name": "Mechanical Engineering", "intake": 60, "durationYears": 4 },
-      { "id": "c6", "degree": "B.Tech", "name": "Civil & Coastal Infrastructure", "intake": 60, "durationYears": 4 }
+      {
+        "id": "c1",
+        "degree": "B.Tech",
+        "name": "Computer Science & Engineering",
+        "intake": 120,
+        "durationYears": 4
+      },
+      {
+        "id": "c2",
+        "degree": "B.Tech",
+        "name": "Information Technology & Marine Informatics",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c3",
+        "degree": "B.Tech",
+        "name": "Electronics & Biomedical Engineering",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c4",
+        "degree": "B.Tech",
+        "name": "Electrical & Electronics Engineering",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c5",
+        "degree": "B.Tech",
+        "name": "Mechanical Engineering",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c6",
+        "degree": "B.Tech",
+        "name": "Civil & Coastal Infrastructure",
+        "intake": 60,
+        "durationYears": 4
+      }
     ],
     "photos": [
       {
@@ -543,11 +753,41 @@
     "website": "https://vindhya-tech.demo-edu.in",
     "address": "Bichhiya Industrial Bypass, Rewa, Madhya Pradesh - 486001",
     "courses": [
-      { "id": "c1", "degree": "B.Tech", "name": "Computer Science & Engineering", "intake": 120, "durationYears": 4 },
-      { "id": "c2", "degree": "B.Tech", "name": "Electrical Engineering", "intake": 60, "durationYears": 4 },
-      { "id": "c3", "degree": "B.Tech", "name": "Mechanical Engineering", "intake": 60, "durationYears": 4 },
-      { "id": "c4", "degree": "B.Tech", "name": "Civil Engineering", "intake": 60, "durationYears": 4 },
-      { "id": "c5", "degree": "B.Tech", "name": "Mining Machinery & Mechanics", "intake": 60, "durationYears": 4 }
+      {
+        "id": "c1",
+        "degree": "B.Tech",
+        "name": "Computer Science & Engineering",
+        "intake": 120,
+        "durationYears": 4
+      },
+      {
+        "id": "c2",
+        "degree": "B.Tech",
+        "name": "Electrical Engineering",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c3",
+        "degree": "B.Tech",
+        "name": "Mechanical Engineering",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c4",
+        "degree": "B.Tech",
+        "name": "Civil Engineering",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c5",
+        "degree": "B.Tech",
+        "name": "Mining Machinery & Mechanics",
+        "intake": 60,
+        "durationYears": 4
+      }
     ],
     "photos": [
       {
@@ -631,11 +871,41 @@
     "website": "https://coromandel-tech.demo-edu.in",
     "address": "East Coast Highway, Kalapet, Puducherry - 605014",
     "courses": [
-      { "id": "c1", "degree": "B.Tech", "name": "Computer Science & Engineering", "intake": 90, "durationYears": 4 },
-      { "id": "c2", "degree": "B.Tech", "name": "Marine & Offshore Technology", "intake": 60, "durationYears": 4 },
-      { "id": "c3", "degree": "B.Tech", "name": "Electronics & Communication Engineering", "intake": 60, "durationYears": 4 },
-      { "id": "c4", "degree": "B.Tech", "name": "Electrical & Green Power Systems", "intake": 60, "durationYears": 4 },
-      { "id": "c5", "degree": "B.Tech", "name": "Chemical & Environmental Process", "intake": 30, "durationYears": 4 }
+      {
+        "id": "c1",
+        "degree": "B.Tech",
+        "name": "Computer Science & Engineering",
+        "intake": 90,
+        "durationYears": 4
+      },
+      {
+        "id": "c2",
+        "degree": "B.Tech",
+        "name": "Marine & Offshore Technology",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c3",
+        "degree": "B.Tech",
+        "name": "Electronics & Communication Engineering",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c4",
+        "degree": "B.Tech",
+        "name": "Electrical & Green Power Systems",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c5",
+        "degree": "B.Tech",
+        "name": "Chemical & Environmental Process",
+        "intake": 30,
+        "durationYears": 4
+      }
     ],
     "photos": [
       {
@@ -712,17 +982,41 @@
     "trustScore": 24,
     "intake": 240,
     "facultyCount": 16,
-    "campusAreaAcres": 20.0,
+    "campusAreaAcres": 20,
     "builtUpAreaSqm": 12800,
     "contactEmail": "rector@zaskar-engg.demo-edu.in",
     "contactPhone": "+91-1982-259009",
     "website": "https://zaskar-engg.demo-edu.in",
     "address": "Cold Desert Tech Park, Skara Valley, Leh, Ladakh - 194101",
     "courses": [
-      { "id": "c1", "degree": "B.Tech", "name": "Computer Science & Engineering", "intake": 60, "durationYears": 4 },
-      { "id": "c2", "degree": "B.Tech", "name": "Civil & Cold-Climate Infrastructure", "intake": 60, "durationYears": 4 },
-      { "id": "c3", "degree": "B.Tech", "name": "Renewable High-Altitude Energy", "intake": 60, "durationYears": 4 },
-      { "id": "c4", "degree": "B.Tech", "name": "Electronics & Satellite Communications", "intake": 60, "durationYears": 4 }
+      {
+        "id": "c1",
+        "degree": "B.Tech",
+        "name": "Computer Science & Engineering",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c2",
+        "degree": "B.Tech",
+        "name": "Civil & Cold-Climate Infrastructure",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c3",
+        "degree": "B.Tech",
+        "name": "Renewable High-Altitude Energy",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c4",
+        "degree": "B.Tech",
+        "name": "Electronics & Satellite Communications",
+        "intake": 60,
+        "durationYears": 4
+      }
     ],
     "photos": [
       {
@@ -799,18 +1093,48 @@
     "trustScore": 28,
     "intake": 360,
     "facultyCount": 24,
-    "campusAreaAcres": 22.0,
+    "campusAreaAcres": 22,
     "builtUpAreaSqm": 16000,
     "contactEmail": "principal@thar-institute.demo-edu.in",
     "contactPhone": "+91-2992-254010",
     "website": "https://thar-institute.demo-edu.in",
     "address": "Desert Knowledge Expressway, Sam Dunes Road, Jaisalmer, Rajasthan - 345001",
     "courses": [
-      { "id": "c1", "degree": "B.Tech", "name": "Computer Science & Engineering", "intake": 120, "durationYears": 4 },
-      { "id": "c2", "degree": "B.Tech", "name": "Renewable Solar & Wind Technology", "intake": 60, "durationYears": 4 },
-      { "id": "c3", "degree": "B.Tech", "name": "Electrical & Power Grid Management", "intake": 60, "durationYears": 4 },
-      { "id": "c4", "degree": "B.Tech", "name": "Mechanical Engineering", "intake": 60, "durationYears": 4 },
-      { "id": "c5", "degree": "B.Tech", "name": "Civil & Water Resource Management", "intake": 60, "durationYears": 4 }
+      {
+        "id": "c1",
+        "degree": "B.Tech",
+        "name": "Computer Science & Engineering",
+        "intake": 120,
+        "durationYears": 4
+      },
+      {
+        "id": "c2",
+        "degree": "B.Tech",
+        "name": "Renewable Solar & Wind Technology",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c3",
+        "degree": "B.Tech",
+        "name": "Electrical & Power Grid Management",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c4",
+        "degree": "B.Tech",
+        "name": "Mechanical Engineering",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c5",
+        "degree": "B.Tech",
+        "name": "Civil & Water Resource Management",
+        "intake": 60,
+        "durationYears": 4
+      }
     ],
     "photos": [
       {
@@ -894,11 +1218,41 @@
     "website": "https://chilika-tech.demo-edu.in",
     "address": "Coastal Marine Drive, Marine Tech Enclave, Puri, Odisha - 752002",
     "courses": [
-      { "id": "c1", "degree": "B.Tech", "name": "Computer Science & Engineering", "intake": 90, "durationYears": 4 },
-      { "id": "c2", "degree": "B.Tech", "name": "Electronics & Marine Systems", "intake": 60, "durationYears": 4 },
-      { "id": "c3", "degree": "B.Tech", "name": "Electrical & Energy Engineering", "intake": 60, "durationYears": 4 },
-      { "id": "c4", "degree": "B.Tech", "name": "Civil & Coastal Protection Engineering", "intake": 60, "durationYears": 4 },
-      { "id": "c5", "degree": "B.Tech", "name": "Aquaculture & Environmental Tech", "intake": 30, "durationYears": 4 }
+      {
+        "id": "c1",
+        "degree": "B.Tech",
+        "name": "Computer Science & Engineering",
+        "intake": 90,
+        "durationYears": 4
+      },
+      {
+        "id": "c2",
+        "degree": "B.Tech",
+        "name": "Electronics & Marine Systems",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c3",
+        "degree": "B.Tech",
+        "name": "Electrical & Energy Engineering",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c4",
+        "degree": "B.Tech",
+        "name": "Civil & Coastal Protection Engineering",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c5",
+        "degree": "B.Tech",
+        "name": "Aquaculture & Environmental Tech",
+        "intake": 30,
+        "durationYears": 4
+      }
     ],
     "photos": [
       {
@@ -975,17 +1329,41 @@
     "trustScore": 38,
     "intake": 240,
     "facultyCount": 16,
-    "campusAreaAcres": 13.0,
+    "campusAreaAcres": 13,
     "builtUpAreaSqm": 12400,
     "contactEmail": "principal@satpura-engg.demo-edu.in",
     "contactPhone": "+91-7162-243012",
     "website": "https://satpura-engg.demo-edu.in",
     "address": "Plateau Tech Zone, Nagpur-Jabalpur Link Road, Chhindwara, Madhya Pradesh - 480001",
     "courses": [
-      { "id": "c1", "degree": "B.Tech", "name": "Computer Science & Engineering", "intake": 60, "durationYears": 4 },
-      { "id": "c2", "degree": "B.Tech", "name": "Mining & Geotechnical Engineering", "intake": 60, "durationYears": 4 },
-      { "id": "c3", "degree": "B.Tech", "name": "Mechanical Engineering", "intake": 60, "durationYears": 4 },
-      { "id": "c4", "degree": "B.Tech", "name": "Civil Engineering & Forest Roadways", "intake": 60, "durationYears": 4 }
+      {
+        "id": "c1",
+        "degree": "B.Tech",
+        "name": "Computer Science & Engineering",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c2",
+        "degree": "B.Tech",
+        "name": "Mining & Geotechnical Engineering",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c3",
+        "degree": "B.Tech",
+        "name": "Mechanical Engineering",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c4",
+        "degree": "B.Tech",
+        "name": "Civil Engineering & Forest Roadways",
+        "intake": 60,
+        "durationYears": 4
+      }
     ],
     "photos": [
       {
@@ -1043,6 +1421,369 @@
         "status": "Verified",
         "tamperDetected": false,
         "filePath": "/seed/docs/sec-satpura/compliance_report.pdf"
+      }
+    ]
+  },
+  {
+    "id": "kiat-kailash",
+    "permanentId": "SYN-2025-013",
+    "name": "Kailash Institute of Advanced Technology & AI",
+    "shortName": "KIAT",
+    "city": "Dehradun",
+    "district": "Dehradun",
+    "state": "Uttarakhand",
+    "pincode": "248007",
+    "establishedYear": 2011,
+    "legalEntityType": "Himalayan Higher Education & Research Trust (Fictional)",
+    "status": "Valid",
+    "statusReason": "Full compliance with APH 2025-26 norms; accredited smart labs and approved 1:15 faculty ratio.",
+    "trustScore": 97,
+    "intake": 420,
+    "facultyCount": 28,
+    "campusAreaAcres": 14.5,
+    "builtUpAreaSqm": 19800,
+    "contactEmail": "dean@kailash-tech.demo-edu.in",
+    "contactPhone": "+91-135-2789013",
+    "website": "https://kailash-tech.demo-edu.in",
+    "address": "Survey No. 412/1B, Foothills Knowledge Boulevard, Dehradun, Uttarakhand - 248007",
+    "courses": [
+      {
+        "id": "c1",
+        "degree": "B.Tech",
+        "name": "Computer Science & Engineering (AI & ML)",
+        "intake": 120,
+        "durationYears": 4
+      },
+      {
+        "id": "c2",
+        "degree": "B.Tech",
+        "name": "Electronics & Communication Engineering",
+        "intake": 120,
+        "durationYears": 4
+      },
+      {
+        "id": "c3",
+        "degree": "B.Tech",
+        "name": "Robotics & Autonomous Systems",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c4",
+        "degree": "B.Tech",
+        "name": "Aerospace & Avionics Engineering",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c5",
+        "degree": "M.Tech",
+        "name": "Computational Intelligence",
+        "intake": 30,
+        "durationYears": 2
+      },
+      {
+        "id": "c6",
+        "degree": "M.Tech",
+        "name": "Quantum Computing & Cyber Security",
+        "intake": 30,
+        "durationYears": 2
+      }
+    ],
+    "photos": [
+      {
+        "type": "campus",
+        "title": "Main Himalayan Academic Quadrangle & Mountain Observatory",
+        "path": "/seed/photos/kiat-kailash/campus.jpg",
+        "alt": "Kailash Institute of Advanced Technology modern foothill campus with solar glass observatory"
+      },
+      {
+        "type": "classroom",
+        "title": "Interactive Tiered AI Innovation Lecture Theatre",
+        "path": "/seed/photos/kiat-kailash/classroom.jpg",
+        "alt": "Tiered classroom with interactive dual 4K display panels and ergonomic seating at Kailash Tech"
+      },
+      {
+        "type": "lab",
+        "title": "Supercomputing & Robotics Automation Research Lab",
+        "path": "/seed/photos/kiat-kailash/lab.jpg",
+        "alt": "High performance AI server racks and multi-axis robotic arms at Kailash Tech"
+      }
+    ],
+    "logo": "/seed/logos/kiat-kailash.svg",
+    "documents": [
+      {
+        "id": "doc-kiat-01",
+        "type": "approval_letter",
+        "title": "AICTE Extension of Approval (EoA) 2025-26",
+        "refNumber": "AICTE/NRO/SYN-2025-013/2025/EOA",
+        "issueDate": "2025-05-12",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/kiat-kailash/approval_letter.pdf",
+        "pages": 2,
+        "fileSize": "184 KB"
+      },
+      {
+        "id": "doc-kiat-02",
+        "type": "affiliation_certificate",
+        "title": "State Technological University Affiliation Order",
+        "refNumber": "UTU/AFFIL/2025/UK-512",
+        "issueDate": "2025-06-04",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/kiat-kailash/affiliation_certificate.pdf",
+        "pages": 1,
+        "fileSize": "172 KB"
+      },
+      {
+        "id": "doc-kiat-03",
+        "type": "compliance_report",
+        "title": "TER Regulatory Fee & Green Campus Audit Compliance",
+        "refNumber": "COMP/SYN-2025-013/AUDIT-25",
+        "issueDate": "2025-05-20",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/kiat-kailash/compliance_report.pdf",
+        "pages": 1,
+        "fileSize": "178 KB"
+      }
+    ]
+  },
+  {
+    "id": "rit-rann",
+    "permanentId": "SYN-2025-014",
+    "name": "Rann Institute of Technology & Marine Systems",
+    "shortName": "RIT",
+    "city": "Bhuj",
+    "district": "Kachchh",
+    "state": "Gujarat",
+    "pincode": "370001",
+    "establishedYear": 2016,
+    "legalEntityType": "Kutch Marine & Engineering Trust (Fictional)",
+    "status": "Tampered",
+    "statusReason": "Course intake table in submitted PDF has been manually inflated from 60 to 180 seats; cryptographic SHA-256 mismatch detected.",
+    "trustScore": 26,
+    "intake": 360,
+    "facultyCount": 24,
+    "campusAreaAcres": 10.8,
+    "builtUpAreaSqm": 14200,
+    "contactEmail": "registrar@rit-kutch.demo-edu.in",
+    "contactPhone": "+91-2832-259014",
+    "website": "https://rit-kutch.demo-edu.in",
+    "address": "Survey No. 78/3, Coastal Highway Corridor, Bhuj, Kachchh, Gujarat - 370001",
+    "courses": [
+      {
+        "id": "c1",
+        "degree": "B.Tech",
+        "name": "Marine Engineering",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c2",
+        "degree": "B.Tech",
+        "name": "Artificial Intelligence & Data Science",
+        "intake": 120,
+        "durationYears": 4
+      },
+      {
+        "id": "c3",
+        "degree": "B.Tech",
+        "name": "Civil & Offshore Infrastructure Engineering",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c4",
+        "degree": "B.Tech",
+        "name": "Mechanical Engineering",
+        "intake": 60,
+        "durationYears": 4
+      },
+      {
+        "id": "c5",
+        "degree": "B.Tech",
+        "name": "Electrical & Energy Engineering",
+        "intake": 60,
+        "durationYears": 4
+      }
+    ],
+    "photos": [
+      {
+        "type": "campus",
+        "title": "Maritime Tech Complex & Wind-Powered Solar Array",
+        "path": "/seed/photos/rit-rann/campus.jpg",
+        "alt": "Rann Institute coastal campus building with wind turbines and solar architecture"
+      },
+      {
+        "type": "classroom",
+        "title": "Smart Nautical Simulation & Computing Amphitheatre",
+        "path": "/seed/photos/rit-rann/classroom.jpg",
+        "alt": "Amphitheatre classroom featuring nautical navigation simulation monitors at Rann Institute"
+      },
+      {
+        "type": "lab",
+        "title": "Hydrodynamics & Marine Propulsion Testing Facility",
+        "path": "/seed/photos/rit-rann/lab.jpg",
+        "alt": "Scale water flume channels and marine engine testing instrumentation at Rann Institute"
+      }
+    ],
+    "logo": "/seed/logos/rit-rann.svg",
+    "documents": [
+      {
+        "id": "doc-rit-01",
+        "type": "approval_letter",
+        "title": "AICTE Extension of Approval (EoA) 2025-26 [TAMPERED]",
+        "refNumber": "AICTE/WRO/SYN-2025-014/2025/EOA",
+        "issueDate": "2025-05-18",
+        "validUntil": "2026-06-30",
+        "status": "Tampered",
+        "tamperDetected": true,
+        "tamperType": "INTAKE_INFLATION",
+        "tamperDetails": "Course intake for B.Tech Marine Engineering altered from sanctioned 60 seats to 180 seats in the submitted PDF. Digital hash and QR code validation failed.",
+        "filePath": "/seed/docs/rit-rann/approval_letter.pdf",
+        "pages": 2,
+        "fileSize": "186 KB"
+      },
+      {
+        "id": "doc-rit-02",
+        "type": "affiliation_certificate",
+        "title": "State Technological University Affiliation Order",
+        "refNumber": "GTU/AFFIL/2025/GJ-308",
+        "issueDate": "2025-06-11",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/rit-rann/affiliation_certificate.pdf",
+        "pages": 1,
+        "fileSize": "174 KB"
+      },
+      {
+        "id": "doc-rit-03",
+        "type": "compliance_report",
+        "title": "TER Regulatory Fee & Coastal Environmental Clearance",
+        "refNumber": "COMP/SYN-2025-014/AUDIT-25",
+        "issueDate": "2025-05-28",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/rit-rann/compliance_report.pdf",
+        "pages": 1,
+        "fileSize": "181 KB"
+      }
+    ]
+  },
+  {
+    "id": "dpit-deccan",
+    "permanentId": "SYN-2025-015",
+    "name": "Deccan Premier Institute of Technology",
+    "shortName": "DPIT",
+    "city": "Hyderabad",
+    "district": "Hyderabad",
+    "state": "Telangana",
+    "pincode": "500081",
+    "establishedYear": 2010,
+    "legalEntityType": "Deccan Knowledge & Technical Education Society (Fictional)",
+    "status": "Expired",
+    "statusReason": "State Technological University Affiliation expired on 30-April-2024 without mandatory renewal for AY 2025-26.",
+    "trustScore": 44,
+    "intake": 300,
+    "facultyCount": 20,
+    "campusAreaAcres": 8.5,
+    "builtUpAreaSqm": 13800,
+    "contactEmail": "principal@dpit-hyderabad.demo-edu.in",
+    "contactPhone": "+91-40-2391015",
+    "website": "https://dpit-hyderabad.demo-edu.in",
+    "address": "Plot 92, Hitech Regulatory Zone, Madhapur, Hyderabad, Telangana - 500081",
+    "courses": [
+      {
+        "id": "c1",
+        "degree": "B.Tech",
+        "name": "Computer Science & Engineering",
+        "intake": 120,
+        "durationYears": 4
+      },
+      {
+        "id": "c2",
+        "degree": "B.Tech",
+        "name": "Electronics & Communication Engineering",
+        "intake": 120,
+        "durationYears": 4
+      },
+      {
+        "id": "c3",
+        "degree": "B.Tech",
+        "name": "Information Technology",
+        "intake": 60,
+        "durationYears": 4
+      }
+    ],
+    "photos": [
+      {
+        "type": "campus",
+        "title": "Central Academic Block & Innovation Hub",
+        "path": "/seed/photos/dpit-deccan/campus.jpg",
+        "alt": "Modern glass multi-story academic campus of Deccan Premier Institute in Hyderabad"
+      },
+      {
+        "type": "classroom",
+        "title": "Executive Digital Classroom & Seminar Hall",
+        "path": "/seed/photos/dpit-deccan/classroom.jpg",
+        "alt": "Corporate styled seminar classroom with ceiling acoustic baffles and dual screen projectors at Deccan Premier"
+      },
+      {
+        "type": "lab",
+        "title": "Advanced Embedded Systems & VLSI Testing Lab",
+        "path": "/seed/photos/dpit-deccan/lab.jpg",
+        "alt": "Cleanroom testing tables with FPGA development modules and logic analyzers at Deccan Premier"
+      }
+    ],
+    "logo": "/seed/logos/dpit-deccan.svg",
+    "documents": [
+      {
+        "id": "doc-dpit-01",
+        "type": "approval_letter",
+        "title": "AICTE Extension of Approval (EoA) 2025-26",
+        "refNumber": "AICTE/SCRO/SYN-2025-015/2025/EOA",
+        "issueDate": "2025-05-15",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/dpit-deccan/approval_letter.pdf",
+        "pages": 2,
+        "fileSize": "183 KB"
+      },
+      {
+        "id": "doc-dpit-02",
+        "type": "affiliation_certificate",
+        "title": "State University Affiliation Order [EXPIRED]",
+        "refNumber": "JNTU/AFFIL/2024/TS-419",
+        "issueDate": "2023-05-02",
+        "validUntil": "2024-04-30",
+        "status": "Expired",
+        "tamperDetected": true,
+        "tamperType": "EXPIRED_DATE",
+        "tamperDetails": "Affiliation certificate expired on 30-Apr-2024 and lacks statutory renewal for academic session 2025-26.",
+        "filePath": "/seed/docs/dpit-deccan/affiliation_certificate.pdf",
+        "pages": 1,
+        "fileSize": "176 KB"
+      },
+      {
+        "id": "doc-dpit-03",
+        "type": "compliance_report",
+        "title": "TER Regulatory Fee & Life Safety Compliance Clearance",
+        "refNumber": "COMP/SYN-2025-015/AUDIT-25",
+        "issueDate": "2025-05-22",
+        "validUntil": "2026-06-30",
+        "status": "Verified",
+        "tamperDetected": false,
+        "filePath": "/seed/docs/dpit-deccan/compliance_report.pdf",
+        "pages": 1,
+        "fileSize": "179 KB"
       }
     ]
   }

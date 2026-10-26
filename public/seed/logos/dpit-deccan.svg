@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <linearGradient id="dpit-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4C1D95"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="36" fill="#FAF5FF"/>
+  <!-- Shield with Crown Crest -->
+  <path d="M128 26 C192 26 218 52 218 114 C218 180 156 224 128 238 C100 224 38 180 38 114 C38 52 64 26 128 26 Z" fill="url(#dpit-grad)" stroke="#A78BFA" stroke-width="4"/>
+  <!-- Charminar Gateway Silhouette Motif -->
+  <rect x="94" y="92" width="16" height="64" rx="2" fill="#EDE9FE"/>
+  <rect x="146" y="92" width="16" height="64" rx="2" fill="#EDE9FE"/>
+  <path d="M90 92 L102 66 L114 92 Z" fill="#FDE047"/>
+  <path d="M142 92 L154 66 L166 92 Z" fill="#FDE047"/>
+  <!-- Arch connecting towers -->
+  <path d="M106 118 C114 104 142 104 150 118 L150 156 L106 156 Z" fill="#EDE9FE" opacity="0.9"/>
+  <!-- Acronym Ribbon -->
+  <rect x="84" y="200" width="88" height="22" rx="4" fill="#FDE047"/>
+  <text x="128" y="215" text-anchor="middle" font-family="system-ui, sans-serif" font-weight="900" font-size="12" fill="#4C1D95" letter-spacing="2">D P I T</text>
+</svg>

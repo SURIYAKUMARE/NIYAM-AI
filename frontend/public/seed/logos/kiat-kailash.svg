@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <linearGradient id="kiat-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </linearGradient>
+    <linearGradient id="snow-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#BAE6FD"/>
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="36" fill="#F0F9FF"/>
+  <!-- Octagonal Crest Shield -->
+  <polygon points="128,24 208,56 224,144 176,216 128,236 80,216 32,144 48,56" fill="url(#kiat-grad)" stroke="#38BDF8" stroke-width="4"/>
+  <!-- Triple Snowy Himalayan Peaks -->
+  <polygon points="68,144 100,92 132,144" fill="url(#snow-grad)"/>
+  <polygon points="104,144 128,76 152,144" fill="#FFFFFF"/>
+  <polygon points="124,144 156,92 188,144" fill="url(#snow-grad)"/>
+  <!-- AI Neural Network Nodes -->
+  <circle cx="96" cy="116" r="4.5" fill="#38BDF8"/>
+  <circle cx="128" cy="100" r="5.5" fill="#FBBF24"/>
+  <circle cx="160" cy="116" r="4.5" fill="#38BDF8"/>
+  <line x1="96" y1="116" x2="128" y2="100" stroke="#FBBF24" stroke-width="2"/>
+  <line x1="160" y1="116" x2="128" y2="100" stroke="#FBBF24" stroke-width="2"/>
+  <line x1="96" y1="116" x2="160" y2="116" stroke="#38BDF8" stroke-width="1.5" stroke-dasharray="3 2"/>
+  <!-- Open Digital Book Base -->
+  <path d="M84,168 C104,160 120,164 128,172 C136,164 152,160 172,168 L172,192 C152,184 136,188 128,196 C120,188 104,184 84,192 Z" fill="#FFFFFF"/>
+  <!-- Acronym Ribbon -->
+  <rect x="80" y="202" width="96" height="22" rx="5" fill="#38BDF8"/>
+  <text x="128" y="217" text-anchor="middle" font-family="system-ui, sans-serif" font-weight="900" font-size="12" fill="#0F172A" letter-spacing="2">K I A T</text>
+</svg>

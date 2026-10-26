@@ -2,12 +2,12 @@
   "version": "1.0.0",
   "dataset": "AICTE Synthetic Validation Benchmark v2025-26",
   "generatedAt": "2026-10-25T00:00:00Z",
-  "totalColleges": 12,
-  "totalDocuments": 36,
+  "totalColleges": 15,
+  "totalDocuments": 45,
   "summary": {
-    "validColleges": 6,
-    "expiredColleges": 2,
-    "tamperedColleges": 2,
+    "validColleges": 7,
+    "expiredColleges": 3,
+    "tamperedColleges": 3,
     "missingFieldsColleges": 2
   },
   "colleges": {
@@ -161,6 +161,49 @@
             "municipal_sanction_order_number"
           ],
           "explanation": "Mandatory Bharatkosh regulatory fee payment receipt reference and Municipal Sanction Plan approval number left blank in the submitted application."
+        }
+      ]
+    },
+    "kiat-kailash": {
+      "collegeName": "Kailash Institute of Advanced Technology & AI",
+      "expectedStatus": "Valid",
+      "expectedTrustScore": 97,
+      "anomaliesExpected": [],
+      "verificationMethod": "DigiLocker & X.509 PKI Signature Match"
+    },
+    "rit-rann": {
+      "collegeName": "Rann Institute of Technology & Marine Systems",
+      "expectedStatus": "Tampered",
+      "expectedTrustScore": 26,
+      "anomaliesExpected": [
+        {
+          "documentId": "doc-rit-01",
+          "documentType": "approval_letter",
+          "anomalyType": "INTAKE_INFLATION",
+          "ruleViolated": "APH-2025-RULE-01 (Sanctioned Intake Authenticity)",
+          "severity": "CRITICAL",
+          "extractedValue": "B.Tech Marine Engineering Intake = 180 seats",
+          "expectedValue": "B.Tech Marine Engineering Intake = 60 seats",
+          "sha256Mismatched": true,
+          "qrPayloadMismatched": true,
+          "explanation": "Course intake in the submitted PDF has been manually altered from sanctioned 60 seats to 180 seats. Cryptographic hash check and QR payload validation failed."
+        }
+      ]
+    },
+    "dpit-deccan": {
+      "collegeName": "Deccan Premier Institute of Technology",
+      "expectedStatus": "Expired",
+      "expectedTrustScore": 44,
+      "anomaliesExpected": [
+        {
+          "documentId": "doc-dpit-02",
+          "documentType": "affiliation_certificate",
+          "anomalyType": "EXPIRED_DATE",
+          "ruleViolated": "APH-2025-RULE-02 (Statutory Certificate Validity)",
+          "severity": "CRITICAL",
+          "extractedValue": "2024-04-30",
+          "expectedValue": ">= 2026-06-30",
+          "explanation": "State University Affiliation Order expired on 30-Apr-2024 and lacks mandatory renewal for academic session 2025-26."
         }
       ]
     }
